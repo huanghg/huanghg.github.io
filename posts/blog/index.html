@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="拾忆">
+  <meta name="description" content="待定">
+  
+  
+  
+  
+  <link rel="canonical" href="http://huanghg.github.io/posts/blog/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Blog | 拾忆
+       
+  </title>
+  <meta name="title" content="Blog | 拾忆">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "http:\/\/huanghg.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "Blog",
+    "headline" : "Blog",
+    "description" : "#Hugo \x26amp; Github Pages 制作静态个人博客\n##背景\n最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：\n 沉淀所学知识，搭建知识体系。（这是最重要的） 千里马常有，而伯乐也需要一个平台去认识你。 结识志同道合之士 于智者，抛砖引玉；于惑者，授业解惑  但是在搭建的过程中，遇到很多坑，特此写这篇文章记录一下，希望可以帮助到其他童鞋。\n搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。\n下面就介绍一下Hugo \x26amp; Github Pages搭建的过程。\n简介 ##Hugo\n Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。\n hugo的安装流程请见中文官网 或英文官网，此处就做不详细介绍。这里更多的想要描述一下hugo的用法，及相关文件夹的功能，以及如何配置hugo。\n➜ `Github` hugo new site `blogname` \/\/blogname任君喜欢 Congratulations! Your new Hugo site is created in \/Users\/haiguanghuang\/Documents\/Github\/blogname. Just a few more steps and you\x27re ready to go: 1. Download a theme into the same-named folder. Choose a theme from https:\/\/themes.gohugo.io\/ or create your own with the \x26quot;hugo new theme \x26lt;THEMENAME\x26gt;\x26quot; command.",
+    "inLanguage" : "zh-cn",
+    "author" : "拾忆",
+    "creator" : "拾忆",
+    "publisher": "拾忆",
+    "accountablePerson" : "拾忆",
+    "copyrightHolder" : "拾忆",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-11-06 16:58:13 \x2b0800 CST",
+    "dateModified" : "2019-11-06 16:58:13 \x2b0800 CST",
+    "url" : "http:\/\/huanghg.github.io\/posts\/blog\/",
+    "wordCount" : "395",
+    "keywords" : [  "拾忆"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="http://huanghg.github.io/">拾忆</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/" title="">首页</a>
+                
+                <a class="menu-item" href="/posts/" title="">博文</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="http://huanghg.github.io/">拾忆</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/" title="">首页</a>
+                
+                <a class="menu-item" href="/posts/" title="">博文</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Blog</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="http://huanghg.github.io/" rel="author">拾忆</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-11-06 itemprop="datePublished">November 6, 2019</time>
+                </span>
+                in
+                
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>#Hugo &amp; Github Pages 制作静态个人博客</p>
+
+<p>##背景</p>
+
+<p>最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：</p>
+
+<ul>
+<li>沉淀所学知识，搭建知识体系。（这是最重要的）</li>
+<li>千里马常有，而伯乐也需要一个平台去认识你。</li>
+<li>结识志同道合之士</li>
+<li>于智者，抛砖引玉；于惑者，授业解惑</li>
+</ul>
+
+<p>但是在搭建的过程中，遇到很多坑，特此写这篇文章记录一下，希望可以帮助到其他童鞋。</p>
+
+<p>搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。</p>
+
+<p>下面就介绍一下Hugo &amp; Github Pages搭建的过程。</p>
+
+<h2 id="简介">简介</h2>
+
+<p>##Hugo</p>
+
+<blockquote>
+<p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</p>
+</blockquote>
+
+<p><code>hugo</code>的安装流程请见<a href="https://www.gohugo.org">中文官网</a> 或<a href="https://gohugo.io">英文官网</a>，此处就做不详细介绍。这里更多的想要描述一下<code>hugo</code>的用法，及相关文件夹的功能，以及如何配置<code>hugo</code>。</p>
+
+<pre><code class="language-shell">➜  `Github` hugo new site `blogname` //blogname任君喜欢
+
+Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname.
+
+Just a few more steps and you're ready to go:
+
+1. Download a theme into the same-named folder.
+   Choose a theme from https://themes.gohugo.io/ or
+   create your own with the &quot;hugo new theme &lt;THEMENAME&gt;&quot; command.
+2. Perhaps you want to add some content. You can add single files
+   with &quot;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&quot;.
+3. Start the built-in live server via &quot;hugo server&quot;.
+
+Visit https://gohugo.io/ for quickstart guide and full documentation.
+
+➜  `blogname` cd `blogname`				//进入主页文件夹
+➜  `blogname` git init						//用git管理
+</code></pre>
+
+<p>目录结构如下</p>
+
+<pre><code class="language-shell">-`blogname`
+	-archetypes  
+		-default.md		//这是md模板，通过`hugo new xxxx.md`就会以这个模板创建
+	-config.toml		//hugo的配置文件
+	-content				//放主要的博客内容
+	-data       		
+	-layouts     		//布局相关，优先级会比theme里面的高
+	-static     		//放静态资源，比如图片啥的
+	-themes					//hugo的主题，更多主题见：https://themes.gohugo.io
+</code></pre>
+
+<p>创建完主页后，就可以下载你喜欢的主题了，下载主题方式多样化，最终只要把对应的主题放到<code>themes</code>文件下即可。</p>
+
+<p>下面是通过git下载，这里有个小提醒，在<a href="https://themes.gohugo.io">主题官网</a>看到喜欢的主题，进入该主题的主页后，点击<code>Download</code>，会跳转到对应<code>Github</code>地址，fork一份到自己的<code>Github</code>，这样以后可以根据自己的喜好微调。</p>
+
+<pre><code class="language-shell">➜  `blogname` git:(master) git subtree add --prefix=themes/leaveIt git@github.com:huanghg/LeaveIt master		//用subtree的方式关联一个主题远程分支
+</code></pre>
+
+<p>主题下载好了，接下来就是配置了主题了, 可以编辑<code>config.toml</code> , 这一步不是必要的。</p>
+
+<pre><code class="language-shell">baseURL = &quot;http://example.org/&quot;
+languageCode = &quot;en-us&quot;
+title = &quot;My New Hugo Site&quot;
+theme = &quot;leaveIt&quot;			//这个对应themes里面的主题文件夹名
+publicDir = &quot;public&quot;	//最终生成的文件目录
+</code></pre>
+
+<p>更多的<code>config</code>配置见<a href="https://gohugo.io/getting-started/configuration/">Configure Hugo</a>，初期我用的并不多，要打理好个人博客，这个<code>config</code>还是要花时间去了解的。</p>
+
+<p>接下来就可以创建自己的博文了，默认是创建到<code>content</code>文件下</p>
+
+<pre><code class="language-shell">➜  `blogname` git:(master) ✗ hugo new posts/welcome.md		//用hugo的模板创建博文，这个模板就是archetypes下的default.md
+</code></pre>
+
+<p>创建成功后还需要编辑<code>config.toml</code>,配置目录结构，</p>
+
+<pre><code class="language-shell">baseURL = &quot;http://example.org/&quot;
+languageCode = &quot;en-us&quot;
+title = &quot;My New Hugo Site&quot;
+theme = &quot;leaveIt&quot;			//这个对应themes里面的主题文件夹名
+
+[[menu.main]]
+  name = &quot;首页&quot;
+  weight = 10
+  identifier = &quot;home&quot;
+  url = &quot;/&quot;
+[[menu.main]]
+  name = &quot;博文&quot;
+  weight = 20
+  identifier = &quot;posts&quot;
+  url = &quot;/posts/&quot;
+</code></pre>
+
+<p>最后使用<code>hugo</code>命令，就可以生成静态网站了，且本地部署。执行完命令后，会生成一个新的文件<code>public</code>，并把生成的文件放到<code>public</code>文件下。</p>
+
+<pre><code class="language-shell">➜  blogname git:(master) ✗ hugo server -t leaveIt -D
+
+                   | EN
++------------------+----+
+  Pages            |  7
+  Paginator pages  |  0
+  Non-page files   |  0
+  Static files     |  0
+  Processed images |  0
+  Aliases          |  0
+  Sitemaps         |  1
+  Cleaned          |  0
+
+Total in 40 ms
+Watching for changes in /Users/haiguanghuang/Documents/Github/blogname/{archetypes,content,data,layouts,static,themes}
+Watching for config changes in /Users/haiguanghuang/Documents/Github/blogname/config.toml
+Environment: &quot;development&quot;
+Serving pages from memory
+Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+Press Ctrl+C to stop
+</code></pre>
+
+<p>此时在浏览器打开，就可以看到效果啦</p>
+
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="./posts/blog/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+
+<p>可以看到左上角是<code>My New Hugo Site</code>对应的就是<code>config.toml</code>的<code>title</code>, 可以根据个人喜好修改。</p>
+
+<p>右上角就是<code>config.toml</code>里面的<code>menu</code>，大家可以根据自己需求定制化。其中<code>首页</code>就是访问<code>https://localhost:1313/</code>,而<code>博文</code>是访问<code>http://localhost:1313/posts/</code></p>
+
+<p>截此为止，静态网站已经生成好了，接下来就是托管到<code>Github</code></p>
+
+<h2 id="github-pages">Github Pages</h2>
+
+<p>在创建主页的时候，遇到一个坑，<code>User pages must be built from the</code>master<code>branch.</code>网上其他资料都没有刻意说明，花费了我很多时间，希望可以帮助到有需要的童鞋。</p>
+
+<blockquote>
+<p>网上都会建议通过{github-username}.github.io创建个人主页, 通过这种方式创建的，默认只能<code>built master分支</code>， 是没有办法修改<code>Github Pages Source</code>,你可以理解为<code>master</code>下的根目录就是通过<code>Hugo</code>生成的静态文件目录，但是我们默认生成的是在<code>public</code>目录下，我这里的做法是<code>Hugo</code>主页的目录另起一个远程Git仓库，而<code>public</code>创建一个子仓库，链接的是{github-username}.github.io，这样日后访问的时候就可以直接访问<code>https://{github-username}.github.io</code>即可访问了。</p>
+
+<p>网上会有介绍说可以选择<code>gh-pages</code>分支，但是这个方式就不能通过{github-username}.github.io创建，而是另起一个名字,如<code>blog</code>，这样访问的时候链接就不是<code>https://{github-username}.github.io</code>,而是<code>https://{github-username}.github.io/blog</code>。这种方式只需要建一个远程Git仓库，通过添加<code>subtree</code>的方式链接<code>public</code>文件夹。</p>
+</blockquote>
+
+<p>在<code>Github</code>创建一个主仓库`<code>{blogname}</code>,一个子仓库<code>{git-username}.github.io</code>.</p>
+
+<pre><code class="language-shell">➜  `blogname` git:(master) ✗ git remote add origin https://{git-username}.github.io/{blogname} //关联远程主仓库地址
+...
+
+➜  `blogname` git:(master) git subtree add --prefix=public git@github.com:{git-username}/{git.username}.github.io master	//将public关联远程{git-username}.github.io子仓库
+...
+
+➜  `blogname` git:(master) hugo -t leaveIt		//以leaveIt为主题，生成静态网站
+...
+
+➜  `blogname` git:(master) ✗ git commit -m &quot;Updating site&quot; &amp;&amp; git push origin master //生成静态网站后，master有修改，先commit修改，并push到远程主仓库
+...
+
+➜  `blogname` git:(master) git subtree push --prefix=public git@github.com:{git-username}/{git-username}.github.io master //将public的修改push到远程子仓库，也就是User Pages
+</code></pre>
+
+<p>最终在浏览器访问https://{git-username}.github.io.这里面可能会有些缓存，需要些时间才能刷新最新的改动。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>拾忆 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=http://huanghg.github.io/posts/blog/>http://huanghg.github.io/posts/blog/</span>
+            </p>
+            
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="http://huanghg.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="http://huanghg.github.io/">拾忆</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
