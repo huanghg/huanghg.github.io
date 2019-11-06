@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Blog",
     "headline" : "Blog",
-    "description" : "#Hugo \x26amp; Github Pages 制作静态个人博客\n##背景\n最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：\n 沉淀所学知识，搭建知识体系。（这是最重要的） 千里马常有，而伯乐也需要一个平台去认识你。 结识志同道合之士 于智者，抛砖引玉；于惑者，授业解惑  但是在搭建的过程中，遇到很多坑，特此写这篇文章记录一下，希望可以帮助到其他童鞋。\n搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。\n下面就介绍一下Hugo \x26amp; Github Pages搭建的过程。\n简介 ##Hugo\n Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。\n hugo的安装流程请见中文官网 或英文官网，此处就做不详细介绍。这里更多的想要描述一下hugo的用法，及相关文件夹的功能，以及如何配置hugo。\n➜ `Github` hugo new site `blogname` \/\/blogname任君喜欢 Congratulations! Your new Hugo site is created in \/Users\/haiguanghuang\/Documents\/Github\/blogname. Just a few more steps and you\x27re ready to go: 1. Download a theme into the same-named folder. Choose a theme from https:\/\/themes.gohugo.io\/ or create your own with the \x26quot;hugo new theme \x26lt;THEMENAME\x26gt;\x26quot; command.",
+    "description" : "Hugo \x26 Github Pages 制作静态个人博客",
     "inLanguage" : "zh-cn",
     "author" : "拾忆",
     "creator" : "拾忆",
@@ -138,9 +138,9 @@
 
           
 
-<p>#Hugo &amp; Github Pages 制作静态个人博客</p>
+<h1 id="hugo-github-pages-制作静态个人博客">Hugo &amp; Github Pages 制作静态个人博客</h1>
 
-<p>##背景</p>
+<h2 id="背景">背景</h2>
 
 <p>最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：</p>
 
@@ -159,7 +159,7 @@
 
 <h2 id="简介">简介</h2>
 
-<p>##Hugo</p>
+<h3 id="hugo">Hugo</h3>
 
 <blockquote>
 <p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</p>
@@ -268,7 +268,7 @@ Press Ctrl+C to stop
 
 <p>此时在浏览器打开，就可以看到效果啦</p>
 
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="./posts/blog/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="http://huanghg.github.io/posts/blog/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
 
 <p>可以看到左上角是<code>My New Hugo Site</code>对应的就是<code>config.toml</code>的<code>title</code>, 可以根据个人喜好修改。</p>
 
@@ -276,7 +276,7 @@ Press Ctrl+C to stop
 
 <p>截此为止，静态网站已经生成好了，接下来就是托管到<code>Github</code></p>
 
-<h2 id="github-pages">Github Pages</h2>
+<h3 id="github-pages">Github Pages</h3>
 
 <p>在创建主页的时候，遇到一个坑，<code>User pages must be built from the</code>master<code>branch.</code>网上其他资料都没有刻意说明，花费了我很多时间，希望可以帮助到有需要的童鞋。</p>
 
