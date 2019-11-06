@@ -57,7 +57,7 @@
     "datePublished": "2019-11-06 16:58:13 \x2b0800 CST",
     "dateModified" : "2019-11-06 16:58:13 \x2b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/blog\/",
-    "wordCount" : "395",
+    "wordCount" : "461",
     "keywords" : [  "拾忆"]
 }
 </script>
@@ -304,6 +304,25 @@ Press Ctrl+C to stop
 </code></pre>
 
 <p>最终在浏览器访问https://{git-username}.github.io.这里面可能会有些缓存，需要些时间才能刷新最新的改动。</p>
+
+<h2 id="发布">发布</h2>
+
+<p>可以发现，上面的几个命令是比较常规的，我们可以把这些命令通过脚本的方式，如<code>publish.sh</code>, 后续只需执行这个脚本即可</p>
+
+<pre><code class="language-shell"># Run hugo. Generated site will be placed in public directory (or omit -t ThemeName if you're not using a theme)
+hugo -t leaveIt
+
+# Add everything
+git add -A
+
+# Commit and push to master
+git commit -m &quot;Updating site&quot; &amp;&amp; git push origin master
+
+# Push the public subtree to the master branch
+git subtree push --prefix=public git@github.com:{git-username}/{git-username}.github.io master
+</code></pre>
+
+<p>后续有任何改动后，首先先把改动commit到master分支，然后就可以通过<code>bash publish.sh</code>执行这个脚本了。</p>
 
     </div>
 
