@@ -6,10 +6,26 @@
     <description>Recent content in Posts on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 06 Nov 2019 17:59:05 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 07 Nov 2019 17:28:26 +0800</lastBuildDate>
     
 	<atom:link href="http://huanghg.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Github Pages &amp; Gitalk 添加评论功能</title>
+      <link>http://huanghg.github.io/posts/ghcomment/</link>
+      <pubDate>Thu, 07 Nov 2019 17:28:26 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/ghcomment/</guid>
+      <description>背景 评论是博客中一个必要的功能，除非你想写个博客，然后不允许别人逼逼那种。
+前两天刚搭好自己的Github主页，所以迫不及待就想弄个评论功能。网上推荐蛮多评论插件了，我最终选择的是Gitalk，在线示例请见链接
+Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。让我最终选择他的是因为Gitalk 使用的是Github Issue 的API，不依赖任何第三方平台，只要Github不倒闭，评论系统就不会出问题。当然如果Github倒闭，Github主页就不复存在了。
+搭建 创建Github OAuth Application 这里面要特别说明一下，我第一次接触的时候，一直以为是GitHub App，页面如下图：
+前面的信息都挺顺利的，哒哒哒敲完了，点击Create GitHub App的时候，提示途中标红的Webhook URL，这就一脸懵逼了。然后网上各种搜，最后发现创建应该是Github OAuth Application。如下图：
+其中**Client ID**和**Client Secret**后续会用到。
+添加gitalk.html模板 从网上拷贝了一份见下方, 注意这份模板是有问题的！！！本身添加评论功能是很简单的，但是这份代码增加集成了难度，下文会详细讲解。
+{{ if .Site.Params.enableGitalk }} &amp;lt;div id=&amp;quot;gitalk-container/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/div&amp;gt; &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.css/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt; &amp;lt;script src=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.min.js/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; const gitalk = new Gitalk({ clientID: &#39;{{ .Site.Params.Gitalk.clientID }}&#39;, clientSecret: &#39;{{ .Site.Params.Gitalk.clientSecret }}&#39;, repo: &#39;{{ .Site.Params.Gitalk.repo }}&#39;, owner: &#39;{{ .Site.Params.Gitalk.owner }}&#39;, admin: [&#39;{{ .</description>
+    </item>
     
     <item>
       <title>浅谈HTTP，HTTPS</title>
