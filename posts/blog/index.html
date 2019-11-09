@@ -22,10 +22,10 @@
   <title>
        
        
-           使用Hugo &amp; Github Pages 制作静态个人博客 | 拾忆
+           使用Hugo &amp; GitHub Pages 制作静态个人博客 | 拾忆
        
   </title>
-  <meta name="title" content="使用Hugo &amp; Github Pages 制作静态个人博客 | 拾忆">
+  <meta name="title" content="使用Hugo &amp; GitHub Pages 制作静态个人博客 | 拾忆">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "http:\/\/huanghg.github.io\/"
     },
     "articleSection" : "posts",
-    "name" : "使用Hugo \x26 Github Pages 制作静态个人博客",
-    "headline" : "使用Hugo \x26 Github Pages 制作静态个人博客",
-    "description" : "Hugo \x26 Github Pages 制作静态个人博客",
+    "name" : "使用Hugo \x26 GitHub Pages 制作静态个人博客",
+    "headline" : "使用Hugo \x26 GitHub Pages 制作静态个人博客",
+    "description" : "Hugo \x26 GitHub Pages 制作静态个人博客",
     "inLanguage" : "zh-cn",
     "author" : "拾忆",
     "creator" : "拾忆",
@@ -58,7 +58,7 @@
     "dateModified" : "2019-11-06 16:58:13 \x2b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/blog\/",
     "wordCount" : "456",
-    "keywords" : [  "拾忆"]
+    "keywords" : [ "Hugo","GitHub Pages", "拾忆"]
 }
 </script>
 
@@ -81,9 +81,9 @@
                 
                 <a class="menu-item" href="/posts/" title="">博文</a>
                 
-                <a class="menu-item" href="/time/" title="">时光</a>
+                <a class="menu-item" href="/categories/" title="">分类</a>
                 
-                <a class="menu-item" href="/tattle/" title="">碎碎念</a>
+                <a class="menu-item" href="/tags/" title="">标签</a>
                 
                 <a class="menu-item" href="/about/" title="">关于</a>
                 
@@ -106,9 +106,9 @@
                 
                 <a class="menu-item" href="/posts/" title="">博文</a>
                 
-                <a class="menu-item" href="/time/" title="">时光</a>
+                <a class="menu-item" href="/categories/" title="">分类</a>
                 
-                <a class="menu-item" href="/tattle/" title="">碎碎念</a>
+                <a class="menu-item" href="/tags/" title="">标签</a>
                 
                 <a class="menu-item" href="/about/" title="">关于</a>
                 
@@ -120,14 +120,18 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">使用Hugo &amp; Github Pages 制作静态个人博客</h1>
+        <h1 class="post-title" itemprop="name headline">使用Hugo &amp; GitHub Pages 制作静态个人博客</h1>
         <div class="post-meta">
                 Written by <a itemprop="name" href="http://huanghg.github.io/" rel="author">拾忆</a> with ♥ 
                 <span class="post-time">
                 on <time datetime=2019-11-06 itemprop="datePublished">November 6, 2019</time>
                 </span>
                 in
-                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="http://huanghg.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/"> 杂技浅尝 </a>
+                        
+                </span>
                 <span class="post-word-count">, 456 words</span>
         </div>
     </header>
@@ -166,7 +170,7 @@
 
 <p>搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。</p>
 
-<p>下面就介绍一下Hugo &amp; Github Pages搭建的过程。</p>
+<p>下面就介绍一下Hugo &amp; GitHub Pages搭建的过程。</p>
 
 <h2 id="简介">简介</h2>
 
@@ -178,7 +182,7 @@
 
 <p><code>hugo</code>的安装流程请见<a href="https://www.gohugo.org">中文官网</a> 或<a href="https://gohugo.io">英文官网</a>，此处就做不详细介绍。这里更多的想要描述一下<code>hugo</code>的用法，及相关文件夹的功能，以及如何配置<code>hugo</code>。</p>
 
-<pre><code class="language-shell">➜  `Github` hugo new site `blogname` //blogname任君喜欢
+<pre><code class="language-shell">➜  `GitHub` hugo new site `blogname` //blogname任君喜欢
 
 Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname.
 
@@ -212,7 +216,7 @@ Visit https://gohugo.io/ for quickstart guide and full documentation.
 
 <p>创建完主页后，就可以下载你喜欢的主题了，下载主题方式多样化，最终只要把对应的主题放到<code>themes</code>文件下即可。</p>
 
-<p>下面是通过git下载，这里有个小提醒，在<a href="https://themes.gohugo.io">主题官网</a>看到喜欢的主题，进入该主题的主页后，点击<code>Download</code>，会跳转到对应<code>Github</code>地址，fork一份到自己的<code>Github</code>，这样以后可以根据自己的喜好微调。</p>
+<p>下面是通过git下载，这里有个小提醒，在<a href="https://themes.gohugo.io">主题官网</a>看到喜欢的主题，进入该主题的主页后，点击<code>Download</code>，会跳转到对应<code>GitHub</code>地址，fork一份到自己的<code>GitHub</code>，这样以后可以根据自己的喜好微调。</p>
 
 <pre><code class="language-shell">➜  `blogname` git:(master) git subtree add --prefix=themes/leaveIt git@github.com:huanghg/LeaveIt master		//用subtree的方式关联一个主题远程分支
 </code></pre>
@@ -285,19 +289,19 @@ Press Ctrl+C to stop
 
 <p>右上角就是<code>config.toml</code>里面的<code>menu</code>，大家可以根据自己需求定制化。其中<code>首页</code>就是访问<code>https://localhost:1313/</code>,而<code>博文</code>是访问<code>http://localhost:1313/posts/</code></p>
 
-<p>截此为止，静态网站已经生成好了，接下来就是托管到<code>Github</code></p>
+<p>截此为止，静态网站已经生成好了，接下来就是托管到<code>GitHub</code></p>
 
-<h3 id="github-pages">Github Pages</h3>
+<h3 id="github-pages">GitHub Pages</h3>
 
 <p>在创建主页的时候，遇到一个坑，<code>User pages must be built from the</code>master<code>branch.</code>网上其他资料都没有刻意说明，花费了我很多时间，希望可以帮助到有需要的童鞋。</p>
 
 <blockquote>
-<p>网上都会建议通过{github-username}.github.io创建个人主页, 通过这种方式创建的，默认只能<code>built master分支</code>， 是没有办法修改<code>Github Pages Source</code>,你可以理解为<code>master</code>下的根目录就是通过<code>Hugo</code>生成的静态文件目录，但是我们默认生成的是在<code>public</code>目录下，我这里的做法是<code>Hugo</code>主页的目录另起一个远程Git仓库，而<code>public</code>创建一个子仓库，链接的是{github-username}.github.io，这样日后访问的时候就可以直接访问<code>https://{github-username}.github.io</code>即可访问了。</p>
+<p>网上都会建议通过{github-username}.github.io创建个人主页, 通过这种方式创建的，默认只能<code>built master分支</code>， 是没有办法修改<code>GitHub Pages Source</code>,你可以理解为<code>master</code>下的根目录就是通过<code>Hugo</code>生成的静态文件目录，但是我们默认生成的是在<code>public</code>目录下，我这里的做法是<code>Hugo</code>主页的目录另起一个远程Git仓库，而<code>public</code>创建一个子仓库，链接的是{github-username}.github.io，这样日后访问的时候就可以直接访问<code>https://{github-username}.github.io</code>即可访问了。</p>
 
 <p>网上会有介绍说可以选择<code>gh-pages</code>分支，但是这个方式就不能通过{github-username}.github.io创建，而是另起一个名字,如<code>blog</code>，这样访问的时候链接就不是<code>https://{github-username}.github.io</code>,而是<code>https://{github-username}.github.io/blog</code>。这种方式只需要建一个远程Git仓库，通过添加<code>subtree</code>的方式链接<code>public</code>文件夹。</p>
 </blockquote>
 
-<p>在<code>Github</code>创建一个主仓库`<code>{blogname}</code>,一个子仓库<code>{git-username}.github.io</code>.</p>
+<p>在<code>GitHub</code>创建一个主仓库`<code>{blogname}</code>,一个子仓库<code>{git-username}.github.io</code>.</p>
 
 <pre><code class="language-shell">➜  `blogname` git:(master) ✗ git remote add origin https://{git-username}.github.io/{blogname} //关联远程主仓库地址
 ...
@@ -356,6 +360,17 @@ git subtree push --prefix=public git@github.com:{git-username}/{git-username}.gi
 
   
     <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/hugo/">
+                    #Hugo</a></span>
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/github-pages/">
+                    #GitHub Pages</a></span>
+            
+            </section>
         
         <section>
                 <a href="javascript:window.history.back();">back</a></span> · 

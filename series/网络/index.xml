@@ -1,31 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 拾忆</title>
-    <link>http://huanghg.github.io/posts/</link>
-    <description>Recent content in Posts on 拾忆</description>
+    <title>网络 on 拾忆</title>
+    <link>http://huanghg.github.io/series/%E7%BD%91%E7%BB%9C/</link>
+    <description>Recent content in 网络 on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 07 Nov 2019 17:28:26 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 06 Nov 2019 17:59:05 +0800</lastBuildDate>
     
-	<atom:link href="http://huanghg.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://huanghg.github.io/series/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Github Pages &amp; Gitalk 添加评论功能</title>
-      <link>http://huanghg.github.io/posts/ghcomment/</link>
-      <pubDate>Thu, 07 Nov 2019 17:28:26 +0800</pubDate>
-      
-      <guid>http://huanghg.github.io/posts/ghcomment/</guid>
-      <description>背景 评论是博客中一个必要的功能，除非你想写个博客，然后不允许别人逼逼那种。
-前两天刚搭好自己的Github主页，所以迫不及待就想弄个评论功能。网上推荐蛮多评论插件了，我最终选择的是Gitalk，在线示例请见链接
-Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。让我最终选择他的是因为Gitalk 使用的是Github Issue 的API，不依赖任何第三方平台，只要Github不倒闭，评论系统就不会出问题。当然如果Github倒闭，Github主页就不复存在了。
-搭建 创建Github OAuth Application 这里面要特别说明一下，我第一次接触的时候，一直以为是GitHub App，页面如下图：
-前面的信息都挺顺利的，哒哒哒敲完了，点击Create GitHub App的时候，提示途中标红的Webhook URL，这就一脸懵逼了。然后网上各种搜，最后发现创建应该是Github OAuth Application。如下图：
-其中Client ID和Client Secret后续会用到。
-添加gitalk.html模板 从网上拷贝了一份见下方, 注意这份模板是有问题的！！！本身添加评论功能是很简单的，但是这份代码增加集成了难度，下文会详细讲解。
-{{ if .Site.Params.enableGitalk }} &amp;lt;div id=&amp;quot;gitalk-container/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/div&amp;gt; &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.css/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt; &amp;lt;script src=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.min.js/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; const gitalk = new Gitalk({ clientID: &#39;{{ .Site.Params.Gitalk.clientID }}&#39;, clientSecret: &#39;{{ .Site.Params.Gitalk.clientSecret }}&#39;, repo: &#39;{{ .Site.Params.Gitalk.repo }}&#39;, owner: &#39;{{ .Site.Params.Gitalk.owner }}&#39;, admin: [&#39;{{ .</description>
-    </item>
     
     <item>
       <title>浅谈HTTP，HTTPS</title>
@@ -50,21 +34,6 @@ HTTPS 来自网络 &amp;gt; HTTPS(全称：Hyper Text Transfer Protocol over Sec
  这个行为就是对称加密，对称加密可以解决窃听风险
  通过对称加密，他们又过了一段甜蜜光阴，但好景又不长 小黄去小明家里，无意中发现了&amp;quot;规则&amp;quot;，于是乎小黄用规则让书信内容一览无遗 然后篡改了书信内容，用同样的规则打乱或混淆。他们俩关系再陷入紧张 小明不得已又飞过去跟小红澄清&amp;quot;规则&amp;quot;可能已经泄漏了,&amp;quot;固定的对称密钥&amp;quot;终究不安全 于是乎他又想到另外一个好方法 小明就打电话给小红跟她说，以后每次写信之前，小明都会打电话给小红并告诉小红一个&amp;quot;随机数&amp;quot;, 然后由小红再告诉小明她的一个&amp;quot;随机数&amp;quot;，最终的&amp;quot;规则&amp;quot;由这两个&amp;quot;随机数&amp;quot;生成。 此次的书信内容就由这个&amp;quot;密钥&amp;quot;加密与解密。这样&amp;quot;密钥&amp;quot;每次都是最新的   此举称为协商密钥，密钥并不是一成不变的，也不会写死在某个地方，而是每次通信前协商好的
  解决冒充风险 小黄根据之前的规则，无法复用书信内容，索性就伪造了一份 在信中说明了临时更改了规则，尽量消除小红的疑惑，小红慢慢信以为真 久而久之，书信内容越来越离谱，关系再次恶化 于是小明怒飞过去，看了伪造的书信，看到潦草的字迹，又想到另外一个方法 小明和小红互相收下了对方的&amp;quot;字迹&amp;quot;，下次收到书信时就跟字迹对比，这样就知道是不是对方   此举称为交换凭证，可以解决冒充风险</description>
-    </item>
-    
-    <item>
-      <title>使用Hugo &amp; GitHub Pages 制作静态个人博客</title>
-      <link>http://huanghg.github.io/posts/blog/</link>
-      <pubDate>Wed, 06 Nov 2019 16:58:13 +0800</pubDate>
-      
-      <guid>http://huanghg.github.io/posts/blog/</guid>
-      <description>背景 最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：
- 沉淀所学知识，搭建知识体系。（这是最重要的） 千里马常有，而伯乐也需要一个平台去认识你。 结识志同道合之士 于智者，抛砖引玉；于惑者，授业解惑  但是在搭建的过程中，遇到很多坑，特此写这篇文章记录一下，希望可以帮助到其他童鞋。
-搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。
-下面就介绍一下Hugo &amp;amp; GitHub Pages搭建的过程。
-简介 Hugo  Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。
- hugo的安装流程请见中文官网 或英文官网，此处就做不详细介绍。这里更多的想要描述一下hugo的用法，及相关文件夹的功能，以及如何配置hugo。
-➜ `GitHub` hugo new site `blogname` //blogname任君喜欢 Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname. Just a few more steps and you&#39;re ready to go: 1. Download a theme into the same-named folder. Choose a theme from https://themes.gohugo.io/ or create your own with the &amp;quot;hugo new theme &amp;lt;THEMENAME&amp;gt;&amp;quot; command.</description>
     </item>
     
   </channel>

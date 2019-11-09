@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on 拾忆</title>
+    <link>http://huanghg.github.io/tags/hugo/</link>
+    <description>Recent content in Hugo on 拾忆</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 07 Nov 2019 17:28:26 +0800</lastBuildDate>
+    
+	<atom:link href="http://huanghg.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Github Pages &amp; Gitalk 添加评论功能</title>
+      <link>http://huanghg.github.io/posts/ghcomment/</link>
+      <pubDate>Thu, 07 Nov 2019 17:28:26 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/ghcomment/</guid>
+      <description>背景 评论是博客中一个必要的功能，除非你想写个博客，然后不允许别人逼逼那种。
+前两天刚搭好自己的Github主页，所以迫不及待就想弄个评论功能。网上推荐蛮多评论插件了，我最终选择的是Gitalk，在线示例请见链接
+Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。让我最终选择他的是因为Gitalk 使用的是Github Issue 的API，不依赖任何第三方平台，只要Github不倒闭，评论系统就不会出问题。当然如果Github倒闭，Github主页就不复存在了。
+搭建 创建Github OAuth Application 这里面要特别说明一下，我第一次接触的时候，一直以为是GitHub App，页面如下图：
+前面的信息都挺顺利的，哒哒哒敲完了，点击Create GitHub App的时候，提示途中标红的Webhook URL，这就一脸懵逼了。然后网上各种搜，最后发现创建应该是Github OAuth Application。如下图：
+其中Client ID和Client Secret后续会用到。
+添加gitalk.html模板 从网上拷贝了一份见下方, 注意这份模板是有问题的！！！本身添加评论功能是很简单的，但是这份代码增加集成了难度，下文会详细讲解。
+{{ if .Site.Params.enableGitalk }} &amp;lt;div id=&amp;quot;gitalk-container/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/div&amp;gt; &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.css/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt; &amp;lt;script src=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.min.js/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; const gitalk = new Gitalk({ clientID: &#39;{{ .Site.Params.Gitalk.clientID }}&#39;, clientSecret: &#39;{{ .Site.Params.Gitalk.clientSecret }}&#39;, repo: &#39;{{ .Site.Params.Gitalk.repo }}&#39;, owner: &#39;{{ .Site.Params.Gitalk.owner }}&#39;, admin: [&#39;{{ .</description>
+    </item>
+    
+    <item>
+      <title>使用Hugo &amp; GitHub Pages 制作静态个人博客</title>
+      <link>http://huanghg.github.io/posts/blog/</link>
+      <pubDate>Wed, 06 Nov 2019 16:58:13 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/blog/</guid>
+      <description>背景 最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：
+ 沉淀所学知识，搭建知识体系。（这是最重要的） 千里马常有，而伯乐也需要一个平台去认识你。 结识志同道合之士 于智者，抛砖引玉；于惑者，授业解惑  但是在搭建的过程中，遇到很多坑，特此写这篇文章记录一下，希望可以帮助到其他童鞋。
+搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。
+下面就介绍一下Hugo &amp;amp; GitHub Pages搭建的过程。
+简介 Hugo  Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。
+ hugo的安装流程请见中文官网 或英文官网，此处就做不详细介绍。这里更多的想要描述一下hugo的用法，及相关文件夹的功能，以及如何配置hugo。
+➜ `GitHub` hugo new site `blogname` //blogname任君喜欢 Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname. Just a few more steps and you&#39;re ready to go: 1. Download a theme into the same-named folder. Choose a theme from https://themes.gohugo.io/ or create your own with the &amp;quot;hugo new theme &amp;lt;THEMENAME&amp;gt;&amp;quot; command.</description>
+    </item>
+    
+  </channel>
+</rss>
