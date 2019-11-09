@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>生活 on 拾忆</title>
+    <link>http://huanghg.github.io/tags/%E7%94%9F%E6%B4%BB/</link>
+    <description>Recent content in 生活 on 拾忆</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Nov 2019 11:01:33 +0800</lastBuildDate>
+    
+	<atom:link href="http://huanghg.github.io/tags/%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>夜游校园</title>
+      <link>http://huanghg.github.io/posts/20191108campus/</link>
+      <pubDate>Sat, 09 Nov 2019 11:01:33 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/20191108campus/</guid>
+      <description>时隔6年，再次踏在校道上（虽然这期间还是有回来过的）
+校园很熟悉，还是原来大概的模样；校园很陌生，新气象随处可见
+白驹过隙，时过境迁
+原来，时间是看得到
+清风徐来，伴随着思绪万千
+可能是我已经不是6年前的那个我了</description>
+    </item>
+    
+  </channel>
+</rss>
