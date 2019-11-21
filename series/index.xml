@@ -6,10 +6,19 @@
     <description>Recent content in Series on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 09 Nov 2019 11:11:59 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 17 Nov 2019 09:44:02 +0800</lastBuildDate>
     
 	<atom:link href="http://huanghg.github.io/series/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>团队建设</title>
+      <link>http://huanghg.github.io/series/%E5%9B%A2%E9%98%9F%E5%BB%BA%E8%AE%BE/</link>
+      <pubDate>Sun, 17 Nov 2019 09:44:02 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/series/%E5%9B%A2%E9%98%9F%E5%BB%BA%E8%AE%BE/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>设计模式</title>

@@ -6,10 +6,48 @@
     <description>Recent content in 藏经阁 on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 06 Nov 2019 17:59:05 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 17 Nov 2019 09:44:02 +0800</lastBuildDate>
     
 	<atom:link href="http://huanghg.github.io/categories/%E8%97%8F%E7%BB%8F%E9%98%81/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>团队建设之夺路狂奔</title>
+      <link>http://huanghg.github.io/posts/20191115wintershare/</link>
+      <pubDate>Sun, 17 Nov 2019 09:44:02 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/20191115wintershare/</guid>
+      <description>程邵非(Winter) 程邵非(Winter)何许人也？
+他自己在分享开篇，做了个简单的自我介绍
+首先让我们看看他的光鲜履历
+微软亚洲工程院-&amp;gt;盛大创新院-&amp;gt;阿里巴巴（手机淘宝前端leader-&amp;gt;淘宝终端架构leader）
+短短一句话，但是这其中分量可不轻
+由衷感慨到牛逼的人不需要过多修饰
+想了解他更多，请点击任意门
+团队与公司的关系 Winter在课件中提出了以上的需求模型，清晰地阐述了员工，团队，公司之间的需求关系
+员工和公司是一个双赢的关系，员工组成团队，团队铸造公司
+ 员工通过劳动换取相应的薪酬 在公司提供资源的情况，员工可以获得技术的提升 员工给公司带来业务输出的同时，公司无形中提供了平台效应  了解了员工和公司的供需关系之后，可以更好的给自己定位
+团队建设 给我收获最多的，印象最深刻的是团队的发展建设
+之前没有很明确的团队发展规划与方向，但是通过Winter的分享，团队的发展建设其实是有必经之路的
+ 初期：支撑快速迭代的节奏，高效高质量完成大量需求  虽然短短一句话，但是却涵盖了很多学问
+万丈高楼平地起，首先需要一个很扎实的根基，其次组件化，模块化以致起到最大的复用
+ 搭建基础服务设施平台（文档平台，CMS，CI持续化构建等） 脚本，工具 （CodeSnippet，Xcode extension等） 辅助系统（埋点，日志系统，路由，JSBridge，调试面板等）
+ 封装基础库（网络库：失败重试，请求复用；数据存储：规范存储等）
+ UI组件化（UI库等）
+ 业务模块（底层库：管理导航堆栈，模块与模块间的消息通信，路由跳转等）
+   服务端，客户端，前端因特性的差异，所以要解决的问题也是不一样的
+ 服务端：解决大量用户访问带来的复杂性，考验服务端的分发，抗压能力 客户端：解决软件需求规模带来的复杂性，考验组件化，模块化，隔离耦合 前端：解决大量页面需求带来的重复劳动，考验模块化，运营配置    中期：追求性能上的提升  这对技术有更高层次的要求，可能要涉及到其他端的专业知识（服务端，客户端，前端）
+了解了各端的特性，才能知道各端如何运作，之间如何衔接，以及问题的最大的瓶颈在哪里等等
+ 性能监控
+ crash检测
+ 包大小
+ 启动优化
+ 卡顿检测
+ 网页首屏加载
+ 网络请求的稳定性，失败重试
+ 图片加载，更小的流量加载更高质量的图片
+   性能是一个很不具体的东西，我们必须要学会量化性能指标</description>
+    </item>
     
     <item>
       <title>浅谈HTTP，HTTPS</title>
