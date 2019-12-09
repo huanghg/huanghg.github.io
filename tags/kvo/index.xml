@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>KVO on 拾忆</title>
+    <link>http://huanghg.github.io/tags/kvo/</link>
+    <description>Recent content in KVO on 拾忆</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 09 Dec 2019 21:16:22 +0800</lastBuildDate>
+    
+	<atom:link href="http://huanghg.github.io/tags/kvo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>实现高逼格的Popup队列管理中心</title>
+      <link>http://huanghg.github.io/posts/20191209popupcenter/</link>
+      <pubDate>Mon, 09 Dec 2019 21:16:22 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/20191209popupcenter/</guid>
+      <description>背景 在平时的开发中，会有很多弹窗的需求，尤其是在首页（版本升级，运营活动）等等
+但是很多时候都是由不同的童鞋开发，而且基本都是依赖于网络接口，所以先后顺序都是无法保证
+这就导致一个后果，弹窗泛滥成灾
+另外我们可以发现，系统自带的AlertView是有队列管理的，总是消失了一个弹窗以后，再显示下一个弹窗
+于是便有了这个Popup队列管理中心
+雏形 在开发前，我们可以大概的设想一下这个的设计雏形
+有一个Popup管理类，由这个类维护一个数组，外部调用该类的API将弹窗添加到这个数组中
+外部在消失弹窗的时候，调用该类的API将该弹窗从这个数组中移除
+最后从队列中取出下一次弹窗进行展示
+以上方式有几个弊端
+ 接入方式过于复杂
+ 使用者需要关心的太多了，如果哪个童鞋在消失自己的弹窗的时候，忘记了从队列中移除，并且没有从队列中取出下一个弹窗进行展示，那队列中的其他弹窗都将永不见天日
+  原理 为了解决以上问题，该项目运用了几个Objective-C底层的原理，下面将一一剖析
+为了不让使用者在消失自己的弹窗后，需要手动从队列中移除，并且唤醒下一个弹窗
+最开始我想到的是定时任务，但是后面觉得定时任务不是很优雅，后面选择了监听Runloop运行状态变化
+Runloop - (instancetype)init { self = [super init]; if (self) { //创建一个以和屏幕刷新率相同的频率的定时器 _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(wakeup)]; [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes]; dispatch_async(dispatch_get_main_queue(), ^{ //添加Runloop监听者 [self addRunloopObserver]; }); } return self; } - (void)addRunloopObserver { //获取当前runloop CFRunLoopRef runloop = CFRunLoopGetCurrent(); //创建context CFRunLoopObserverContext context = {0, (__bridge void *)self, &amp;amp;CFRetain, &amp;amp;CFRelease, NULL}; //创建runloop监听者 static CFRunLoopObserverRef defaultModeObserver; /*其中runloop的状态有如下几种，这里监听的是kCFRunLoopBeforeWaiting kCFRunLoopEntry = (1UL &amp;lt;&amp;lt; 0), kCFRunLoopBeforeTimers = (1UL &amp;lt;&amp;lt; 1), kCFRunLoopBeforeSources = (1UL &amp;lt;&amp;lt; 2), kCFRunLoopBeforeWaiting = (1UL &amp;lt;&amp;lt; 5), kCFRunLoopAfterWaiting = (1UL &amp;lt;&amp;lt; 6), kCFRunLoopExit = (1UL &amp;lt;&amp;lt; 7), kCFRunLoopAllActivities = 0x0FFFFFFFU */ defaultModeObserver = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeWaiting, YES, 0, &amp;amp;callback, &amp;amp;context); //为当前runloop添加runloop监听者 CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes); CFRelease(defaultModeObserver); } void callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) { //Runloop 回调，在这里面可以管理Popup队列 }  截止，就完成了利用Runloop取代定时任务，对Popup队列进行定时管理</description>
+    </item>
+    
+  </channel>
+</rss>

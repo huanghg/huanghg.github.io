@@ -4,7 +4,37 @@
     <url>
       <loc>http://huanghg.github.io/categories/</loc>
       
-      <lastmod>2019-11-17T09:44:02+08:00</lastmod>
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/tags/category/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/tags/kvo/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/series/kvo/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
       
       
       
@@ -14,7 +44,27 @@
     <url>
       <loc>http://huanghg.github.io/posts/</loc>
       
-      <lastmod>2019-11-17T09:44:02+08:00</lastmod>
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/tags/runloop/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/tags/runtime/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
       
       
       
@@ -24,7 +74,7 @@
     <url>
       <loc>http://huanghg.github.io/series/</loc>
       
-      <lastmod>2019-11-17T09:44:02+08:00</lastmod>
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
       
       
       
@@ -34,7 +84,37 @@
     <url>
       <loc>http://huanghg.github.io/tags/</loc>
       
-      <lastmod>2019-11-17T09:44:02+08:00</lastmod>
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/posts/20191209popupcenter/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
+      <loc>http://huanghg.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/</loc>
+      
+      <lastmod>2019-12-09T21:16:22+08:00</lastmod>
       
       
       
@@ -72,16 +152,6 @@
     </url>
   
     <url>
-      <loc>http://huanghg.github.io/</loc>
-      
-      <lastmod>2019-11-17T09:44:02+08:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
       <loc>http://huanghg.github.io/categories/%E8%97%8F%E7%BB%8F%E9%98%81/</loc>
       
       <lastmod>2019-11-17T09:44:02+08:00</lastmod>
@@ -93,16 +163,6 @@
   
     <url>
       <loc>http://huanghg.github.io/posts/20191109decorator/</loc>
-      
-      <lastmod>2019-11-09T11:11:59+08:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>http://huanghg.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
       
       <lastmod>2019-11-09T11:11:59+08:00</lastmod>
       
@@ -132,6 +192,16 @@
     </url>
   
     <url>
+      <loc>http://huanghg.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+      
+      <lastmod>2019-11-09T11:11:59+08:00</lastmod>
+      
+      
+      
+      
+    </url>
+  
+    <url>
       <loc>http://huanghg.github.io/categories/%E5%87%A1%E5%B0%98%E4%BF%97%E4%B8%96/</loc>
       
       <lastmod>2019-11-09T11:01:33+08:00</lastmod>
@@ -152,7 +222,7 @@
     </url>
   
     <url>
-      <loc>http://huanghg.github.io/series/%E7%94%9F%E6%B4%BB/</loc>
+      <loc>http://huanghg.github.io/tags/%E7%94%9F%E6%B4%BB/</loc>
       
       <lastmod>2019-11-09T11:01:33+08:00</lastmod>
       
@@ -162,7 +232,7 @@
     </url>
   
     <url>
-      <loc>http://huanghg.github.io/tags/%E7%94%9F%E6%B4%BB/</loc>
+      <loc>http://huanghg.github.io/series/%E7%94%9F%E6%B4%BB/</loc>
       
       <lastmod>2019-11-09T11:01:33+08:00</lastmod>
       
@@ -203,16 +273,6 @@
   
     <url>
       <loc>http://huanghg.github.io/tags/hugo/</loc>
-      
-      <lastmod>2019-11-07T17:28:26+08:00</lastmod>
-      
-      
-      
-      
-    </url>
-  
-    <url>
-      <loc>http://huanghg.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/</loc>
       
       <lastmod>2019-11-07T17:28:26+08:00</lastmod>
       

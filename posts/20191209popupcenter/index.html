@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="拾忆">
+  <meta name="description" content="待定">
+  
+  
+  <link rel="prev" href="http://huanghg.github.io/posts/20191115wintershare/" />
+  
+  <link rel="canonical" href="http://huanghg.github.io/posts/20191209popupcenter/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           实现高逼格的Popup队列管理中心 | 拾忆
+       
+  </title>
+  <meta name="title" content="实现高逼格的Popup队列管理中心 | 拾忆">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "http:\/\/huanghg.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "实现高逼格的Popup队列管理中心",
+    "headline" : "实现高逼格的Popup队列管理中心",
+    "description" : "利用Runloop，KVO，Runtime，Category实现一个高逼格的Popup队列管理中心",
+    "inLanguage" : "zh-cn",
+    "author" : "拾忆",
+    "creator" : "拾忆",
+    "publisher": "拾忆",
+    "accountablePerson" : "拾忆",
+    "copyrightHolder" : "拾忆",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-12-09 21:16:22 \x2b0800 CST",
+    "dateModified" : "2019-12-09 21:16:22 \x2b0800 CST",
+    "url" : "http:\/\/huanghg.github.io\/posts\/20191209popupcenter\/",
+    "wordCount" : "361",
+    "keywords" : [ "Runloop","KVO","Runtime","Category", "拾忆"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="http://huanghg.github.io/">拾忆</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/" title="">首页</a>
+                
+                <a class="menu-item" href="/posts/" title="">博文</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="http://huanghg.github.io/">拾忆</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/" title="">首页</a>
+                
+                <a class="menu-item" href="/posts/" title="">博文</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">实现高逼格的Popup队列管理中心</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="http://huanghg.github.io/" rel="author">拾忆</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-12-09 itemprop="datePublished">December 9, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="http://huanghg.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/"> 杂技浅尝 </a>
+                        
+                </span>
+                <span class="post-word-count">, 361 words</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<h2 id="背景">背景</h2>
+
+<p>在平时的开发中，会有很多弹窗的需求，尤其是在首页（版本升级，运营活动）等等</p>
+
+<p>但是很多时候都是由不同的童鞋开发，而且基本都是依赖于网络接口，所以先后顺序都是无法保证</p>
+
+<p>这就导致一个后果，弹窗泛滥成灾</p>
+
+<p>另外我们可以发现，系统自带的AlertView是有队列管理的，总是消失了一个弹窗以后，再显示下一个弹窗</p>
+
+<p>于是便有了这个Popup队列管理中心</p>
+
+<h2 id="雏形">雏形</h2>
+
+<p>在开发前，我们可以大概的设想一下这个的设计雏形</p>
+
+<p>有一个Popup管理类，由这个类维护一个数组，外部调用该类的API将弹窗添加到这个数组中</p>
+
+<p>外部在消失弹窗的时候，调用该类的API将该弹窗从这个数组中移除</p>
+
+<p>最后从队列中取出下一次弹窗进行展示</p>
+
+<p>以上方式有几个弊端</p>
+
+<ol>
+<li><p>接入方式过于复杂</p></li>
+
+<li><p>使用者需要关心的太多了，如果哪个童鞋在消失自己的弹窗的时候，忘记了从队列中移除，并且没有从队列中取出下一个弹窗进行展示，那队列中的其他弹窗都将永不见天日</p></li>
+</ol>
+
+<h2 id="原理">原理</h2>
+
+<p>为了解决以上问题，该项目运用了几个Objective-C底层的原理，下面将一一剖析</p>
+
+<p>为了不让使用者在消失自己的弹窗后，需要手动从队列中移除，并且唤醒下一个弹窗</p>
+
+<p>最开始我想到的是定时任务，但是后面觉得定时任务不是很优雅，后面选择了监听<strong>Runloop</strong>运行状态变化</p>
+
+<h3 id="runloop">Runloop</h3>
+
+<pre><code class="language-objective-c">- (instancetype)init {
+    self = [super init];
+    if (self) {
+				//创建一个以和屏幕刷新率相同的频率的定时器
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(wakeup)];
+        [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        dispatch_async(dispatch_get_main_queue(), ^{
+          //添加Runloop监听者
+            [self addRunloopObserver];
+        });
+    }
+    return self;
+}
+
+- (void)addRunloopObserver {
+  //获取当前runloop
+    CFRunLoopRef runloop = CFRunLoopGetCurrent();
+  //创建context
+    CFRunLoopObserverContext context = {0, (__bridge void *)self, &amp;CFRetain, &amp;CFRelease, NULL};
+  //创建runloop监听者
+    static CFRunLoopObserverRef defaultModeObserver;
+  /*其中runloop的状态有如下几种，这里监听的是kCFRunLoopBeforeWaiting
+  	kCFRunLoopEntry = (1UL &lt;&lt; 0),
+    kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),
+    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),
+    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),
+    kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),
+    kCFRunLoopExit = (1UL &lt;&lt; 7),
+    kCFRunLoopAllActivities = 0x0FFFFFFFU
+  */
+    defaultModeObserver = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeWaiting, YES, 0, &amp;callback, &amp;context);
+  //为当前runloop添加runloop监听者
+    CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes);
+    CFRelease(defaultModeObserver);
+}
+
+void callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
+    //Runloop 回调，在这里面可以管理Popup队列
+}
+</code></pre>
+
+<p>截止，就完成了利用Runloop取代定时任务，对Popup队列进行定时管理</p>
+
+<h3 id="kvo">KVO</h3>
+
+<p>为了简化使用者调用，不需要使用者自己将类添加到队列中</p>
+
+<p>一开始想着定义一个show的接口方法，然后添加NSObject的分类，在load里面通过hook的方式，动态替换show成swizzle方法，在swizzle方法里面将popup添加进队列</p>
+
+<p>想法是挺美好的，但是现实是残酷的，因为hook是不能影响到子类的</p>
+
+<p>后面苦思冥想，想有什么办法通过监听方法是否有被调用</p>
+
+<p>最终醍醐灌顶，参照了系统的<strong>KVO</strong>原理，通过创建派生类方式，再利用runtime，hook原有的show方法</p>
+
+<pre><code class="language-objective-c">- (void)ssp_registerToPopupCenter {
+    BOOL flag = [self conformsToProtocol:@protocol(SSPPopupProtocol)];
+    NSString *msg = [NSString stringWithFormat:@&quot;%@ should conform SSPPopupProtocol&quot;, NSStringFromClass([self class])];
+    NSAssert(flag, msg);
+    
+  //创建派生类
+    NSString * className = [NSString stringWithFormat:@&quot;SSPPopupCenter_%@&quot;,NSStringFromClass(self.class)];
+    const char *cla = className.UTF8String;
+    Class subP = objc_allocateClassPair([self class], cla, 0);
+    
+    if (nil != subP &amp;&amp; ![subP isKindOfClass:[self class]]) {
+      //替换原有的show的方法，该方法是通过协议约束的
+        [self swizzleClass:subP method:@selector(ssp_show) swizzledSelector:@selector(ssp_swizzle_show)];
+        
+      //如果实现了hide的方法，同样也替换
+        if (nil != class_getInstanceMethod([self class], @selector(ssp_hide))) {
+            [self swizzleClass:subP method:@selector(ssp_hide) swizzledSelector:@selector(ssp_swizzle_hide)];
+        }
+        
+        [self addClass:[self class] method:@selector(ssp_level)];
+        [self addClass:[self class] method:@selector(setSsp_level:)];
+        
+      //注册派生类
+        objc_registerClassPair(subP);
+    } else {
+      //获取派生类
+        subP = objc_getClass(cla);
+    }
+  //修改对象的isa指针为派生类
+    object_setClass(self, subP);
+}
+</code></pre>
+
+<h3 id="runtime">Runtime</h3>
+
+<p>以下是hook的普遍方式，但大多数人都是直接拷贝，拷贝的版本也是多样化，因为他们没有真正的看过里面的实现</p>
+
+<p>下面将大概讲解一下</p>
+
+<pre><code class="language-objective-c">- (void)swizzleClass:(Class)clazz method:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector {
+  //通过selector的名字，搜索该类的方法列表中是否有该方法
+    Method originalMethod = class_getInstanceMethod(clazz, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(clazz, swizzledSelector);
+    
+  //如果两个方法都有，则直接替换两个方法的实现
+    if (originalMethod &amp;&amp; swizzledMethod) {
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+        return;
+    }
+   
+  //如果swizzle方法没有，则动态添加，一般如果是利用分类hook，那么一般swizzle方法也是有的
+    if (nil == swizzledMethod) {
+        BOOL didAddMethod = class_addMethod(clazz,
+                                            swizzledSelector,
+                                            method_getImplementation(originalMethod),
+                                            method_getTypeEncoding(originalMethod));
+        if (didAddMethod) {
+            swizzledMethod = class_getInstanceMethod(clazz, swizzledSelector);
+        }
+    }
+
+  //最终将原来的方法具体实现替换成swizzle方法的实现
+    if (swizzledMethod) {
+        class_replaceMethod(clazz,
+                            originalSelector,
+                            method_getImplementation(swizzledMethod),
+                            method_getTypeEncoding(swizzledMethod));
+    }
+}
+</code></pre>
+
+<h3 id="category">Category</h3>
+
+<p>弹窗有时候是有优先级的，该项目里在协议中定义了一个属性<strong>ssp_level</strong>， 定义如下：</p>
+
+<pre><code class="language-objective-c">typedef enum : NSUInteger {
+    SSPPopupActivityLevelNormal,	//默认优先级
+    SSPPopupActivityLevelHigh,		//高优先级，会优先插到前面
+} SSPPopupActivityLevel;
+</code></pre>
+
+<p>大家都知道Category正常是不能添加属性的，要添加属性需要用到Runtime，下面就是具体实现</p>
+
+<pre><code class="language-objective-c">- (void)ssp_registerToPopupCenter {
+    ...
+      //添加ssp_level对应的getter，setter方法
+        [self addClass:[self class] method:@selector(ssp_level)];
+        [self addClass:[self class] method:@selector(setSsp_level:)];
+    ...
+}
+
+- (void)addClass:(Class)clazz method:(SEL)selector {
+    Method method = class_getInstanceMethod(clazz, selector);
+    BOOL didAddMethod = class_addMethod(clazz,
+                                        selector,
+                                        method_getImplementation(method),
+                                        method_getTypeEncoding(method));
+    NSAssert(didAddMethod, @&quot;add method failure&quot;);
+}
+
+- (SSPPopupActivityLevel)ssp_level {
+    return [objc_getAssociatedObject(self, &amp;kSSPopupCenterLevel) integerValue];
+}
+
+- (void)setSsp_level:(SSPPopupActivityLevel)level {
+    objc_setAssociatedObject(self, &amp;kSSPopupCenterLevel, @(level), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+</code></pre>
+
+<p>至此，就完成了所有的核心功能，剩下的就是对队列的管理，这个无非就是操作一个数组，就不在此展开了</p>
+
+<h2 id="后记">后记</h2>
+
+<p>后面可以将系统的AlertView也管理起来，不过现在还没有想好一个比较优雅的方案</p>
+
+<h2 id="源码">源码</h2>
+
+<p>具体源码请前往：<strong><a href="https://github.com/huanghg/SSPPopupCenter">SSPPopupCenter</a></strong></p>
+
+<p>##</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>拾忆 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=http://huanghg.github.io/posts/20191209popupcenter/>http://huanghg.github.io/posts/20191209popupcenter/</span>
+            </p>
+            
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/runloop/">
+                    #Runloop</a></span>
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/kvo/">
+                    #KVO</a></span>
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/runtime/">
+                    #Runtime</a></span>
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/category/">
+                    #Category</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="http://huanghg.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="http://huanghg.github.io/posts/20191115wintershare/" class="prev" rel="prev" title="团队建设之夺路狂奔"><i class="iconfont icon-left"></i>&nbsp;团队建设之夺路狂奔</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+          
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '5610f94f91dfae9b7881',
+    clientSecret: '0239bee625fd45aab84c62a36c1d9988a205b117',
+    repo: 'huanghg.github.io',
+    owner: 'huanghg',
+    admin: ['huanghg'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="http://huanghg.github.io/">拾忆</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

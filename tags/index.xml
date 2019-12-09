@@ -6,10 +6,46 @@
     <description>Recent content in Tags on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 17 Nov 2019 09:44:02 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Dec 2019 21:16:22 +0800</lastBuildDate>
     
 	<atom:link href="http://huanghg.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Category</title>
+      <link>http://huanghg.github.io/tags/category/</link>
+      <pubDate>Mon, 09 Dec 2019 21:16:22 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/category/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>KVO</title>
+      <link>http://huanghg.github.io/tags/kvo/</link>
+      <pubDate>Mon, 09 Dec 2019 21:16:22 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/kvo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Runloop</title>
+      <link>http://huanghg.github.io/tags/runloop/</link>
+      <pubDate>Mon, 09 Dec 2019 21:16:22 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/runloop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Runtime</title>
+      <link>http://huanghg.github.io/tags/runtime/</link>
+      <pubDate>Mon, 09 Dec 2019 21:16:22 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/runtime/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>团队</title>
