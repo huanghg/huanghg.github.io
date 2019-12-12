@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Protobuf on 拾忆</title>
+    <link>http://huanghg.github.io/tags/protobuf/</link>
+    <description>Recent content in Protobuf on 拾忆</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 27 Nov 2019 18:57:50 +0800</lastBuildDate>
+    
+	<atom:link href="http://huanghg.github.io/tags/protobuf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Protobuf的日常使用</title>
+      <link>http://huanghg.github.io/posts/20191127protobuf/</link>
+      <pubDate>Wed, 27 Nov 2019 18:57:50 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/20191127protobuf/</guid>
+      <description>简述 Protobuf是一种由谷歌开发的，通过proto协议约束的数据格式，详情请见官网
+协议 syntax = &amp;quot;proto3&amp;quot;; package xxxx; option objc_class_prefix = &amp;quot;xxx&amp;quot;; message SearchRequest { string query = 1; int32 page_number = 2; int32 result_per_page = 3; }  上面是一个简易的protobuf协议，其中有两点需要注意⚠️:
+ 第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”
+ 如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过objc_class_prefix给生成类名带上前缀
+  生成编程语言代码 Protobuf支持生成多种编程语言代码，前提是装了protobuf的编译器
+For C++, the compiler generates a .h and .cc file from each .proto, with a class for each message type described in your file. For Java, the compiler generates a .java file with a class for each message type, as well as a special Builderclasses for creating message class instances.</description>
+    </item>
+    
+  </channel>
+</rss>
