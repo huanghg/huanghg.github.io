@@ -57,7 +57,7 @@
     "datePublished": "2019-11-27 18:57:50 \x2b0800 CST",
     "dateModified" : "2019-11-27 18:57:50 \x2b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/20191127protobuf\/",
-    "wordCount" : "271",
+    "wordCount" : "274",
     "keywords" : [ "Protobuf", "拾忆"]
 }
 </script>
@@ -132,7 +132,7 @@
                         <a href="http://huanghg.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/"> 杂技浅尝 </a>
                         
                 </span>
-                <span class="post-word-count">, 271 words</span>
+                <span class="post-word-count">, 274 words</span>
         </div>
     </header>
     <div class="post-content">
@@ -179,6 +179,13 @@ message SearchRequest {
 <li><p>第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”</p></li>
 
 <li><p>如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过<strong>objc_class_prefix</strong>给生成类名带上前缀</p></li>
+</ul>
+
+<h2 id="优点">优点</h2>
+
+<ul>
+<li>Protobuf数据格式的数据是以二进制方式传输的，数据量相对XML，JSON等数据格式会小很多倍，所以传输速度也会快很多</li>
+<li>接收到Protobuf数据格式的数据后，需要对其反序列化，生成对应的模型，反序列化的过程效率高于XML数据格式</li>
 </ul>
 
 <h2 id="生成编程语言代码">生成编程语言代码</h2>
