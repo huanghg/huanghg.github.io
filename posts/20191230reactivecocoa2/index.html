@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="拾忆">
+  <meta name="description" content="待定">
+  
+  
+  <link rel="prev" href="http://huanghg.github.io/posts/20191230reactivecocoa1/" />
+  
+  <link rel="canonical" href="http://huanghg.github.io/posts/20191230reactivecocoa2/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           ReactiveCocoa代码浅析&lt;二&gt; | 拾忆
+       
+  </title>
+  <meta name="title" content="ReactiveCocoa代码浅析&lt;二&gt; | 拾忆">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "http:\/\/huanghg.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "ReactiveCocoa代码浅析\x3c二\x3e",
+    "headline" : "ReactiveCocoa代码浅析\x3c二\x3e",
+    "description" : "ReactiveCocoa代码浅析",
+    "inLanguage" : "zh-cn",
+    "author" : "拾忆",
+    "creator" : "拾忆",
+    "publisher": "拾忆",
+    "accountablePerson" : "拾忆",
+    "copyrightHolder" : "拾忆",
+    "copyrightYear" : "2019",
+    "datePublished": "2019-12-30 17:56:32 \x2b0800 CST",
+    "dateModified" : "2019-12-30 17:56:32 \x2b0800 CST",
+    "url" : "http:\/\/huanghg.github.io\/posts\/20191230reactivecocoa2\/",
+    "wordCount" : "596",
+    "keywords" : [ "React，RAC", "拾忆"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="http://huanghg.github.io/">拾忆</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/" title="">首页</a>
+                
+                <a class="menu-item" href="/posts/" title="">博文</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="http://huanghg.github.io/">拾忆</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/" title="">首页</a>
+                
+                <a class="menu-item" href="/posts/" title="">博文</a>
+                
+                <a class="menu-item" href="/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="/about/" title="">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">ReactiveCocoa代码浅析&lt;二&gt;</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="http://huanghg.github.io/" rel="author">拾忆</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2019-12-30 itemprop="datePublished">December 30, 2019</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="http://huanghg.github.io/categories/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%B3%BB%E5%88%97/"> 响应式编程系列 </a>
+                        
+                </span>
+                <span class="post-word-count">, 596 words</span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          
+
+<p>看merge之前，我们先看一下flatten</p>
+
+<h2 id="flatten">flatten</h2>
+
+<pre><code class="language-objective-c">//以下是merge另外的一种实现
+- (void)flattenDemo {
+    RACSubject *letters = [RACSubject subject];
+    RACSubject *numbers = [RACSubject subject];
+    
+    //创建信号数组，当flattened信号subscribeNext的时候，会在其内部触发signalOfSignals的subscribeNext
+    //当[subscriber sendNext:letters];时，会把letters这个signal传递到里面去，会添加到flattened的一个数组中，并建立letters的subscribeNext
+    RACSignal *signalOfSignals = [RACSignal createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
+        [subscriber sendNext:letters];
+        [subscriber sendNext:numbers];
+        [subscriber sendCompleted];
+        return nil;
+    }];
+    
+    //flatten主要是打平，降维
+    //flatten的时候，创建了一个新的signal，在新的signal里面监听了信号数组，即
+    /*[RACSignal createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
+     [signalOfSignals subscribeNext:^(id x) {
+        addSignal(signal);
+     }];
+     }];
+     
+     addSignal() {
+     [letters subscribeNext:^(NSString *x) {
+	     [subscriber sendNext:x];
+     }];
+     }
+     */
+    RACSignal *flattened = [signalOfSignals flatten];
+    
+    // Outputs: A 1 B C 2
+    [flattened subscribeNext:^(NSString *x) {
+        NSLog(@&quot;%@&quot;, x);
+    }];
+    
+    //letters信号sendNext就会触发底层的subscribeNext
+    //而底层中subscribeNext就会调用flattened的subscriber
+    //最终就会触发[flattened subscribeNext:^(id x) {}];
+    [letters sendNext:@&quot;A&quot;];
+    [numbers sendNext:@&quot;1&quot;];
+    [letters sendNext:@&quot;B&quot;];
+    [letters sendNext:@&quot;C&quot;];
+    [numbers sendNext:@&quot;2&quot;];
+}
+</code></pre>
+
+<h2 id="merge">merge</h2>
+
+<pre><code class="language-objective-c">- (void)mergeDemo {
+    RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
+        [subscriber sendNext:@&quot;signalA&quot;];
+        return nil;
+    }];
+    
+    RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
+        [subscriber sendNext:@&quot;signalB&quot;];
+        return nil;
+    }];
+    
+  //signalA merge signalB 产生一个新的信号mergeSignal
+    RACSignal *mergeSignal = [signalA merge:signalB];
+  
+  //新的信号mergeSignal通过subscribeNext创建监听者。
+    [mergeSignal subscribeNext:^(id x) {
+        NSLog(@&quot;%@&quot;, x);
+    } error:^(NSError *error) {
+        NSLog(@&quot;%@&quot;, error.localizedDescription);
+    }];
+}
+</code></pre>
+
+<blockquote>
+<p>RACSignal *mergeSignal = [signalA merge:signalB];</p>
+</blockquote>
+
+<p>这里的关键是RACSignal *mergeSignal = [signalA merge:signalB]; signalA merge了signalB产生了一个新的信号mergeSignal，下面我们就看看merge里面做了什么。</p>
+
+<pre><code class="language-objective-c">+ (RACSignal *)merge:(id&lt;NSFastEnumeration&gt;)signals {
+  //将两个signal添加一个数组中
+	NSMutableArray *copiedSignals = [[NSMutableArray alloc] init];
+	for (RACSignal *signal in signals) {
+		[copiedSignals addObject:signal];
+	}
+
+	return [[[RACSignal
+		createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
+      //遍历数组，触发sendNext，注意这里sendNext的是signal
+			for (RACSignal *signal in copiedSignals) {
+				[subscriber sendNext:signal];
+			}
+
+			[subscriber sendCompleted];
+			return nil;
+		}]
+    //倘若没有flatten，外面新的signal就是这个signal，外面subscribeNext后，就会触发上面的block
+		flatten]
+		setNameWithFormat:@&quot;+merge: %@&quot;, copiedSignals];
+}
+</code></pre>
+
+<p>merge里面创建了一个信号，然后调用了flatten。下面我们再来看看flatten里面做了什么</p>
+
+<pre><code class="language-objective-c">- (instancetype)flatten {
+	__weak RACStream *stream __attribute__((unused)) = self;
+	return [[self flattenMap:^(id value) {
+		return value;
+	}] setNameWithFormat:@&quot;[%@] -flatten&quot;, self.name];
+}
+</code></pre>
+
+<pre><code class="language-objective-c">- (instancetype)flattenMap:(RACStream * (^)(id value))block {
+	Class class = self.class;
+
+  //最主要的是这个bind，几乎所有的operation底层都调用这个bind，通过bind创建一个新的signal
+	return [[self bind:^{
+		return ^(id value, BOOL *stop) {
+			id stream = block(value) ?: [class empty];
+			NSCAssert([stream isKindOfClass:RACStream.class], @&quot;Value returned from -flattenMap: is not a stream: %@&quot;, stream);
+
+			return stream;
+		};
+	}] setNameWithFormat:@&quot;[%@] -flattenMap:&quot;, self.name];
+}
+</code></pre>
+
+<p>一直到最底层，调用了bind, bind几乎是所有的operation的根基。我们再看看bind里面有做了什么</p>
+
+<pre><code class="language-objective-c">- (RACSignal *)bind:(RACStreamBindBlock (^)(void))block {
+	NSCParameterAssert(block != NULL);
+
+	/*
+	 * -bind: should:
+	 * 
+	 * 1. Subscribe to the original signal of values.
+	 * 2. Any time the original signal sends a value, transform it using the binding block.
+	 * 3. If the binding block returns a signal, subscribe to it, and pass all of its values through to the subscriber as they're received.
+	 * 4. If the binding block asks the bind to terminate, complete the _original_ signal.
+	 * 5. When _all_ signals complete, send completed to the subscriber.
+	 * 
+	 * If any signal sends an error at any point, send that to the subscriber.
+	 */
+	//创建一个新的siganl，也就是最外面的mergeSignal就是这个siganl，mergeSignal调用了subscribeNext后，就会创建一个subscriber，并当作参数触发以下这个block
+	return [[RACSignal createSignal:^(id&lt;RACSubscriber&gt; subscriber) {
+		RACStreamBindBlock bindingBlock = block();
+
+		NSMutableArray *signals = [NSMutableArray arrayWithObject:self];
+
+		RACCompoundDisposable *compoundDisposable = [RACCompoundDisposable compoundDisposable];
+
+    //创建completionSignal，处理complete以后的操作
+		void (^completeSignal)(RACSignal *, RACDisposable *) = ^(RACSignal *signal, RACDisposable *finishedDisposable) {
+			BOOL removeDisposable = NO;
+
+			@synchronized (signals) {
+				[signals removeObject:signal];
+
+				if (signals.count == 0) {
+					[subscriber sendCompleted];
+					[compoundDisposable dispose];
+				} else {
+					removeDisposable = YES;
+				}
+			}
+
+			if (removeDisposable) [compoundDisposable removeDisposable:finishedDisposable];
+		};
+    
+    //创建addSignal，
+		void (^addSignal)(RACSignal *) = ^(RACSignal *signal) {
+			@synchronized (signals) {
+				[signals addObject:signal];
+			}
+
+			RACSerialDisposable *selfDisposable = [[RACSerialDisposable alloc] init];
+			[compoundDisposable addDisposable:selfDisposable];
+			//在添加的过程中，会调用subscribeNext，这时候就会触发signalA的block。
+			RACDisposable *disposable = [signal subscribeNext:^(id x) {
+        //以下这个subscriber就是mergeSignal的，通过sendNext后，最外面的subscribeNext就会被调用。
+				[subscriber sendNext:x];
+			} error:^(NSError *error) {
+				[compoundDisposable dispose];
+				[subscriber sendError:error];
+			} completed:^{
+				@autoreleasepool {
+					completeSignal(signal, selfDisposable);
+				}
+			}];
+
+			selfDisposable.disposable = disposable;
+		};
+
+		@autoreleasepool {
+			RACSerialDisposable *selfDisposable = [[RACSerialDisposable alloc] init];
+			[compoundDisposable addDisposable:selfDisposable];
+
+      //这里的self是merge的时候创建的signal，调用flatten时，进入到bind，调用subscribeNext把最外面的signalA和signalB取到。这里的x就是signal
+			RACDisposable *bindingDisposable = [self subscribeNext:^(id x) {
+				// Manually check disposal to handle synchronous errors.
+				if (compoundDisposable.disposed) return;
+
+        //x也就是signal,会通过block抛到外面，由外面再进行二次处理，但是flatten不做任何做处理，会原封不动返回signal
+				BOOL stop = NO;
+				id signal = bindingBlock(x, &amp;stop);
+
+				@autoreleasepool {
+          //然后会把这个signal添加到数组signals中。
+					if (signal != nil) addSignal(signal);
+					if (signal == nil || stop) {
+						[selfDisposable dispose];
+						completeSignal(self, selfDisposable);
+					}
+				}
+			} error:^(NSError *error) {
+				[compoundDisposable dispose];
+				[subscriber sendError:error];
+			} completed:^{
+				@autoreleasepool {
+					completeSignal(self, selfDisposable);
+				}
+			}];
+
+			selfDisposable.disposable = bindingDisposable;
+		}
+
+		return compoundDisposable;
+	}] setNameWithFormat:@&quot;[%@] -bind:&quot;, self.name];
+}
+</code></pre>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>拾忆 </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=http://huanghg.github.io/posts/20191230reactivecocoa2/>http://huanghg.github.io/posts/20191230reactivecocoa2/</span>
+            </p>
+            
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="http://huanghg.github.io/tags/reactrac/">
+                    #React，RAC</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="http://huanghg.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="http://huanghg.github.io/posts/20191230reactivecocoa1/" class="prev" rel="prev" title="ReactiveCocoa代码浅析&lt;一&gt;"><i class="iconfont icon-left"></i>&nbsp;ReactiveCocoa代码浅析&lt;一&gt;</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+          
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+  const gitalk = new Gitalk({
+    clientID: '5610f94f91dfae9b7881',
+    clientSecret: '0239bee625fd45aab84c62a36c1d9988a205b117',
+    repo: 'huanghg.github.io',
+    owner: 'huanghg',
+    admin: ['huanghg'],
+    id: location.pathname, 
+    distractionFreeMode: false 
+  });
+  (function() {
+    if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+      document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+      return;
+    }
+    gitalk.render('gitalk-container');
+  })();
+</script>
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="http://huanghg.github.io/">拾忆</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
