@@ -6,10 +6,46 @@
     <description>Recent content in Tags on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 19 Oct 2020 15:24:34 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2020 16:11:04 +0800</lastBuildDate>
     
 	<atom:link href="http://huanghg.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>commitlint</title>
+      <link>http://huanghg.github.io/tags/commitlint/</link>
+      <pubDate>Fri, 13 Nov 2020 16:11:04 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/commitlint/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>http://huanghg.github.io/tags/git/</link>
+      <pubDate>Fri, 13 Nov 2020 16:11:04 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>husky</title>
+      <link>http://huanghg.github.io/tags/husky/</link>
+      <pubDate>Fri, 13 Nov 2020 16:11:04 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/husky/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>npm</title>
+      <link>http://huanghg.github.io/tags/npm/</link>
+      <pubDate>Fri, 13 Nov 2020 16:11:04 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/tags/npm/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>方法论</title>

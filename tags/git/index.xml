@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on 拾忆</title>
+    <link>http://huanghg.github.io/tags/git/</link>
+    <description>Recent content in git on 拾忆</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 13 Nov 2020 16:11:04 +0800</lastBuildDate>
+    
+	<atom:link href="http://huanghg.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CommitLint</title>
+      <link>http://huanghg.github.io/posts/20201113commitlint/</link>
+      <pubDate>Fri, 13 Nov 2020 16:11:04 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/20201113commitlint/</guid>
+      <description>CommitLint 背景 多人协作，为了减少合作成本，需对代码风格，commit message等形成统一规范。本文将统一介绍如何用git hook在commit的时候对message的检测。
+CommitLint 现在业内比较推荐的是用CommitLint，详情见官网。
+Install 主要是安装node相关module，有全局和局部两种方式
+npm install -g @commitlint/cli @commitlint/config-conventional	//全局，路径在/usr/local/lib/node_modules/ npm install -D @commitlint/cli @commitlint/config-conventional //局部，路径在当前目录 Configure 安装完以后，接下来配置
+echo &amp;#34;module.exports = {extends: [&amp;#39;@commitlint/config-conventional&amp;#39;]}&amp;#34; &amp;gt; commitlint.config.js 在当前目录创建配置文件commitlint.config.js
+至此，CommitLint就安装配置好了，下面测试一下
+echo &amp;#34;test&amp;#34; | commitlint ⧗ input: test ✖ subject may not be empty [subject-empty] ✖ type may not be empty [type-empty] ✖ found 2 problems, 0 warnings ⓘ Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint 如上，如果message不符合规范，下面就会提示报错。
+echo &amp;#34;feat: test&amp;#34; | commitlint 如果符合规范，则不会有任何提示</description>
+    </item>
+    
+  </channel>
+</rss>
