@@ -44,8 +44,8 @@
          "@id": "http:\/\/huanghg.github.io\/"
     },
     "articleSection" : "posts",
-    "name" : "ReactiveCocoa代码浅析\x3c一\x3e",
-    "headline" : "ReactiveCocoa代码浅析\x3c一\x3e",
+    "name" : "ReactiveCocoa代码浅析\u003c一\u003e",
+    "headline" : "ReactiveCocoa代码浅析\u003c一\u003e",
     "description" : "ReactiveCocoa代码浅析",
     "inLanguage" : "zh-cn",
     "author" : "拾忆",
@@ -54,8 +54,8 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-12-30 17:53:27 \x2b0800 CST",
-    "dateModified" : "2019-12-30 17:53:27 \x2b0800 CST",
+    "datePublished": "2019-12-30 17:53:27 \u002b0800 CST",
+    "dateModified" : "2019-12-30 17:53:27 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/20191230reactivecocoa1\/",
     "wordCount" : "1150",
     "keywords" : [ "React，RAC", "拾忆"]
@@ -151,211 +151,200 @@
           
           
 
-          
-
-<h2 id="racstream">RACStream</h2>
-
+          <h2 id="racstream">RACStream</h2>
 <p>在ReactiveCocoa世界里面，万物皆为Stream，RACSignal和RACSequence都继承于RACStream，声明了一些抽象方法由子类去实现。</p>
-
-<pre><code class="language-objective-c">@implementation RACStream
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACStream</span>
 ...
-#pragma mark Abstract methods
-
-+ (instancetype)empty {
-	return nil;
+<span style="color:#75715e">#pragma mark Abstract methods
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)empty {
+	<span style="color:#66d9ef">return</span> nil;
 }
 
-- (instancetype)bind:(RACStreamBindBlock (^)(void))block {
-	return nil;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)bind:(RACStreamBindBlock (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">void</span>))block {
+	<span style="color:#66d9ef">return</span> nil;
 }
 
-+ (instancetype)return:(id)value {
-	return nil;
+<span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)<span style="color:#66d9ef">return</span><span style="color:#f92672">:</span>(<span style="color:#66d9ef">id</span>)value {
+	<span style="color:#66d9ef">return</span> nil;
 }
 
-- (instancetype)concat:(RACStream *)stream {
-	return nil;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)concat:(RACStream <span style="color:#f92672">*</span>)stream {
+	<span style="color:#66d9ef">return</span> nil;
 }
 
-- (instancetype)zipWith:(RACStream *)stream {
-	return nil;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)zipWith:(RACStream <span style="color:#f92672">*</span>)stream {
+	<span style="color:#66d9ef">return</span> nil;
 }
 ...
-@end
-</code></pre>
-
-<p>也提供很多底层的操作方法。下面列举了一些常用的方法，更多方法请见RACStream.m，后续会有专题讲解部分的方法，别看这么多方法，其实只要掌握里面的原理，会发现有很多相似的地方。所谓万变不离其宗，就是这个理。</p>
-
-<pre><code class="language-objective-c">@implementation RACStream (Operations)
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><p>也提供很多底层的操作方法。下面列举了一些常用的方法，更多方法请见RACStream.m，后续会有专题讲解部分的方法，别看这么多方法，其实只要掌握里面的原理，会发现有很多相似的地方。所谓万变不离其宗，就是这个理。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACStream</span> (Operations)
 ...
-- (instancetype)flattenMap:(RACStream * (^)(id value))block {
-	Class class = self.class;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)flattenMap:(RACStream <span style="color:#f92672">*</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span> value))block {
+	<span style="color:#66d9ef">Class</span> <span style="color:#66d9ef">class</span> <span style="color:#f92672">=</span> self.<span style="color:#66d9ef">class</span>;
 
-	return [[self bind:^{
-		return ^(id value, BOOL *stop) {
-			id stream = block(value) ?: [class empty];
-			NSCAssert([stream isKindOfClass:RACStream.class], @&quot;Value returned from -flattenMap: is not a stream: %@&quot;, stream);
+	<span style="color:#66d9ef">return</span> [[self bind:<span style="color:#f92672">^</span>{
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> value, <span style="color:#66d9ef">BOOL</span> <span style="color:#f92672">*</span>stop) {
+			<span style="color:#66d9ef">id</span> stream <span style="color:#f92672">=</span> block(value) <span style="color:#f92672">?:</span> [<span style="color:#66d9ef">class</span> empty];
+			NSCAssert([stream isKindOfClass:RACStream.<span style="color:#66d9ef">class</span>], <span style="color:#e6db74">@&#34;Value returned from -flattenMap: is not a stream: %@&#34;</span>, stream);
 
-			return stream;
+			<span style="color:#66d9ef">return</span> stream;
 		};
-	}] setNameWithFormat:@&quot;[%@] -flattenMap:&quot;, self.name];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -flattenMap:&#34;</span>, self.name];
 }
 
-- (instancetype)flatten {
-	__weak RACStream *stream __attribute__((unused)) = self;
-	return [[self flattenMap:^(id value) {
-		return value;
-	}] setNameWithFormat:@&quot;[%@] -flatten&quot;, self.name];
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)flatten {
+	<span style="color:#66d9ef">__weak</span> RACStream <span style="color:#f92672">*</span>stream __attribute__((unused)) <span style="color:#f92672">=</span> self;
+	<span style="color:#66d9ef">return</span> [[self flattenMap:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> value) {
+		<span style="color:#66d9ef">return</span> value;
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -flatten&#34;</span>, self.name];
 }
 
-- (instancetype)map:(id (^)(id value))block {
-	NSCParameterAssert(block != nil);
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)map:(<span style="color:#66d9ef">id</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span> value))block {
+	NSCParameterAssert(block <span style="color:#f92672">!=</span> nil);
 
-	Class class = self.class;
+	<span style="color:#66d9ef">Class</span> <span style="color:#66d9ef">class</span> <span style="color:#f92672">=</span> self.<span style="color:#66d9ef">class</span>;
 	
-	return [[self flattenMap:^(id value) {
-		return [class return:block(value)];
-	}] setNameWithFormat:@&quot;[%@] -map:&quot;, self.name];
+	<span style="color:#66d9ef">return</span> [[self flattenMap:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> value) {
+		<span style="color:#66d9ef">return</span> [<span style="color:#66d9ef">class</span> <span style="color:#66d9ef">return</span><span style="color:#f92672">:</span>block(value)];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -map:&#34;</span>, self.name];
 }
 
-- (instancetype)mapReplace:(id)object {
-	return [[self map:^(id _) {
-		return object;
-	}] setNameWithFormat:@&quot;[%@] -mapReplace: %@&quot;, self.name, [object rac_description]];
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)mapReplace:(<span style="color:#66d9ef">id</span>)object {
+	<span style="color:#66d9ef">return</span> [[self map:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> _) {
+		<span style="color:#66d9ef">return</span> object;
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -mapReplace: %@&#34;</span>, self.name, [object rac_description]];
 }
 
-- (instancetype)filter:(BOOL (^)(id value))block {
-	NSCParameterAssert(block != nil);
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)filter:(<span style="color:#66d9ef">BOOL</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span> value))block {
+	NSCParameterAssert(block <span style="color:#f92672">!=</span> nil);
 
-	Class class = self.class;
+	<span style="color:#66d9ef">Class</span> <span style="color:#66d9ef">class</span> <span style="color:#f92672">=</span> self.<span style="color:#66d9ef">class</span>;
 	
-	return [[self flattenMap:^ id (id value) {
-		if (block(value)) {
-			return [class return:value];
-		} else {
-			return class.empty;
+	<span style="color:#66d9ef">return</span> [[self flattenMap:<span style="color:#f92672">^</span> <span style="color:#66d9ef">id</span> (<span style="color:#66d9ef">id</span> value) {
+		<span style="color:#66d9ef">if</span> (block(value)) {
+			<span style="color:#66d9ef">return</span> [<span style="color:#66d9ef">class</span> <span style="color:#66d9ef">return</span><span style="color:#f92672">:</span>value];
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">class</span>.empty;
 		}
-	}] setNameWithFormat:@&quot;[%@] -filter:&quot;, self.name];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -filter:&#34;</span>, self.name];
 }
 
-- (instancetype)reduceEach:(id (^)())reduceBlock {
-	NSCParameterAssert(reduceBlock != nil);
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)reduceEach:(<span style="color:#66d9ef">id</span> (<span style="color:#f92672">^</span>)())reduceBlock {
+	NSCParameterAssert(reduceBlock <span style="color:#f92672">!=</span> nil);
 
-	__weak RACStream *stream __attribute__((unused)) = self;
-	return [[self map:^(RACTuple *t) {
-		NSCAssert([t isKindOfClass:RACTuple.class], @&quot;Value from stream %@ is not a tuple: %@&quot;, stream, t);
-		return [RACBlockTrampoline invokeBlock:reduceBlock withArguments:t];
-	}] setNameWithFormat:@&quot;[%@] -reduceEach:&quot;, self.name];
+	<span style="color:#66d9ef">__weak</span> RACStream <span style="color:#f92672">*</span>stream <span style="color:#a6e22e">__attribute__</span>((unused)) <span style="color:#f92672">=</span> self;
+	<span style="color:#66d9ef">return</span> [[self map:<span style="color:#f92672">^</span>(RACTuple <span style="color:#f92672">*</span>t) {
+		NSCAssert([t isKindOfClass:RACTuple.<span style="color:#66d9ef">class</span>], <span style="color:#e6db74">@&#34;Value from stream %@ is not a tuple: %@&#34;</span>, stream, t);
+		<span style="color:#66d9ef">return</span> [RACBlockTrampoline invokeBlock:reduceBlock withArguments:t];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -reduceEach:&#34;</span>, self.name];
 }
 
-- (instancetype)skip:(NSUInteger)skipCount {
-	Class class = self.class;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)skip:(NSUInteger)skipCount {
+	<span style="color:#66d9ef">Class</span> <span style="color:#66d9ef">class</span> <span style="color:#f92672">=</span> self.<span style="color:#66d9ef">class</span>;
 	
-	return [[self bind:^{
-		__block NSUInteger skipped = 0;
+	<span style="color:#66d9ef">return</span> [[self bind:<span style="color:#f92672">^</span>{
+		<span style="color:#66d9ef">__block</span> NSUInteger skipped <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 
-		return ^(id value, BOOL *stop) {
-			if (skipped &gt;= skipCount) return [class return:value];
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> value, <span style="color:#66d9ef">BOOL</span> <span style="color:#f92672">*</span>stop) {
+			<span style="color:#66d9ef">if</span> (skipped <span style="color:#f92672">&gt;=</span> skipCount) <span style="color:#66d9ef">return</span> [<span style="color:#66d9ef">class</span> <span style="color:#66d9ef">return</span><span style="color:#f92672">:</span>value];
 
-			skipped++;
-			return class.empty;
+			skipped<span style="color:#f92672">++</span>;
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">class</span>.empty;
 		};
-	}] setNameWithFormat:@&quot;[%@] -skip: %lu&quot;, self.name, (unsigned long)skipCount];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -skip: %lu&#34;</span>, self.name, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>)skipCount];
 }
 
-- (instancetype)take:(NSUInteger)count {
-	Class class = self.class;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)take:(NSUInteger)count {
+	<span style="color:#66d9ef">Class</span> <span style="color:#66d9ef">class</span> <span style="color:#f92672">=</span> self.<span style="color:#66d9ef">class</span>;
 	
-	if (count == 0) return class.empty;
+	<span style="color:#66d9ef">if</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">class</span>.empty;
 
-	return [[self bind:^{
-		__block NSUInteger taken = 0;
+	<span style="color:#66d9ef">return</span> [[self bind:<span style="color:#f92672">^</span>{
+		<span style="color:#66d9ef">__block</span> NSUInteger taken <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 
-		return ^ id (id value, BOOL *stop) {
-			if (taken &lt; count) {
-				++taken;
-				if (taken == count) *stop = YES;
-				return [class return:value];
-			} else {
-				return nil;
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">^</span> <span style="color:#66d9ef">id</span> (<span style="color:#66d9ef">id</span> value, <span style="color:#66d9ef">BOOL</span> <span style="color:#f92672">*</span>stop) {
+			<span style="color:#66d9ef">if</span> (taken <span style="color:#f92672">&lt;</span> count) {
+				<span style="color:#f92672">++</span>taken;
+				<span style="color:#66d9ef">if</span> (taken <span style="color:#f92672">==</span> count) <span style="color:#f92672">*</span>stop <span style="color:#f92672">=</span> YES;
+				<span style="color:#66d9ef">return</span> [<span style="color:#66d9ef">class</span> <span style="color:#66d9ef">return</span><span style="color:#f92672">:</span>value];
+			} <span style="color:#66d9ef">else</span> {
+				<span style="color:#66d9ef">return</span> nil;
 			}
 		};
-	}] setNameWithFormat:@&quot;[%@] -take: %lu&quot;, self.name, (unsigned long)count];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -take: %lu&#34;</span>, self.name, (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>)count];
 }
 
-+ (instancetype)join:(id&lt;NSFastEnumeration&gt;)streams block:(RACStream * (^)(id, id))block {
-	RACStream *current = nil;
+<span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)join:(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>NSFastEnumeration<span style="color:#f92672">&gt;</span>)streams block:(RACStream <span style="color:#f92672">*</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span>, <span style="color:#66d9ef">id</span>))block {
+	RACStream <span style="color:#f92672">*</span>current <span style="color:#f92672">=</span> nil;
 
-	// Creates streams of successively larger tuples by combining the input
-	// streams one-by-one.
-	for (RACStream *stream in streams) {
-		// For the first stream, just wrap its values in a RACTuple. That way,
-		// if only one stream is given, the result is still a stream of tuples.
-		if (current == nil) {
-			current = [stream map:^(id x) {
-				return RACTuplePack(x);
+	<span style="color:#75715e">// Creates streams of successively larger tuples by combining the input
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// streams one-by-one.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> (RACStream <span style="color:#f92672">*</span>stream <span style="color:#66d9ef">in</span> streams) {
+		<span style="color:#75715e">// For the first stream, just wrap its values in a RACTuple. That way,
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// if only one stream is given, the result is still a stream of tuples.
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> (current <span style="color:#f92672">==</span> nil) {
+			current <span style="color:#f92672">=</span> [stream map:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+				<span style="color:#66d9ef">return</span> RACTuplePack(x);
 			}];
 
-			continue;
+			<span style="color:#66d9ef">continue</span>;
 		}
 
-		current = block(current, stream);
+		current <span style="color:#f92672">=</span> block(current, stream);
 	}
 
-	if (current == nil) return [self empty];
+	<span style="color:#66d9ef">if</span> (current <span style="color:#f92672">==</span> nil) <span style="color:#66d9ef">return</span> [self empty];
 
-	return [current map:^(RACTuple *xs) {
-		// Right now, each value is contained in its own tuple, sorta like:
-		//
-		// (((1), 2), 3)
-		//
-		// We need to unwrap all the layers and create a tuple out of the result.
-		NSMutableArray *values = [[NSMutableArray alloc] init];
+	<span style="color:#66d9ef">return</span> [current map:<span style="color:#f92672">^</span>(RACTuple <span style="color:#f92672">*</span>xs) {
+		<span style="color:#75715e">// Right now, each value is contained in its own tuple, sorta like:
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// (((1), 2), 3)
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">//
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// We need to unwrap all the layers and create a tuple out of the result.
+</span><span style="color:#75715e"></span>		NSMutableArray <span style="color:#f92672">*</span>values <span style="color:#f92672">=</span> [[NSMutableArray alloc] init];
 
-		while (xs != nil) {
-			[values insertObject:xs.last ?: RACTupleNil.tupleNil atIndex:0];
-			xs = (xs.count &gt; 1 ? xs.first : nil);
+		<span style="color:#66d9ef">while</span> (xs <span style="color:#f92672">!=</span> nil) {
+			[values insertObject:xs.last <span style="color:#f92672">?:</span> RACTupleNil.tupleNil atIndex:<span style="color:#ae81ff">0</span>];
+			xs <span style="color:#f92672">=</span> (xs.count <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">?</span> xs.first : nil);
 		}
 
-		return [RACTuple tupleWithObjectsFromArray:values];
+		<span style="color:#66d9ef">return</span> [RACTuple tupleWithObjectsFromArray:values];
 	}];
 }
 
-+ (instancetype)zip:(id&lt;NSFastEnumeration&gt;)streams {
-	return [[self join:streams block:^(RACStream *left, RACStream *right) {
-		return [left zipWith:right];
-	}] setNameWithFormat:@&quot;+zip: %@&quot;, streams];
+<span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)zip:(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>NSFastEnumeration<span style="color:#f92672">&gt;</span>)streams {
+	<span style="color:#66d9ef">return</span> [[self join:streams block:<span style="color:#f92672">^</span>(RACStream <span style="color:#f92672">*</span>left, RACStream <span style="color:#f92672">*</span>right) {
+		<span style="color:#66d9ef">return</span> [left zipWith:right];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;+zip: %@&#34;</span>, streams];
 }
 
-+ (instancetype)zip:(id&lt;NSFastEnumeration&gt;)streams reduce:(id (^)())reduceBlock {
-	NSCParameterAssert(reduceBlock != nil);
+<span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)zip:(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>NSFastEnumeration<span style="color:#f92672">&gt;</span>)streams reduce:(<span style="color:#66d9ef">id</span> (<span style="color:#f92672">^</span>)())reduceBlock {
+	NSCParameterAssert(reduceBlock <span style="color:#f92672">!=</span> nil);
 
-	RACStream *result = [self zip:streams];
+	RACStream <span style="color:#f92672">*</span>result <span style="color:#f92672">=</span> [self zip:streams];
 
-	// Although we assert this condition above, older versions of this method
-	// supported this argument being nil. Avoid crashing Release builds of
-	// apps that depended on that.
-	if (reduceBlock != nil) result = [result reduceEach:reduceBlock];
+	<span style="color:#75715e">// Although we assert this condition above, older versions of this method
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// supported this argument being nil. Avoid crashing Release builds of
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// apps that depended on that.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> (reduceBlock <span style="color:#f92672">!=</span> nil) result <span style="color:#f92672">=</span> [result reduceEach:reduceBlock];
 
-	return [result setNameWithFormat:@&quot;+zip: %@ reduce:&quot;, streams];
+	<span style="color:#66d9ef">return</span> [result setNameWithFormat:<span style="color:#e6db74">@&#34;+zip: %@ reduce:&#34;</span>, streams];
 }
 
-+ (instancetype)concat:(id&lt;NSFastEnumeration&gt;)streams {
-	RACStream *result = self.empty;
-	for (RACStream *stream in streams) {
-		result = [result concat:stream];
+<span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)concat:(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>NSFastEnumeration<span style="color:#f92672">&gt;</span>)streams {
+	RACStream <span style="color:#f92672">*</span>result <span style="color:#f92672">=</span> self.empty;
+	<span style="color:#66d9ef">for</span> (RACStream <span style="color:#f92672">*</span>stream <span style="color:#66d9ef">in</span> streams) {
+		result <span style="color:#f92672">=</span> [result concat:stream];
 	}
 
-	return [result setNameWithFormat:@&quot;+concat: %@&quot;, streams];
+	<span style="color:#66d9ef">return</span> [result setNameWithFormat:<span style="color:#e6db74">@&#34;+concat: %@&#34;</span>, streams];
 }
 ...
-@end
-</code></pre>
-
-<h2 id="racsignal">RACSignal</h2>
-
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><h2 id="racsignal">RACSignal</h2>
 <p>RACSignal继承于RACStream，是一个类簇，包含有很多子类，具体如下：</p>
-
 <ul>
 <li>RACSubject</li>
 <li>RACDynamicSignal</li>
@@ -364,298 +353,265 @@
 <li>RACReturnSignal</li>
 <li>RACChannelTerminal</li>
 </ul>
-
 <p>其中RACSubject，RACDynamicSignal用得比较多，后续会详细讲解</p>
-
 <h3 id="demo">Demo</h3>
-
 <p>下面会用一个场景来描述RACSignal是怎么运作的。</p>
-
-<pre><code class="language-objective-c">- (void)createSignalDemo {
-    //小明（signal），小明有个愿望，想吃水果（即block里面要做的事情）。
-    //家里没有水果，所以只能去水果店。（即RAC适合处理异步的时间，例如网络请求等）。
-    RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
-        //挑水果
-        NSLog(@&quot;小明挑选水果中...&quot;);
-        NSString *fruit = [self selectFruit];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">createSignalDemo</span> {
+    <span style="color:#75715e">//小明（signal），小明有个愿望，想吃水果（即block里面要做的事情）。
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//家里没有水果，所以只能去水果店。（即RAC适合处理异步的时间，例如网络请求等）。
+</span><span style="color:#75715e"></span>    RACSignal <span style="color:#f92672">*</span>signal <span style="color:#f92672">=</span> [RACSignal createSignal:<span style="color:#f92672">^</span>RACDisposable <span style="color:#f92672">*</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
+        <span style="color:#75715e">//挑水果
+</span><span style="color:#75715e"></span>        NSLog(<span style="color:#e6db74">@&#34;小明挑选水果中...&#34;</span>);
+        NSString <span style="color:#f92672">*</span>fruit <span style="color:#f92672">=</span> [self selectFruit];
         
-        //挑好水果，水果店老板(subscriber) 称重
-        [subscriber sendNext:fruit];
-        //水果店老板结算
-        [subscriber sendCompleted];
+        <span style="color:#75715e">//挑好水果，水果店老板(subscriber) 称重
+</span><span style="color:#75715e"></span>        [subscriber sendNext:fruit];
+        <span style="color:#75715e">//水果店老板结算
+</span><span style="color:#75715e"></span>        [subscriber sendCompleted];
         
-        //水果店老板发现小明没带钱，想偷了就跑
-        //complete和error是排斥的存在，只会触发一种。
-        [subscriber sendError:nil];
+        <span style="color:#75715e">//水果店老板发现小明没带钱，想偷了就跑
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//complete和error是排斥的存在，只会触发一种。
+</span><span style="color:#75715e"></span>        [subscriber sendError:nil];
         
-        return nil;
+        <span style="color:#66d9ef">return</span> nil;
     }];
     
-    //去水果店是一个耗时的操作，（即signal可以在后续任意时间段subscribeNext）。
-    //水果店里面有个老板，（即subscribeNext的时候就会创建一个subscriber）。
-    //老板有些行为，针对不同情况，做不同的事（即subscriber持有下面这些block）。
-    //到了水果店小明就挑水果（即subscribeNext后，会马上触发上边的block）。
-    [signal subscribeNext:^(id x) {
-        NSLog(@&quot;老板称重%@&quot;, x);
-    } error:^(NSError *error) {
-        NSLog(@&quot;报警&quot;);
-    } completed:^{
-        NSLog(@&quot;结算&quot;);
+    <span style="color:#75715e">//去水果店是一个耗时的操作，（即signal可以在后续任意时间段subscribeNext）。
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//水果店里面有个老板，（即subscribeNext的时候就会创建一个subscriber）。
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//老板有些行为，针对不同情况，做不同的事（即subscriber持有下面这些block）。
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//到了水果店小明就挑水果（即subscribeNext后，会马上触发上边的block）。
+</span><span style="color:#75715e"></span>    [signal subscribeNext:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+        NSLog(<span style="color:#e6db74">@&#34;老板称重%@&#34;</span>, x);
+    } error:<span style="color:#f92672">^</span>(NSError <span style="color:#f92672">*</span>error) {
+        NSLog(<span style="color:#e6db74">@&#34;报警&#34;</span>);
+    } completed:<span style="color:#f92672">^</span>{
+        NSLog(<span style="color:#e6db74">@&#34;结算&#34;</span>);
     }];
 }
 
-- (NSString *)selectFruit {
-    sleep(5);
-    //假设小明挑了5秒钟,在众多水果中挑了苹果
-    NSLog(@&quot;小明挑选了apple...&quot;);
-    return @&quot;apple&quot;;
+- (NSString <span style="color:#f92672">*</span>)<span style="color:#a6e22e">selectFruit</span> {
+    sleep(<span style="color:#ae81ff">5</span>);
+    <span style="color:#75715e">//假设小明挑了5秒钟,在众多水果中挑了苹果
+</span><span style="color:#75715e"></span>    NSLog(<span style="color:#e6db74">@&#34;小明挑选了apple...&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">@&#34;apple&#34;</span>;
 }
-</code></pre>
-
-<blockquote>
+</code></pre></div><blockquote>
 <p>2019-05-21 19:33:07.985581+0800 ReactiveCocoaDemo[52190:8753946] 小明挑选水果中&hellip;</p>
-
 <p>2019-05-21 19:33:12.986973+0800 ReactiveCocoaDemo[52190:8753946] 小明挑选了apple&hellip;</p>
-
 <p>2019-05-21 19:33:12.987353+0800 ReactiveCocoaDemo[52190:8753946] 老板称重apple</p>
-
 <p>2019-05-21 19:33:12.987594+0800 ReactiveCocoaDemo[52190:8753946] 结算</p>
 </blockquote>
-
 <h3 id="底层代码梳理">底层代码梳理</h3>
-
 <ol>
-<li><p>再调用构造方法createSignal的时候，其实是创建了RACDynamicSignal对象，并且持有didSubscribe这个block对象</p>
-
-<pre><code class="language-objective-c">@implementation RACSignal
+<li>再调用构造方法createSignal的时候，其实是创建了RACDynamicSignal对象，并且持有didSubscribe这个block对象</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACSignal</span>
 ...
-+ (RACSignal *)createSignal:(RACDisposable * (^)(id&lt;RACSubscriber&gt; subscriber))didSubscribe {
-	return [RACDynamicSignal createSignal:didSubscribe];
+<span style="color:#f92672">+</span> (RACSignal <span style="color:#f92672">*</span>)createSignal:(RACDisposable <span style="color:#f92672">*</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber))didSubscribe {
+	<span style="color:#66d9ef">return</span> [RACDynamicSignal createSignal:didSubscribe];
 }
 ...
-@end
+<span style="color:#66d9ef">@end</span>
   
-@implementation RACDynamicSignal
+<span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACDynamicSignal</span>
 ...
-#pragma mark Lifecycle
-+ (RACSignal *)createSignal:(RACDisposable * (^)(id&lt;RACSubscriber&gt; subscriber))didSubscribe {
-	RACDynamicSignal *signal = [[self alloc] init];
-	signal-&gt;_didSubscribe = [didSubscribe copy];
-	return [signal setNameWithFormat:@&quot;+createSignal:&quot;];
+<span style="color:#75715e">#pragma mark Lifecycle
+</span><span style="color:#75715e"></span><span style="color:#f92672">+</span> (RACSignal <span style="color:#f92672">*</span>)createSignal:(RACDisposable <span style="color:#f92672">*</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber))didSubscribe {
+	RACDynamicSignal <span style="color:#f92672">*</span>signal <span style="color:#f92672">=</span> [[self alloc] init];
+	signal<span style="color:#f92672">-&gt;</span>_didSubscribe <span style="color:#f92672">=</span> [didSubscribe <span style="color:#66d9ef">copy</span>];
+	<span style="color:#66d9ef">return</span> [signal setNameWithFormat:<span style="color:#e6db74">@&#34;+createSignal:&#34;</span>];
 }
 ...
-@end
-</code></pre></li>
-
-<li><p>调用subscribeNext的方法的时候，先创建了一个RACSubscriber对象，并持有nextBlock，errorBlock，completedBlock</p>
-
-<pre><code class="language-objective-c">@implementation RACSignal
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><ol start="2">
+<li>调用subscribeNext的方法的时候，先创建了一个RACSubscriber对象，并持有nextBlock，errorBlock，completedBlock</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACSignal</span>
 ...
-- (RACDisposable *)subscribeNext:(void (^)(id x))nextBlock error:(void (^)(NSError *error))errorBlock completed:(void (^)(void))completedBlock {
-	NSCParameterAssert(nextBlock != NULL);
-	NSCParameterAssert(errorBlock != NULL);
-	NSCParameterAssert(completedBlock != NULL);
+<span style="color:#f92672">-</span> (RACDisposable <span style="color:#f92672">*</span>)subscribeNext:(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span> x))nextBlock error:(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>)(NSError <span style="color:#f92672">*</span>error))errorBlock completed:(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">void</span>))completedBlock {
+	NSCParameterAssert(nextBlock <span style="color:#f92672">!=</span> NULL);
+	NSCParameterAssert(errorBlock <span style="color:#f92672">!=</span> NULL);
+	NSCParameterAssert(completedBlock <span style="color:#f92672">!=</span> NULL);
 	
-	RACSubscriber *o = [RACSubscriber subscriberWithNext:nextBlock error:errorBlock completed:completedBlock];
-	return [self subscribe:o];
+	RACSubscriber <span style="color:#f92672">*</span>o <span style="color:#f92672">=</span> [RACSubscriber subscriberWithNext:nextBlock error:errorBlock completed:completedBlock];
+	<span style="color:#66d9ef">return</span> [self subscribe:o];
 }
 ...
-@end
-</code></pre></li>
-
-<li><p>最终调用subscribe，每个子类都会重写这个方法。差异性就体现在这个方法。以下是RACDynamicSignal，基本上我们讨论RACSignal的都是这个类，在subscribe的时候，就会调用之前持有的didSubscribe，并把刚创建的RACSubscriber对象当作输入参数传入。</p>
-
-<pre><code class="language-objective-c">@implementation RACDynamicSignal
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><ol start="3">
+<li>最终调用subscribe，每个子类都会重写这个方法。差异性就体现在这个方法。以下是RACDynamicSignal，基本上我们讨论RACSignal的都是这个类，在subscribe的时候，就会调用之前持有的didSubscribe，并把刚创建的RACSubscriber对象当作输入参数传入。</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACDynamicSignal</span>
 ...
-- (RACDisposable *)subscribe:(id&lt;RACSubscriber&gt;)subscriber {
-	NSCParameterAssert(subscriber != nil);
+<span style="color:#f92672">-</span> (RACDisposable <span style="color:#f92672">*</span>)subscribe:(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span>)subscriber {
+	NSCParameterAssert(subscriber <span style="color:#f92672">!=</span> nil);
 
-	RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
-	subscriber = [[RACPassthroughSubscriber alloc] initWithSubscriber:subscriber signal:self disposable:disposable];
+	RACCompoundDisposable <span style="color:#f92672">*</span>disposable <span style="color:#f92672">=</span> [RACCompoundDisposable compoundDisposable];
+	subscriber <span style="color:#f92672">=</span> [[RACPassthroughSubscriber alloc] initWithSubscriber:subscriber signal:self disposable:disposable];
 
-	if (self.didSubscribe != NULL) {
-		RACDisposable *schedulingDisposable = [RACScheduler.subscriptionScheduler schedule:^{
-			RACDisposable *innerDisposable = self.didSubscribe(subscriber);
+	<span style="color:#66d9ef">if</span> (self.didSubscribe <span style="color:#f92672">!=</span> NULL) {
+		RACDisposable <span style="color:#f92672">*</span>schedulingDisposable <span style="color:#f92672">=</span> [RACScheduler.subscriptionScheduler schedule:<span style="color:#f92672">^</span>{
+			RACDisposable <span style="color:#f92672">*</span>innerDisposable <span style="color:#f92672">=</span> self.didSubscribe(subscriber);
 			[disposable addDisposable:innerDisposable];
 		}];
 
 		[disposable addDisposable:schedulingDisposable];
 	}
 	
-	return disposable;
+	<span style="color:#66d9ef">return</span> disposable;
 }
 ...
-@end
-</code></pre></li>
-
-<li><p>最后RACSubscriber对象会调用sendNext，sendCompleted或者sendError。因为执行了sendError或者sendCompleted会嗲用[self.disposable dispose]，所以这两个方法是互斥的。</p>
-
-<pre><code class="language-objective-c">@implementation RACSubscriber
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><ol start="4">
+<li>最后RACSubscriber对象会调用sendNext，sendCompleted或者sendError。因为执行了sendError或者sendCompleted会嗲用[self.disposable dispose]，所以这两个方法是互斥的。</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACSubscriber</span>
 ...
-- (void)sendNext:(id)value {
-	@synchronized (self) {
-		void (^nextBlock)(id) = [self.next copy];
-		if (nextBlock == nil) return;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)sendNext:(<span style="color:#66d9ef">id</span>)value {
+	<span style="color:#66d9ef">@synchronized</span> (self) {
+		<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>nextBlock)(<span style="color:#66d9ef">id</span>) <span style="color:#f92672">=</span> [self.next <span style="color:#66d9ef">copy</span>];
+		<span style="color:#66d9ef">if</span> (nextBlock <span style="color:#f92672">==</span> nil) <span style="color:#66d9ef">return</span>;
 
 		nextBlock(value);
 	}
 }
 
-- (void)sendError:(NSError *)e {
-	@synchronized (self) {
-		void (^errorBlock)(NSError *) = [self.error copy];
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)sendError:(NSError <span style="color:#f92672">*</span>)e {
+	<span style="color:#66d9ef">@synchronized</span> (self) {
+		<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>errorBlock)(NSError <span style="color:#f92672">*</span>) <span style="color:#f92672">=</span> [self.error <span style="color:#66d9ef">copy</span>];
 		[self.disposable dispose];
 
-		if (errorBlock == nil) return;
+		<span style="color:#66d9ef">if</span> (errorBlock <span style="color:#f92672">==</span> nil) <span style="color:#66d9ef">return</span>;
 		errorBlock(e);
 	}
 }
 
-- (void)sendCompleted {
-	@synchronized (self) {
-		void (^completedBlock)(void) = [self.completed copy];
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)sendCompleted {
+	<span style="color:#66d9ef">@synchronized</span> (self) {
+		<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>completedBlock)(<span style="color:#66d9ef">void</span>) <span style="color:#f92672">=</span> [self.completed <span style="color:#66d9ef">copy</span>];
 		[self.disposable dispose];
 
-		if (completedBlock == nil) return;
+		<span style="color:#66d9ef">if</span> (completedBlock <span style="color:#f92672">==</span> nil) <span style="color:#66d9ef">return</span>;
 		completedBlock();
 	}
 }
 ...
-@end
-</code></pre></li>
-</ol>
-
-<h2 id="racsubject">RACSubject</h2>
-
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><h2 id="racsubject">RACSubject</h2>
 <p>RACSubject继承于RACSignal，既是信号监听者，也是信号触发器，也就是自导自演。</p>
-
 <h3 id="demo-1">Demo</h3>
-
-<pre><code class="language-objective-c">- (void)subjectDemo {
-    RACSubject *subject = [RACSubject subject];
-    //subject是一个简单的signal
-    //每次subscribeNext的时候都会创建一个subscriber，subscriber会持有block，然后加入subscribers数组中
-    [subject subscribeNext:^(id x) {
-        NSLog(@&quot;1--%@&quot;,x);
-    } error:^(NSError *error) {
-        NSLog(@&quot;1--%@&quot;, error.localizedDescription);
-    } completed:^{
-        NSLog(@&quot;1--completed&quot;);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">subjectDemo</span> {
+    RACSubject <span style="color:#f92672">*</span>subject <span style="color:#f92672">=</span> [RACSubject subject];
+    <span style="color:#75715e">//subject是一个简单的signal
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//每次subscribeNext的时候都会创建一个subscriber，subscriber会持有block，然后加入subscribers数组中
+</span><span style="color:#75715e"></span>    [subject subscribeNext:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+        NSLog(<span style="color:#e6db74">@&#34;1--%@&#34;</span>,x);
+    } error:<span style="color:#f92672">^</span>(NSError <span style="color:#f92672">*</span>error) {
+        NSLog(<span style="color:#e6db74">@&#34;1--%@&#34;</span>, error.localizedDescription);
+    } completed:<span style="color:#f92672">^</span>{
+        NSLog(<span style="color:#e6db74">@&#34;1--completed&#34;</span>);
     }];
     
-    [subject subscribeNext:^(id x) {
-        NSLog(@&quot;2--%@&quot;,x);
-    } error:^(NSError *error) {
-        NSLog(@&quot;2--%@&quot;, error.localizedDescription);
-    } completed:^{
-        NSLog(@&quot;2--completed&quot;);
+    [subject subscribeNext:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+        NSLog(<span style="color:#e6db74">@&#34;2--%@&#34;</span>,x);
+    } error:<span style="color:#f92672">^</span>(NSError <span style="color:#f92672">*</span>error) {
+        NSLog(<span style="color:#e6db74">@&#34;2--%@&#34;</span>, error.localizedDescription);
+    } completed:<span style="color:#f92672">^</span>{
+        NSLog(<span style="color:#e6db74">@&#34;2--completed&#34;</span>);
     }];
     
-    //sendNext的时候，就会遍历subscribers数组，执行subscriber的block
-    [subject sendNext:@&quot;x&quot;];
-    [subject sendNext:@&quot;y&quot;];
-    [subject sendError:[NSError errorWithDomain:@&quot;1&quot; code:0x11 userInfo:nil]];
+    <span style="color:#75715e">//sendNext的时候，就会遍历subscribers数组，执行subscriber的block
+</span><span style="color:#75715e"></span>    [subject sendNext:<span style="color:#e6db74">@&#34;x&#34;</span>];
+    [subject sendNext:<span style="color:#e6db74">@&#34;y&#34;</span>];
+    [subject sendError:[NSError errorWithDomain:<span style="color:#e6db74">@&#34;1&#34;</span> code:<span style="color:#ae81ff">0x11</span> userInfo:nil]];
 }
-</code></pre>
-
-<blockquote>
+</code></pre></div><blockquote>
 <p>2019-05-21 19:27:47.613451+0800 ReactiveCocoaDemo[52109:8748972] 1&ndash;x</p>
-
 <p>2019-05-21 19:27:47.613560+0800 ReactiveCocoaDemo[52109:8748972] 2&ndash;x</p>
-
 <p>2019-05-21 19:27:47.613631+0800 ReactiveCocoaDemo[52109:8748972] 1&ndash;y</p>
-
 <p>2019-05-21 19:27:47.613707+0800 ReactiveCocoaDemo[52109:8748972] 2&ndash;y</p>
-
 <p>2019-05-21 19:27:47.615153+0800 ReactiveCocoaDemo[52109:8748972] 1&ndash;The operation couldn’t be completed. (1 error 17.)</p>
-
 <p>2019-05-21 19:27:47.615283+0800 ReactiveCocoaDemo[52109:8748972] 2&ndash;The operation couldn’t be completed. (1 error 17.)</p>
 </blockquote>
-
 <h3 id="底层代码梳理-1">底层代码梳理</h3>
-
 <ol>
-<li><p>RACSubject继承于RACSignal，并实现RACSubscriber协议</p>
+<li>RACSubject继承于RACSignal，并实现RACSubscriber协议</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@interface</span> <span style="color:#a6e22e">RACSubject</span> : <span style="color:#a6e22e">RACSignal</span> <span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span>
+<span style="color:#75715e">/// Returns a new subject.
+</span><span style="color:#75715e"></span><span style="color:#f92672">+</span> (<span style="color:#66d9ef">instancetype</span>)subject;
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><ol start="2">
+<li>RACSubject是一个Signal，维护了一个数组subscribers，并且重写了subscribe方法，每次subscribeNext的时候都会往这个数组添加新的subscriber。</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACSubject</span>
+<span style="color:#75715e">//重写subscribe方法，每次subscribeNext就会触发这个
+</span><span style="color:#75715e"></span>- (RACDisposable <span style="color:#f92672">*</span>)<span style="color:#a6e22e">subscribe:</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span>)subscriber {
+	NSCParameterAssert(subscriber <span style="color:#f92672">!=</span> nil);
 
-<pre><code class="language-objective-c">@interface RACSubject : RACSignal &lt;RACSubscriber&gt;
-/// Returns a new subject.
-+ (instancetype)subject;
-@end
-</code></pre></li>
+	RACCompoundDisposable <span style="color:#f92672">*</span>disposable <span style="color:#f92672">=</span> [RACCompoundDisposable compoundDisposable];
+	subscriber <span style="color:#f92672">=</span> [[RACPassthroughSubscriber alloc] initWithSubscriber:subscriber signal:self disposable:disposable];
 
-<li><p>RACSubject是一个Signal，维护了一个数组subscribers，并且重写了subscribe方法，每次subscribeNext的时候都会往这个数组添加新的subscriber。</p>
-
-<pre><code class="language-objective-c">@implementation RACSubject
-//重写subscribe方法，每次subscribeNext就会触发这个
-- (RACDisposable *)subscribe:(id&lt;RACSubscriber&gt;)subscriber {
-	NSCParameterAssert(subscriber != nil);
-
-	RACCompoundDisposable *disposable = [RACCompoundDisposable compoundDisposable];
-	subscriber = [[RACPassthroughSubscriber alloc] initWithSubscriber:subscriber signal:self disposable:disposable];
-
-	NSMutableArray *subscribers = self.subscribers;
-//把subscriber添加到数组中，并加锁防止多线程冲突
-	@synchronized (subscribers) {
+	NSMutableArray <span style="color:#f92672">*</span>subscribers <span style="color:#f92672">=</span> self.subscribers;
+  <span style="color:#75715e">//把subscriber添加到数组中，并加锁防止多线程冲突
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">@synchronized</span> (subscribers) {
 		[subscribers addObject:subscriber];
 	}
 	
-	return [RACDisposable disposableWithBlock:^{
-		@synchronized (subscribers) {
-			// Since newer subscribers are generally shorter-lived, search
-			// starting from the end of the list.
-			NSUInteger index = [subscribers indexOfObjectWithOptions:NSEnumerationReverse passingTest:^ BOOL (id&lt;RACSubscriber&gt; obj, NSUInteger index, BOOL *stop) {
-				return obj == subscriber;
+	<span style="color:#66d9ef">return</span> [RACDisposable disposableWithBlock:<span style="color:#f92672">^</span>{
+		<span style="color:#66d9ef">@synchronized</span> (subscribers) {
+			<span style="color:#75715e">// Since newer subscribers are generally shorter-lived, search
+</span><span style="color:#75715e"></span>			<span style="color:#75715e">// starting from the end of the list.
+</span><span style="color:#75715e"></span>			NSUInteger index <span style="color:#f92672">=</span> [subscribers indexOfObjectWithOptions:NSEnumerationReverse passingTest:<span style="color:#f92672">^</span> <span style="color:#66d9ef">BOOL</span> (<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> obj, NSUInteger index, <span style="color:#66d9ef">BOOL</span> <span style="color:#f92672">*</span>stop) {
+				<span style="color:#66d9ef">return</span> obj <span style="color:#f92672">==</span> subscriber;
 			}];
 
-			if (index != NSNotFound) [subscribers removeObjectAtIndex:index];
+			<span style="color:#66d9ef">if</span> (index <span style="color:#f92672">!=</span> NSNotFound) [subscribers removeObjectAtIndex:index];
 		}
 	}];
 }
-@end
-</code></pre></li>
-
-<li><p>RACSubject实现了RACSubscriber协议，具备sendNext，sendError，sendCompletion等方法。在调用这几个方法的时候会遍历self.subscribers，然后会一一执行subscriber持有的sendNext</p>
-
-<pre><code class="language-objective-c">@implementation RACSubject
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><ol start="3">
+<li>RACSubject实现了RACSubscriber协议，具备sendNext，sendError，sendCompletion等方法。在调用这几个方法的时候会遍历self.subscribers，然后会一一执行subscriber持有的sendNext</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">RACSubject</span>
 ...
-//遍历subscribers数组，执行响应的block
-- (void)enumerateSubscribersUsingBlock:(void (^)(id&lt;RACSubscriber&gt; subscriber))block {
-	NSArray *subscribers;
-	@synchronized (self.subscribers) {
-		subscribers = [self.subscribers copy];
+<span style="color:#75715e">//遍历subscribers数组，执行响应的block
+</span><span style="color:#75715e"></span><span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)enumerateSubscribersUsingBlock:(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber))block {
+	NSArray <span style="color:#f92672">*</span>subscribers;
+	<span style="color:#66d9ef">@synchronized</span> (self.subscribers) {
+		subscribers <span style="color:#f92672">=</span> [self.subscribers <span style="color:#66d9ef">copy</span>];
 	}
 
-	for (id&lt;RACSubscriber&gt; subscriber in subscribers) {
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber <span style="color:#66d9ef">in</span> subscribers) {
 		block(subscriber);
 	}
 }
 
-- (void)sendNext:(id)value {
-	[self enumerateSubscribersUsingBlock:^(id&lt;RACSubscriber&gt; subscriber) {
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)sendNext:(<span style="color:#66d9ef">id</span>)value {
+	[self enumerateSubscribersUsingBlock:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
 		[subscriber sendNext:value];
 	}];
 }
 
-- (void)sendError:(NSError *)error {
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)sendError:(NSError <span style="color:#f92672">*</span>)error {
 	[self.disposable dispose];
 	
-	[self enumerateSubscribersUsingBlock:^(id&lt;RACSubscriber&gt; subscriber) {
+	[self enumerateSubscribersUsingBlock:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
 		[subscriber sendError:error];
 	}];
 }
 
-- (void)sendCompleted {
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)sendCompleted {
 	[self.disposable dispose];
 	
-	[self enumerateSubscribersUsingBlock:^(id&lt;RACSubscriber&gt; subscriber) {
+	[self enumerateSubscribersUsingBlock:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
 		[subscriber sendCompleted];
 	}];
 }
 ...
-@end
-</code></pre></li>
-</ol>
-
+<span style="color:#66d9ef">@end</span>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">

@@ -54,8 +54,8 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-12-09 21:16:22 \x2b0800 CST",
-    "dateModified" : "2019-12-09 21:16:22 \x2b0800 CST",
+    "datePublished": "2019-12-09 21:16:22 \u002b0800 CST",
+    "dateModified" : "2019-12-09 21:16:22 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/20191209popupcenter\/",
     "wordCount" : "360",
     "keywords" : [ "Runloop","KVO","Runtime","Category", "拾忆"]
@@ -151,220 +151,176 @@
           
           
 
-          
-
-<h2 id="背景">背景</h2>
-
+          <h2 id="背景">背景</h2>
 <p>在平时的开发中，会有很多弹窗的需求，尤其是在首页（版本升级，运营活动）等等</p>
-
 <p>但是很多时候都是由不同的童鞋开发，而且基本都是依赖于网络接口，所以先后顺序都是无法保证</p>
-
 <p>这就导致一个后果，弹窗泛滥成灾</p>
-
 <p>另外我们可以发现，系统自带的AlertView是有队列管理的，总是消失了一个弹窗以后，再显示下一个弹窗</p>
-
 <p>于是便有了这个Popup队列管理中心</p>
-
 <h2 id="雏形">雏形</h2>
-
 <p>在开发前，我们可以大概的设想一下这个的设计雏形</p>
-
 <p>有一个Popup管理类，由这个类维护一个数组，外部调用该类的API将弹窗添加到这个数组中</p>
-
 <p>外部在消失弹窗的时候，调用该类的API将该弹窗从这个数组中移除</p>
-
 <p>最后从队列中取出下一次弹窗进行展示</p>
-
 <p>以上方式有几个弊端</p>
-
 <ol>
-<li><p>接入方式过于复杂</p></li>
-
-<li><p>使用者需要关心的太多了，如果哪个童鞋在消失自己的弹窗的时候，忘记了从队列中移除，并且没有从队列中取出下一个弹窗进行展示，那队列中的其他弹窗都将永不见天日</p></li>
+<li>
+<p>接入方式过于复杂</p>
+</li>
+<li>
+<p>使用者需要关心的太多了，如果哪个童鞋在消失自己的弹窗的时候，忘记了从队列中移除，并且没有从队列中取出下一个弹窗进行展示，那队列中的其他弹窗都将永不见天日</p>
+</li>
 </ol>
-
 <h2 id="原理">原理</h2>
-
 <p>为了解决以上问题，该项目运用了几个Objective-C底层的原理，下面将一一剖析</p>
-
 <p>为了不让使用者在消失自己的弹窗后，需要手动从队列中移除，并且唤醒下一个弹窗</p>
-
 <p>最开始我想到的是定时任务，但是后面觉得定时任务不是很优雅，后面选择了监听<strong>Runloop</strong>运行状态变化</p>
-
 <h3 id="runloop">Runloop</h3>
-
-<pre><code class="language-objective-c">- (instancetype)init {
-    self = [super init];
-    if (self) {
-				//创建一个以和屏幕刷新率相同的频率的定时器
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(wakeup)];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">instancetype</span>)<span style="color:#a6e22e">init</span> {
+    self <span style="color:#f92672">=</span> [super init];
+    <span style="color:#66d9ef">if</span> (self) {
+				<span style="color:#75715e">//创建一个以和屏幕刷新率相同的频率的定时器
+</span><span style="color:#75715e"></span>        _displayLink <span style="color:#f92672">=</span> [CADisplayLink displayLinkWithTarget:self selector:<span style="color:#66d9ef">@selector</span>(wakeup)];
         [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-        dispatch_async(dispatch_get_main_queue(), ^{
-          //添加Runloop监听者
-            [self addRunloopObserver];
+        dispatch_async(dispatch_get_main_queue(), <span style="color:#f92672">^</span>{
+          <span style="color:#75715e">//添加Runloop监听者
+</span><span style="color:#75715e"></span>            [self addRunloopObserver];
         });
     }
-    return self;
+    <span style="color:#66d9ef">return</span> self;
 }
 
-- (void)addRunloopObserver {
-  //获取当前runloop
-    CFRunLoopRef runloop = CFRunLoopGetCurrent();
-  //创建context
-    CFRunLoopObserverContext context = {0, (__bridge void *)self, &amp;CFRetain, &amp;CFRelease, NULL};
-  //创建runloop监听者
-    static CFRunLoopObserverRef defaultModeObserver;
-  /*其中runloop的状态有如下几种，这里监听的是kCFRunLoopBeforeWaiting
-  	kCFRunLoopEntry = (1UL &lt;&lt; 0),
-    kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),
-    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),
-    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),
-    kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),
-    kCFRunLoopExit = (1UL &lt;&lt; 7),
-    kCFRunLoopAllActivities = 0x0FFFFFFFU
-  */
-    defaultModeObserver = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeWaiting, YES, 0, &amp;callback, &amp;context);
-  //为当前runloop添加runloop监听者
-    CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes);
+- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">addRunloopObserver</span> {
+  <span style="color:#75715e">//获取当前runloop
+</span><span style="color:#75715e"></span>    CFRunLoopRef runloop <span style="color:#f92672">=</span> CFRunLoopGetCurrent();
+  <span style="color:#75715e">//创建context
+</span><span style="color:#75715e"></span>    CFRunLoopObserverContext context <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>, (<span style="color:#66d9ef">__bridge</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)self, <span style="color:#f92672">&amp;</span>CFRetain, <span style="color:#f92672">&amp;</span>CFRelease, NULL};
+  <span style="color:#75715e">//创建runloop监听者
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> CFRunLoopObserverRef defaultModeObserver;
+  <span style="color:#75715e">/*其中runloop的状态有如下几种，这里监听的是kCFRunLoopBeforeWaiting
+</span><span style="color:#75715e">  	kCFRunLoopEntry = (1UL &lt;&lt; 0),
+</span><span style="color:#75715e">    kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),
+</span><span style="color:#75715e">    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),
+</span><span style="color:#75715e">    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),
+</span><span style="color:#75715e">    kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),
+</span><span style="color:#75715e">    kCFRunLoopExit = (1UL &lt;&lt; 7),
+</span><span style="color:#75715e">    kCFRunLoopAllActivities = 0x0FFFFFFFU
+</span><span style="color:#75715e">  */</span>
+    defaultModeObserver <span style="color:#f92672">=</span> CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeWaiting, YES, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>callback, <span style="color:#f92672">&amp;</span>context);
+  <span style="color:#75715e">//为当前runloop添加runloop监听者
+</span><span style="color:#75715e"></span>    CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes);
     CFRelease(defaultModeObserver);
 }
 
-void callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
-    //Runloop 回调，在这里面可以管理Popup队列
-}
-</code></pre>
-
-<p>截止，就完成了利用Runloop取代定时任务，对Popup队列进行定时管理</p>
-
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">callback</span>(CFRunLoopObserverRef observer, CFRunLoopActivity activity, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>info) {
+    <span style="color:#75715e">//Runloop 回调，在这里面可以管理Popup队列
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>截止，就完成了利用Runloop取代定时任务，对Popup队列进行定时管理</p>
 <h3 id="kvo">KVO</h3>
-
 <p>为了简化使用者调用，不需要使用者自己将类添加到队列中</p>
-
 <p>一开始想着定义一个show的接口方法，然后添加NSObject的分类，在load里面通过hook的方式，动态替换show成swizzle方法，在swizzle方法里面将popup添加进队列</p>
-
 <p>想法是挺美好的，但是现实是残酷的，因为hook是不能影响到子类的</p>
-
 <p>后面苦思冥想，想有什么办法通过监听方法是否有被调用</p>
-
 <p>最终醍醐灌顶，参照了系统的<strong>KVO</strong>原理，通过创建派生类方式，再利用runtime，hook原有的show方法</p>
-
-<pre><code class="language-objective-c">- (void)ssp_registerToPopupCenter {
-    BOOL flag = [self conformsToProtocol:@protocol(SSPPopupProtocol)];
-    NSString *msg = [NSString stringWithFormat:@&quot;%@ should conform SSPPopupProtocol&quot;, NSStringFromClass([self class])];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">ssp_registerToPopupCenter</span> {
+    <span style="color:#66d9ef">BOOL</span> flag <span style="color:#f92672">=</span> [self conformsToProtocol:@protocol(SSPPopupProtocol)];
+    NSString <span style="color:#f92672">*</span>msg <span style="color:#f92672">=</span> [NSString stringWithFormat:<span style="color:#e6db74">@&#34;%@ should conform SSPPopupProtocol&#34;</span>, NSStringFromClass([self <span style="color:#66d9ef">class</span>])];
     NSAssert(flag, msg);
     
-  //创建派生类
-    NSString * className = [NSString stringWithFormat:@&quot;SSPPopupCenter_%@&quot;,NSStringFromClass(self.class)];
-    const char *cla = className.UTF8String;
-    Class subP = objc_allocateClassPair([self class], cla, 0);
+  <span style="color:#75715e">//创建派生类
+</span><span style="color:#75715e"></span>    NSString <span style="color:#f92672">*</span> className <span style="color:#f92672">=</span> [NSString stringWithFormat:<span style="color:#e6db74">@&#34;SSPPopupCenter_%@&#34;</span>,NSStringFromClass(self.<span style="color:#66d9ef">class</span>)];
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>cla <span style="color:#f92672">=</span> className.UTF8String;
+    <span style="color:#66d9ef">Class</span> subP <span style="color:#f92672">=</span> objc_allocateClassPair([self <span style="color:#66d9ef">class</span>], cla, <span style="color:#ae81ff">0</span>);
     
-    if (nil != subP &amp;&amp; ![subP isKindOfClass:[self class]]) {
-      //替换原有的show的方法，该方法是通过协议约束的
-        [self swizzleClass:subP method:@selector(ssp_show) swizzledSelector:@selector(ssp_swizzle_show)];
+    <span style="color:#66d9ef">if</span> (nil <span style="color:#f92672">!=</span> subP <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>[subP isKindOfClass:[self <span style="color:#66d9ef">class</span>]]) {
+      <span style="color:#75715e">//替换原有的show的方法，该方法是通过协议约束的
+</span><span style="color:#75715e"></span>        [self swizzleClass:subP method:<span style="color:#66d9ef">@selector</span>(ssp_show) swizzledSelector:<span style="color:#66d9ef">@selector</span>(ssp_swizzle_show)];
         
-      //如果实现了hide的方法，同样也替换
-        if (nil != class_getInstanceMethod([self class], @selector(ssp_hide))) {
-            [self swizzleClass:subP method:@selector(ssp_hide) swizzledSelector:@selector(ssp_swizzle_hide)];
+      <span style="color:#75715e">//如果实现了hide的方法，同样也替换
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (nil <span style="color:#f92672">!=</span> class_getInstanceMethod([self <span style="color:#66d9ef">class</span>], <span style="color:#66d9ef">@selector</span>(ssp_hide))) {
+            [self swizzleClass:subP method:<span style="color:#66d9ef">@selector</span>(ssp_hide) swizzledSelector:<span style="color:#66d9ef">@selector</span>(ssp_swizzle_hide)];
         }
         
-        [self addClass:[self class] method:@selector(ssp_level)];
-        [self addClass:[self class] method:@selector(setSsp_level:)];
+        [self addClass:[self <span style="color:#66d9ef">class</span>] method:<span style="color:#66d9ef">@selector</span>(ssp_level)];
+        [self addClass:[self <span style="color:#66d9ef">class</span>] method:<span style="color:#66d9ef">@selector</span>(setSsp_level:)];
         
-      //注册派生类
-        objc_registerClassPair(subP);
-    } else {
-      //获取派生类
-        subP = objc_getClass(cla);
+      <span style="color:#75715e">//注册派生类
+</span><span style="color:#75715e"></span>        objc_registerClassPair(subP);
+    } <span style="color:#66d9ef">else</span> {
+      <span style="color:#75715e">//获取派生类
+</span><span style="color:#75715e"></span>        subP <span style="color:#f92672">=</span> objc_getClass(cla);
     }
-  //修改对象的isa指针为派生类
-    object_setClass(self, subP);
+  <span style="color:#75715e">//修改对象的isa指针为派生类
+</span><span style="color:#75715e"></span>    object_setClass(self, subP);
 }
-</code></pre>
-
-<h3 id="runtime">Runtime</h3>
-
+</code></pre></div><h3 id="runtime">Runtime</h3>
 <p>以下是hook的普遍方式，但大多数人都是直接拷贝，拷贝的版本也是多样化，因为他们没有真正的看过里面的实现</p>
-
 <p>下面将大概讲解一下</p>
-
-<pre><code class="language-objective-c">- (void)swizzleClass:(Class)clazz method:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector {
-  //通过selector的名字，搜索该类的方法列表中是否有该方法
-    Method originalMethod = class_getInstanceMethod(clazz, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(clazz, swizzledSelector);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">swizzleClass:</span>(<span style="color:#66d9ef">Class</span>)clazz <span style="color:#a6e22e">method:</span>(<span style="color:#66d9ef">SEL</span>)originalSelector <span style="color:#a6e22e">swizzledSelector:</span>(<span style="color:#66d9ef">SEL</span>)swizzledSelector {
+  <span style="color:#75715e">//通过selector的名字，搜索该类的方法列表中是否有该方法
+</span><span style="color:#75715e"></span>    Method originalMethod <span style="color:#f92672">=</span> class_getInstanceMethod(clazz, originalSelector);
+    Method swizzledMethod <span style="color:#f92672">=</span> class_getInstanceMethod(clazz, swizzledSelector);
     
-  //如果两个方法都有，则直接替换两个方法的实现
-    if (originalMethod &amp;&amp; swizzledMethod) {
+  <span style="color:#75715e">//如果两个方法都有，则直接替换两个方法的实现
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (originalMethod <span style="color:#f92672">&amp;&amp;</span> swizzledMethod) {
         method_exchangeImplementations(originalMethod, swizzledMethod);
-        return;
+        <span style="color:#66d9ef">return</span>;
     }
    
-  //如果swizzle方法没有，则动态添加，一般如果是利用分类hook，那么一般swizzle方法也是有的
-    if (nil == swizzledMethod) {
-        BOOL didAddMethod = class_addMethod(clazz,
+  <span style="color:#75715e">//如果swizzle方法没有，则动态添加，一般如果是利用分类hook，那么一般swizzle方法也是有的
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (nil <span style="color:#f92672">==</span> swizzledMethod) {
+        <span style="color:#66d9ef">BOOL</span> didAddMethod <span style="color:#f92672">=</span> class_addMethod(clazz,
                                             swizzledSelector,
                                             method_getImplementation(originalMethod),
                                             method_getTypeEncoding(originalMethod));
-        if (didAddMethod) {
-            swizzledMethod = class_getInstanceMethod(clazz, swizzledSelector);
+        <span style="color:#66d9ef">if</span> (didAddMethod) {
+            swizzledMethod <span style="color:#f92672">=</span> class_getInstanceMethod(clazz, swizzledSelector);
         }
     }
 
-  //最终将原来的方法具体实现替换成swizzle方法的实现
-    if (swizzledMethod) {
+  <span style="color:#75715e">//最终将原来的方法具体实现替换成swizzle方法的实现
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (swizzledMethod) {
         class_replaceMethod(clazz,
                             originalSelector,
                             method_getImplementation(swizzledMethod),
                             method_getTypeEncoding(swizzledMethod));
     }
 }
-</code></pre>
-
-<h3 id="category">Category</h3>
-
+</code></pre></div><h3 id="category">Category</h3>
 <p>弹窗有时候是有优先级的，该项目里在协议中定义了一个属性<strong>ssp_level</strong>， 定义如下：</p>
-
-<pre><code class="language-objective-c">typedef enum : NSUInteger {
-    SSPPopupActivityLevelNormal,	//默认优先级
-    SSPPopupActivityLevelHigh,		//高优先级，会优先插到前面
-} SSPPopupActivityLevel;
-</code></pre>
-
-<p>大家都知道Category正常是不能添加属性的，要添加属性需要用到Runtime，下面就是具体实现</p>
-
-<pre><code class="language-objective-c">- (void)ssp_registerToPopupCenter {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">enum</span> <span style="color:#f92672">:</span> NSUInteger {
+    SSPPopupActivityLevelNormal,	<span style="color:#75715e">//默认优先级
+</span><span style="color:#75715e"></span>    SSPPopupActivityLevelHigh,		<span style="color:#75715e">//高优先级，会优先插到前面
+</span><span style="color:#75715e"></span>} SSPPopupActivityLevel;
+</code></pre></div><p>大家都知道Category正常是不能添加属性的，要添加属性需要用到Runtime，下面就是具体实现</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">ssp_registerToPopupCenter</span> {
     ...
-      //添加ssp_level对应的getter，setter方法
-        [self addClass:[self class] method:@selector(ssp_level)];
-        [self addClass:[self class] method:@selector(setSsp_level:)];
+      <span style="color:#75715e">//添加ssp_level对应的getter，setter方法
+</span><span style="color:#75715e"></span>        [self addClass:[self <span style="color:#66d9ef">class</span>] method:<span style="color:#66d9ef">@selector</span>(ssp_level)];
+        [self addClass:[self <span style="color:#66d9ef">class</span>] method:<span style="color:#66d9ef">@selector</span>(setSsp_level:)];
     ...
 }
 
-- (void)addClass:(Class)clazz method:(SEL)selector {
-    Method method = class_getInstanceMethod(clazz, selector);
-    BOOL didAddMethod = class_addMethod(clazz,
+- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">addClass:</span>(<span style="color:#66d9ef">Class</span>)clazz <span style="color:#a6e22e">method:</span>(<span style="color:#66d9ef">SEL</span>)selector {
+    Method method <span style="color:#f92672">=</span> class_getInstanceMethod(clazz, selector);
+    <span style="color:#66d9ef">BOOL</span> didAddMethod <span style="color:#f92672">=</span> class_addMethod(clazz,
                                         selector,
                                         method_getImplementation(method),
                                         method_getTypeEncoding(method));
-    NSAssert(didAddMethod, @&quot;add method failure&quot;);
+    NSAssert(didAddMethod, <span style="color:#e6db74">@&#34;add method failure&#34;</span>);
 }
 
-- (SSPPopupActivityLevel)ssp_level {
-    return [objc_getAssociatedObject(self, &amp;kSSPopupCenterLevel) integerValue];
+- (SSPPopupActivityLevel)<span style="color:#a6e22e">ssp_level</span> {
+    <span style="color:#66d9ef">return</span> [objc_getAssociatedObject(self, <span style="color:#f92672">&amp;</span>kSSPopupCenterLevel) integerValue];
 }
 
-- (void)setSsp_level:(SSPPopupActivityLevel)level {
-    objc_setAssociatedObject(self, &amp;kSSPopupCenterLevel, @(level), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">setSsp_level:</span>(SSPPopupActivityLevel)level {
+    objc_setAssociatedObject(self, <span style="color:#f92672">&amp;</span>kSSPopupCenterLevel, <span style="color:#ae81ff">@(</span>level<span style="color:#ae81ff">)</span>, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-</code></pre>
-
-<p>至此，就完成了所有的核心功能，剩下的就是对队列的管理，这个无非就是操作一个数组，就不在此展开了</p>
-
+</code></pre></div><p>至此，就完成了所有的核心功能，剩下的就是对队列的管理，这个无非就是操作一个数组，就不在此展开了</p>
 <h2 id="后记">后记</h2>
-
 <p>后面可以将系统的AlertView也管理起来，不过现在还没有想好一个比较优雅的方案</p>
-
 <h2 id="源码">源码</h2>
-
 <p>具体源码请前往：<strong><a href="https://github.com/huanghg/SSPPopupCenter">SSPPopupCenter</a></strong></p>
 
     </div>

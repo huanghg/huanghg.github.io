@@ -44,9 +44,9 @@
          "@id": "http:\/\/huanghg.github.io\/"
     },
     "articleSection" : "posts",
-    "name" : "使用Hugo \x26 GitHub Pages 制作静态个人博客",
-    "headline" : "使用Hugo \x26 GitHub Pages 制作静态个人博客",
-    "description" : "Hugo \x26 GitHub Pages 制作静态个人博客",
+    "name" : "使用Hugo \u0026 GitHub Pages 制作静态个人博客",
+    "headline" : "使用Hugo \u0026 GitHub Pages 制作静态个人博客",
+    "description" : "Hugo \u0026 GitHub Pages 制作静态个人博客",
     "inLanguage" : "zh-cn",
     "author" : "拾忆",
     "creator" : "拾忆",
@@ -54,10 +54,10 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-11-06 16:58:13 \x2b0800 CST",
-    "dateModified" : "2019-11-06 16:58:13 \x2b0800 CST",
+    "datePublished": "2019-11-06 16:58:13 \u002b0800 CST",
+    "dateModified" : "2019-11-06 16:58:13 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/blog\/",
-    "wordCount" : "456",
+    "wordCount" : "458",
     "keywords" : [ "Hugo","GitHub Pages", "拾忆"]
 }
 </script>
@@ -132,7 +132,7 @@
                         <a href="http://huanghg.github.io/categories/%E6%9D%82%E6%8A%80%E6%B5%85%E5%B0%9D/"> 杂技浅尝 </a>
                         
                 </span>
-                <span class="post-word-count">, 456 words</span>
+                <span class="post-word-count">, 458 words</span>
         </div>
     </header>
     <div class="post-content">
@@ -153,191 +153,140 @@
           
           
 
-          
-
-<h2 id="背景">背景</h2>
-
+          <h2 id="背景">背景</h2>
 <p>最近在着手搭建自己的个人博客，博客的好处想必大家都知道好处有很多，下面列举了几条仅供大家参考：</p>
-
 <ul>
 <li>沉淀所学知识，搭建知识体系。（这是最重要的）</li>
 <li>千里马常有，而伯乐也需要一个平台去认识你。</li>
 <li>结识志同道合之士</li>
 <li>于智者，抛砖引玉；于惑者，授业解惑</li>
 </ul>
-
 <p>但是在搭建的过程中，遇到很多坑，特此写这篇文章记录一下，希望可以帮助到其他童鞋。</p>
-
 <p>搭建个人博客方法有很多，最简单的方法，只需要fork一个现有的博客，并将工程名修改为{github-username}.github.io，然后替换自己的博文既可。虽然也可以达到效果，但是体验不到自己动手搭建的乐趣。</p>
-
 <p>下面就介绍一下Hugo &amp; GitHub Pages搭建的过程。</p>
-
 <h2 id="简介">简介</h2>
-
 <h3 id="hugo">Hugo</h3>
-
 <blockquote>
 <p>Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。</p>
 </blockquote>
-
 <p><code>hugo</code>的安装流程请见<a href="https://www.gohugo.org">中文官网</a> 或<a href="https://gohugo.io">英文官网</a>，此处就做不详细介绍。这里更多的想要描述一下<code>hugo</code>的用法，及相关文件夹的功能，以及如何配置<code>hugo</code>。</p>
-
-<pre><code class="language-shell">➜  `GitHub` hugo new site `blogname` //blogname任君喜欢
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  <span style="color:#e6db74">`</span>GitHub<span style="color:#e6db74">`</span> hugo new site <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> //blogname任君喜欢
 
 Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname.
 
-Just a few more steps and you're ready to go:
+Just a few more steps and you<span style="color:#960050;background-color:#1e0010">&#39;</span>re ready to go:
 
 1. Download a theme into the same-named folder.
    Choose a theme from https://themes.gohugo.io/ or
-   create your own with the &quot;hugo new theme &lt;THEMENAME&gt;&quot; command.
+   create your own with the <span style="color:#e6db74">&#34;hugo new theme &lt;THEMENAME&gt;&#34;</span> command.
 2. Perhaps you want to add some content. You can add single files
-   with &quot;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&quot;.
-3. Start the built-in live server via &quot;hugo server&quot;.
+   with <span style="color:#e6db74">&#34;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&#34;</span>.
+3. Start the built-in live server via <span style="color:#e6db74">&#34;hugo server&#34;</span>.
 
-Visit https://gohugo.io/ for quickstart guide and full documentation.
+Visit https://gohugo.io/ <span style="color:#66d9ef">for</span> quickstart guide and full documentation.
 
-➜  `blogname` cd `blogname`				//进入主页文件夹
-➜  `blogname` git init						//用git管理
-</code></pre>
-
-<p>目录结构如下</p>
-
-<pre><code class="language-shell">-`blogname`
+➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> cd <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span>				//进入主页文件夹
+➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git init						//用git管理
+</code></pre></div><p>目录结构如下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">-<span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span>
 	-archetypes  
-		-default.md		//这是md模板，通过`hugo new xxxx.md`就会以这个模板创建
+		-default.md		//这是md模板，通过<span style="color:#e6db74">`</span>hugo new xxxx.md<span style="color:#e6db74">`</span>就会以这个模板创建
 	-config.toml		//hugo的配置文件
 	-content				//放主要的博客内容
 	-data       		
 	-layouts     		//布局相关，优先级会比theme里面的高
 	-static     		//放静态资源，比如图片啥的
 	-themes					//hugo的主题，更多主题见：https://themes.gohugo.io
-</code></pre>
-
-<p>创建完主页后，就可以下载你喜欢的主题了，下载主题方式多样化，最终只要把对应的主题放到<code>themes</code>文件下即可。</p>
-
+</code></pre></div><p>创建完主页后，就可以下载你喜欢的主题了，下载主题方式多样化，最终只要把对应的主题放到<code>themes</code>文件下即可。</p>
 <p>下面是通过git下载，这里有个小提醒，在<a href="https://themes.gohugo.io">主题官网</a>看到喜欢的主题，进入该主题的主页后，点击<code>Download</code>，会跳转到对应<code>GitHub</code>地址，fork一份到自己的<code>GitHub</code>，这样以后可以根据自己的喜好微调。</p>
-
-<pre><code class="language-shell">➜  `blogname` git:(master) git subtree add --prefix=themes/leaveIt git@github.com:huanghg/LeaveIt master		//用subtree的方式关联一个主题远程分支
-</code></pre>
-
-<p>主题下载好了，接下来就是配置了主题了, 可以编辑<code>config.toml</code> , 这一步不是必要的。</p>
-
-<pre><code class="language-shell">baseURL = &quot;http://example.org/&quot;
-languageCode = &quot;en-us&quot;
-title = &quot;My New Hugo Site&quot;
-theme = &quot;leaveIt&quot;			//这个对应themes里面的主题文件夹名
-publicDir = &quot;public&quot;	//最终生成的文件目录
-</code></pre>
-
-<p>更多的<code>config</code>配置见<a href="https://gohugo.io/getting-started/configuration/">Configure Hugo</a>，初期我用的并不多，要打理好个人博客，这个<code>config</code>还是要花时间去了解的。</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> git subtree add --prefix<span style="color:#f92672">=</span>themes/leaveIt git@github.com:huanghg/LeaveIt master		//用subtree的方式关联一个主题远程分支
+</code></pre></div><p>主题下载好了，接下来就是配置了主题了, 可以编辑<code>config.toml</code> , 这一步不是必要的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">baseURL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://example.org/&#34;</span>
+languageCode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;en-us&#34;</span>
+title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My New Hugo Site&#34;</span>
+theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;leaveIt&#34;</span>			//这个对应themes里面的主题文件夹名
+publicDir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;public&#34;</span>	//最终生成的文件目录
+</code></pre></div><p>更多的<code>config</code>配置见<a href="https://gohugo.io/getting-started/configuration/">Configure Hugo</a>，初期我用的并不多，要打理好个人博客，这个<code>config</code>还是要花时间去了解的。</p>
 <p>接下来就可以创建自己的博文了，默认是创建到<code>content</code>文件下</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> ✗ hugo new posts/welcome.md		//用hugo的模板创建博文，这个模板就是archetypes下的default.md
+</code></pre></div><p>创建成功后还需要编辑<code>config.toml</code>,配置目录结构，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">baseURL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://example.org/&#34;</span>
+languageCode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;en-us&#34;</span>
+title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My New Hugo Site&#34;</span>
+theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;leaveIt&#34;</span>			//这个对应themes里面的主题文件夹名
 
-<pre><code class="language-shell">➜  `blogname` git:(master) ✗ hugo new posts/welcome.md		//用hugo的模板创建博文，这个模板就是archetypes下的default.md
-</code></pre>
-
-<p>创建成功后还需要编辑<code>config.toml</code>,配置目录结构，</p>
-
-<pre><code class="language-shell">baseURL = &quot;http://example.org/&quot;
-languageCode = &quot;en-us&quot;
-title = &quot;My New Hugo Site&quot;
-theme = &quot;leaveIt&quot;			//这个对应themes里面的主题文件夹名
-
-[[menu.main]]
-  name = &quot;首页&quot;
-  weight = 10
-  identifier = &quot;home&quot;
-  url = &quot;/&quot;
-[[menu.main]]
-  name = &quot;博文&quot;
-  weight = 20
-  identifier = &quot;posts&quot;
-  url = &quot;/posts/&quot;
-</code></pre>
-
-<p>最后使用<code>hugo</code>命令，就可以生成静态网站了，且本地部署。执行完命令后，会生成一个新的文件<code>public</code>，并把生成的文件放到<code>public</code>文件下。</p>
-
-<pre><code class="language-shell">➜  blogname git:(master) ✗ hugo server -t leaveIt -D
+<span style="color:#f92672">[[</span>menu.main<span style="color:#f92672">]]</span>
+  name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;首页&#34;</span>
+  weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+  identifier <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;home&#34;</span>
+  url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/&#34;</span>
+<span style="color:#f92672">[[</span>menu.main<span style="color:#f92672">]]</span>
+  name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;博文&#34;</span>
+  weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+  identifier <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;posts&#34;</span>
+  url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/posts/&#34;</span>
+</code></pre></div><p>最后使用<code>hugo</code>命令，就可以生成静态网站了，且本地部署。执行完命令后，会生成一个新的文件<code>public</code>，并把生成的文件放到<code>public</code>文件下。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  blogname git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> ✗ hugo server -t leaveIt -D
 
                    | EN
 +------------------+----+
-  Pages            |  7
-  Paginator pages  |  0
-  Non-page files   |  0
-  Static files     |  0
-  Processed images |  0
-  Aliases          |  0
-  Sitemaps         |  1
-  Cleaned          |  0
+  Pages            |  <span style="color:#ae81ff">7</span>
+  Paginator pages  |  <span style="color:#ae81ff">0</span>
+  Non-page files   |  <span style="color:#ae81ff">0</span>
+  Static files     |  <span style="color:#ae81ff">0</span>
+  Processed images |  <span style="color:#ae81ff">0</span>
+  Aliases          |  <span style="color:#ae81ff">0</span>
+  Sitemaps         |  <span style="color:#ae81ff">1</span>
+  Cleaned          |  <span style="color:#ae81ff">0</span>
 
-Total in 40 ms
-Watching for changes in /Users/haiguanghuang/Documents/Github/blogname/{archetypes,content,data,layouts,static,themes}
-Watching for config changes in /Users/haiguanghuang/Documents/Github/blogname/config.toml
-Environment: &quot;development&quot;
+Total in <span style="color:#ae81ff">40</span> ms
+Watching <span style="color:#66d9ef">for</span> changes in /Users/haiguanghuang/Documents/Github/blogname/<span style="color:#f92672">{</span>archetypes,content,data,layouts,static,themes<span style="color:#f92672">}</span>
+Watching <span style="color:#66d9ef">for</span> config changes in /Users/haiguanghuang/Documents/Github/blogname/config.toml
+Environment: <span style="color:#e6db74">&#34;development&#34;</span>
 Serving pages from memory
 Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
-Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+Web Server is available at http://localhost:1313/ <span style="color:#f92672">(</span>bind address 127.0.0.1<span style="color:#f92672">)</span>
 Press Ctrl+C to stop
-</code></pre>
-
-<p>此时在浏览器打开，就可以看到效果啦</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="http://huanghg.github.io/posts/blog/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
-
+</code></pre></div><p>此时在浏览器打开，就可以看到效果啦</p>
+<p><img src="http://huanghg.github.io/posts/blog/1.png" alt=""></p>
 <p>可以看到左上角是<code>My New Hugo Site</code>对应的就是<code>config.toml</code>的<code>title</code>, 可以根据个人喜好修改。</p>
-
 <p>右上角就是<code>config.toml</code>里面的<code>menu</code>，大家可以根据自己需求定制化。其中<code>首页</code>就是访问<code>https://localhost:1313/</code>,而<code>博文</code>是访问<code>http://localhost:1313/posts/</code></p>
-
 <p>截此为止，静态网站已经生成好了，接下来就是托管到<code>GitHub</code></p>
-
 <h3 id="github-pages">GitHub Pages</h3>
-
-<p>在创建主页的时候，遇到一个坑，<code>User pages must be built from the</code>master<code>branch.</code>网上其他资料都没有刻意说明，花费了我很多时间，希望可以帮助到有需要的童鞋。</p>
-
+<p>在创建主页的时候，遇到一个坑，<code>User pages must be built from the </code>master<code> branch.</code>网上其他资料都没有刻意说明，花费了我很多时间，希望可以帮助到有需要的童鞋。</p>
 <blockquote>
 <p>网上都会建议通过{github-username}.github.io创建个人主页, 通过这种方式创建的，默认只能<code>built master分支</code>， 是没有办法修改<code>GitHub Pages Source</code>,你可以理解为<code>master</code>下的根目录就是通过<code>Hugo</code>生成的静态文件目录，但是我们默认生成的是在<code>public</code>目录下，我这里的做法是<code>Hugo</code>主页的目录另起一个远程Git仓库，而<code>public</code>创建一个子仓库，链接的是{github-username}.github.io，这样日后访问的时候就可以直接访问<code>https://{github-username}.github.io</code>即可访问了。</p>
-
 <p>网上会有介绍说可以选择<code>gh-pages</code>分支，但是这个方式就不能通过{github-username}.github.io创建，而是另起一个名字,如<code>blog</code>，这样访问的时候链接就不是<code>https://{github-username}.github.io</code>,而是<code>https://{github-username}.github.io/blog</code>。这种方式只需要建一个远程Git仓库，通过添加<code>subtree</code>的方式链接<code>public</code>文件夹。</p>
 </blockquote>
-
-<p>在<code>GitHub</code>创建一个主仓库`<code>{blogname}</code>,一个子仓库<code>{git-username}.github.io</code>.</p>
-
-<pre><code class="language-shell">➜  `blogname` git:(master) ✗ git remote add origin https://{git-username}.github.io/{blogname} //关联远程主仓库地址
+<p>在<code>GitHub</code>创建一个主仓库``{blogname}<code>,一个子仓库</code>{git-username}.github.io`.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> ✗ git remote add origin https://<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>.github.io/<span style="color:#f92672">{</span>blogname<span style="color:#f92672">}</span> //关联远程主仓库地址
 ...
 
-➜  `blogname` git:(master) git subtree add --prefix=public git@github.com:{git-username}/{git.username}.github.io master	//将public关联远程{git-username}.github.io子仓库
+➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> git subtree add --prefix<span style="color:#f92672">=</span>public git@github.com:<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>/<span style="color:#f92672">{</span>git.username<span style="color:#f92672">}</span>.github.io master	//将public关联远程<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>.github.io子仓库
 ...
 
-➜  `blogname` git:(master) hugo -t leaveIt		//以leaveIt为主题，生成静态网站
+➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> hugo -t leaveIt		//以leaveIt为主题，生成静态网站
 ...
 
-➜  `blogname` git:(master) ✗ git commit -m &quot;Updating site&quot; &amp;&amp; git push origin master //生成静态网站后，master有修改，先commit修改，并push到远程主仓库
+➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> ✗ git commit -m <span style="color:#e6db74">&#34;Updating site&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin master //生成静态网站后，master有修改，先commit修改，并push到远程主仓库
 ...
 
-➜  `blogname` git:(master) git subtree push --prefix=public git@github.com:{git-username}/{git-username}.github.io master //将public的修改push到远程子仓库，也就是User Pages
-</code></pre>
-
-<p>最终在浏览器访问https://{git-username}.github.io.这里面可能会有些缓存，需要些时间才能刷新最新的改动。</p>
-
+➜  <span style="color:#e6db74">`</span>blogname<span style="color:#e6db74">`</span> git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> git subtree push --prefix<span style="color:#f92672">=</span>public git@github.com:<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>/<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>.github.io master //将public的修改push到远程子仓库，也就是User Pages
+</code></pre></div><p>最终在浏览器访问https://{git-username}.github.io.这里面可能会有些缓存，需要些时间才能刷新最新的改动。</p>
 <h2 id="发布">发布</h2>
-
 <p>可以发现，上面的几个命令是比较常规的，我们可以把这些命令通过脚本的方式，如<code>publish.sh</code>, 后续只需执行这个脚本即可</p>
-
-<pre><code class="language-shell"># Run hugo. Generated site will be placed in public directory (or omit -t ThemeName if you're not using a theme)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Run hugo. Generated site will be placed in public directory (or omit -t ThemeName if you&#39;re not using a theme)</span>
 hugo -t leaveIt
 
-# Add everything
+<span style="color:#75715e"># Add everything</span>
 git add -A
 
-# Commit and push to master
-git commit -m &quot;Updating site&quot; &amp;&amp; git push origin master
+<span style="color:#75715e"># Commit and push to master</span>
+git commit -m <span style="color:#e6db74">&#34;Updating site&#34;</span> <span style="color:#f92672">&amp;&amp;</span> git push origin master
 
-# Push the public subtree to the master branch
-git subtree push --prefix=public git@github.com:{git-username}/{git-username}.github.io master
-</code></pre>
-
-<p>后续有任何改动后，首先先把改动commit到master分支，然后就可以通过<code>bash publish.sh</code>执行这个脚本了。</p>
+<span style="color:#75715e"># Push the public subtree to the master branch</span>
+git subtree push --prefix<span style="color:#f92672">=</span>public git@github.com:<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>/<span style="color:#f92672">{</span>git-username<span style="color:#f92672">}</span>.github.io master
+</code></pre></div><p>后续有任何改动后，首先先把改动commit到master分支，然后就可以通过<code>bash publish.sh</code>执行这个脚本了。</p>
 
     </div>
 

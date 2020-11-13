@@ -44,8 +44,8 @@
          "@id": "http:\/\/huanghg.github.io\/"
     },
     "articleSection" : "posts",
-    "name" : "ReactiveCocoa代码浅析\x3c二\x3e",
-    "headline" : "ReactiveCocoa代码浅析\x3c二\x3e",
+    "name" : "ReactiveCocoa代码浅析\u003c二\u003e",
+    "headline" : "ReactiveCocoa代码浅析\u003c二\u003e",
     "description" : "ReactiveCocoa代码浅析",
     "inLanguage" : "zh-cn",
     "author" : "拾忆",
@@ -54,8 +54,8 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-12-30 17:56:32 \x2b0800 CST",
-    "dateModified" : "2019-12-30 17:56:32 \x2b0800 CST",
+    "datePublished": "2019-12-30 17:56:32 \u002b0800 CST",
+    "dateModified" : "2019-12-30 17:56:32 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/20191230reactivecocoa2\/",
     "wordCount" : "596",
     "keywords" : [ "React，RAC", "拾忆"]
@@ -151,241 +151,221 @@
           
           
 
-          
-
-<p>看merge之前，我们先看一下flatten</p>
-
+          <p>看merge之前，我们先看一下flatten</p>
 <h2 id="flatten">flatten</h2>
-
-<pre><code class="language-objective-c">//以下是merge另外的一种实现
-- (void)flattenDemo {
-    RACSubject *letters = [RACSubject subject];
-    RACSubject *numbers = [RACSubject subject];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#75715e">//以下是merge另外的一种实现
+</span><span style="color:#75715e"></span>- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">flattenDemo</span> {
+    RACSubject <span style="color:#f92672">*</span>letters <span style="color:#f92672">=</span> [RACSubject subject];
+    RACSubject <span style="color:#f92672">*</span>numbers <span style="color:#f92672">=</span> [RACSubject subject];
     
-    //创建信号数组，当flattened信号subscribeNext的时候，会在其内部触发signalOfSignals的subscribeNext
-    //当[subscriber sendNext:letters];时，会把letters这个signal传递到里面去，会添加到flattened的一个数组中，并建立letters的subscribeNext
-    RACSignal *signalOfSignals = [RACSignal createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
+    <span style="color:#75715e">//创建信号数组，当flattened信号subscribeNext的时候，会在其内部触发signalOfSignals的subscribeNext
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//当[subscriber sendNext:letters];时，会把letters这个signal传递到里面去，会添加到flattened的一个数组中，并建立letters的subscribeNext
+</span><span style="color:#75715e"></span>    RACSignal <span style="color:#f92672">*</span>signalOfSignals <span style="color:#f92672">=</span> [RACSignal createSignal:<span style="color:#f92672">^</span> RACDisposable <span style="color:#f92672">*</span> (<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
         [subscriber sendNext:letters];
         [subscriber sendNext:numbers];
         [subscriber sendCompleted];
-        return nil;
+        <span style="color:#66d9ef">return</span> nil;
     }];
     
-    //flatten主要是打平，降维
-    //flatten的时候，创建了一个新的signal，在新的signal里面监听了信号数组，即
-    /*[RACSignal createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
-     [signalOfSignals subscribeNext:^(id x) {
-        addSignal(signal);
-     }];
-     }];
-     
-     addSignal() {
-     [letters subscribeNext:^(NSString *x) {
-	     [subscriber sendNext:x];
-     }];
-     }
-     */
-    RACSignal *flattened = [signalOfSignals flatten];
+    <span style="color:#75715e">//flatten主要是打平，降维
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//flatten的时候，创建了一个新的signal，在新的signal里面监听了信号数组，即
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">/*[RACSignal createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
+</span><span style="color:#75715e">     [signalOfSignals subscribeNext:^(id x) {
+</span><span style="color:#75715e">        addSignal(signal);
+</span><span style="color:#75715e">     }];
+</span><span style="color:#75715e">     }];
+</span><span style="color:#75715e">     
+</span><span style="color:#75715e">     addSignal() {
+</span><span style="color:#75715e">     [letters subscribeNext:^(NSString *x) {
+</span><span style="color:#75715e">	     [subscriber sendNext:x];
+</span><span style="color:#75715e">     }];
+</span><span style="color:#75715e">     }
+</span><span style="color:#75715e">     */</span>
+    RACSignal <span style="color:#f92672">*</span>flattened <span style="color:#f92672">=</span> [signalOfSignals flatten];
     
-    // Outputs: A 1 B C 2
-    [flattened subscribeNext:^(NSString *x) {
-        NSLog(@&quot;%@&quot;, x);
+    <span style="color:#75715e">// Outputs: A 1 B C 2
+</span><span style="color:#75715e"></span>    [flattened subscribeNext:<span style="color:#f92672">^</span>(NSString <span style="color:#f92672">*</span>x) {
+        NSLog(<span style="color:#e6db74">@&#34;%@&#34;</span>, x);
     }];
     
-    //letters信号sendNext就会触发底层的subscribeNext
-    //而底层中subscribeNext就会调用flattened的subscriber
-    //最终就会触发[flattened subscribeNext:^(id x) {}];
-    [letters sendNext:@&quot;A&quot;];
-    [numbers sendNext:@&quot;1&quot;];
-    [letters sendNext:@&quot;B&quot;];
-    [letters sendNext:@&quot;C&quot;];
-    [numbers sendNext:@&quot;2&quot;];
+    <span style="color:#75715e">//letters信号sendNext就会触发底层的subscribeNext
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//而底层中subscribeNext就会调用flattened的subscriber
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//最终就会触发[flattened subscribeNext:^(id x) {}];
+</span><span style="color:#75715e"></span>    [letters sendNext:<span style="color:#e6db74">@&#34;A&#34;</span>];
+    [numbers sendNext:<span style="color:#e6db74">@&#34;1&#34;</span>];
+    [letters sendNext:<span style="color:#e6db74">@&#34;B&#34;</span>];
+    [letters sendNext:<span style="color:#e6db74">@&#34;C&#34;</span>];
+    [numbers sendNext:<span style="color:#e6db74">@&#34;2&#34;</span>];
 }
-</code></pre>
-
-<h2 id="merge">merge</h2>
-
-<pre><code class="language-objective-c">- (void)mergeDemo {
-    RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
-        [subscriber sendNext:@&quot;signalA&quot;];
-        return nil;
+</code></pre></div><h2 id="merge">merge</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">mergeDemo</span> {
+    RACSignal <span style="color:#f92672">*</span>signalA <span style="color:#f92672">=</span> [RACSignal createSignal:<span style="color:#f92672">^</span>RACDisposable <span style="color:#f92672">*</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
+        [subscriber sendNext:<span style="color:#e6db74">@&#34;signalA&#34;</span>];
+        <span style="color:#66d9ef">return</span> nil;
     }];
     
-    RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) {
-        [subscriber sendNext:@&quot;signalB&quot;];
-        return nil;
+    RACSignal <span style="color:#f92672">*</span>signalB <span style="color:#f92672">=</span> [RACSignal createSignal:<span style="color:#f92672">^</span>RACDisposable <span style="color:#f92672">*</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
+        [subscriber sendNext:<span style="color:#e6db74">@&#34;signalB&#34;</span>];
+        <span style="color:#66d9ef">return</span> nil;
     }];
     
-  //signalA merge signalB 产生一个新的信号mergeSignal
-    RACSignal *mergeSignal = [signalA merge:signalB];
+  <span style="color:#75715e">//signalA merge signalB 产生一个新的信号mergeSignal
+</span><span style="color:#75715e"></span>    RACSignal <span style="color:#f92672">*</span>mergeSignal <span style="color:#f92672">=</span> [signalA merge:signalB];
   
-  //新的信号mergeSignal通过subscribeNext创建监听者。
-    [mergeSignal subscribeNext:^(id x) {
-        NSLog(@&quot;%@&quot;, x);
-    } error:^(NSError *error) {
-        NSLog(@&quot;%@&quot;, error.localizedDescription);
+  <span style="color:#75715e">//新的信号mergeSignal通过subscribeNext创建监听者。
+</span><span style="color:#75715e"></span>    [mergeSignal subscribeNext:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+        NSLog(<span style="color:#e6db74">@&#34;%@&#34;</span>, x);
+    } error:<span style="color:#f92672">^</span>(NSError <span style="color:#f92672">*</span>error) {
+        NSLog(<span style="color:#e6db74">@&#34;%@&#34;</span>, error.localizedDescription);
     }];
 }
-</code></pre>
-
-<blockquote>
+</code></pre></div><blockquote>
 <p>RACSignal *mergeSignal = [signalA merge:signalB];</p>
 </blockquote>
-
 <p>这里的关键是RACSignal *mergeSignal = [signalA merge:signalB]; signalA merge了signalB产生了一个新的信号mergeSignal，下面我们就看看merge里面做了什么。</p>
-
-<pre><code class="language-objective-c">+ (RACSignal *)merge:(id&lt;NSFastEnumeration&gt;)signals {
-  //将两个signal添加一个数组中
-	NSMutableArray *copiedSignals = [[NSMutableArray alloc] init];
-	for (RACSignal *signal in signals) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">+ (RACSignal <span style="color:#f92672">*</span>)<span style="color:#a6e22e">merge:</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>NSFastEnumeration<span style="color:#f92672">&gt;</span>)signals {
+  <span style="color:#75715e">//将两个signal添加一个数组中
+</span><span style="color:#75715e"></span>	NSMutableArray <span style="color:#f92672">*</span>copiedSignals <span style="color:#f92672">=</span> [[NSMutableArray alloc] init];
+	<span style="color:#66d9ef">for</span> (RACSignal <span style="color:#f92672">*</span>signal <span style="color:#66d9ef">in</span> signals) {
 		[copiedSignals addObject:signal];
 	}
 
-	return [[[RACSignal
-		createSignal:^ RACDisposable * (id&lt;RACSubscriber&gt; subscriber) {
-      //遍历数组，触发sendNext，注意这里sendNext的是signal
-			for (RACSignal *signal in copiedSignals) {
+	<span style="color:#66d9ef">return</span> [[[RACSignal
+		createSignal:<span style="color:#f92672">^</span> RACDisposable <span style="color:#f92672">*</span> (<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
+      <span style="color:#75715e">//遍历数组，触发sendNext，注意这里sendNext的是signal
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">for</span> (RACSignal <span style="color:#f92672">*</span>signal <span style="color:#66d9ef">in</span> copiedSignals) {
 				[subscriber sendNext:signal];
 			}
 
 			[subscriber sendCompleted];
-			return nil;
+			<span style="color:#66d9ef">return</span> nil;
 		}]
-    //倘若没有flatten，外面新的signal就是这个signal，外面subscribeNext后，就会触发上面的block
-		flatten]
-		setNameWithFormat:@&quot;+merge: %@&quot;, copiedSignals];
+    <span style="color:#75715e">//倘若没有flatten，外面新的signal就是这个signal，外面subscribeNext后，就会触发上面的block
+</span><span style="color:#75715e"></span>		flatten]
+		setNameWithFormat:<span style="color:#e6db74">@&#34;+merge: %@&#34;</span>, copiedSignals];
 }
-</code></pre>
-
-<p>merge里面创建了一个信号，然后调用了flatten。下面我们再来看看flatten里面做了什么</p>
-
-<pre><code class="language-objective-c">- (instancetype)flatten {
-	__weak RACStream *stream __attribute__((unused)) = self;
-	return [[self flattenMap:^(id value) {
-		return value;
-	}] setNameWithFormat:@&quot;[%@] -flatten&quot;, self.name];
+</code></pre></div><p>merge里面创建了一个信号，然后调用了flatten。下面我们再来看看flatten里面做了什么</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">instancetype</span>)<span style="color:#a6e22e">flatten</span> {
+	<span style="color:#66d9ef">__weak</span> RACStream <span style="color:#f92672">*</span>stream __attribute__((unused)) <span style="color:#f92672">=</span> self;
+	<span style="color:#66d9ef">return</span> [[self flattenMap:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> value) {
+		<span style="color:#66d9ef">return</span> value;
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -flatten&#34;</span>, self.name];
 }
-</code></pre>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (<span style="color:#66d9ef">instancetype</span>)<span style="color:#a6e22e">flattenMap:</span>(RACStream <span style="color:#f92672">*</span> (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">id</span> value))block {
+	<span style="color:#66d9ef">Class</span> <span style="color:#66d9ef">class</span> <span style="color:#f92672">=</span> self.<span style="color:#66d9ef">class</span>;
 
-<pre><code class="language-objective-c">- (instancetype)flattenMap:(RACStream * (^)(id value))block {
-	Class class = self.class;
+  <span style="color:#75715e">//最主要的是这个bind，几乎所有的operation底层都调用这个bind，通过bind创建一个新的signal
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> [[self bind:<span style="color:#f92672">^</span>{
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> value, <span style="color:#66d9ef">BOOL</span> <span style="color:#f92672">*</span>stop) {
+			<span style="color:#66d9ef">id</span> stream <span style="color:#f92672">=</span> block(value) <span style="color:#f92672">?:</span> [<span style="color:#66d9ef">class</span> empty];
+			NSCAssert([stream isKindOfClass:RACStream.<span style="color:#66d9ef">class</span>], <span style="color:#e6db74">@&#34;Value returned from -flattenMap: is not a stream: %@&#34;</span>, stream);
 
-  //最主要的是这个bind，几乎所有的operation底层都调用这个bind，通过bind创建一个新的signal
-	return [[self bind:^{
-		return ^(id value, BOOL *stop) {
-			id stream = block(value) ?: [class empty];
-			NSCAssert([stream isKindOfClass:RACStream.class], @&quot;Value returned from -flattenMap: is not a stream: %@&quot;, stream);
-
-			return stream;
+			<span style="color:#66d9ef">return</span> stream;
 		};
-	}] setNameWithFormat:@&quot;[%@] -flattenMap:&quot;, self.name];
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -flattenMap:&#34;</span>, self.name];
 }
-</code></pre>
+</code></pre></div><p>一直到最底层，调用了bind, bind几乎是所有的operation的根基。我们再看看bind里面有做了什么</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c">- (RACSignal <span style="color:#f92672">*</span>)<span style="color:#a6e22e">bind:</span>(RACStreamBindBlock (<span style="color:#f92672">^</span>)(<span style="color:#66d9ef">void</span>))block {
+	NSCParameterAssert(block <span style="color:#f92672">!=</span> NULL);
 
-<p>一直到最底层，调用了bind, bind几乎是所有的operation的根基。我们再看看bind里面有做了什么</p>
+	<span style="color:#75715e">/*
+</span><span style="color:#75715e">	 * -bind: should:
+</span><span style="color:#75715e">	 * 
+</span><span style="color:#75715e">	 * 1. Subscribe to the original signal of values.
+</span><span style="color:#75715e">	 * 2. Any time the original signal sends a value, transform it using the binding block.
+</span><span style="color:#75715e">	 * 3. If the binding block returns a signal, subscribe to it, and pass all of its values through to the subscriber as they&#39;re received.
+</span><span style="color:#75715e">	 * 4. If the binding block asks the bind to terminate, complete the _original_ signal.
+</span><span style="color:#75715e">	 * 5. When _all_ signals complete, send completed to the subscriber.
+</span><span style="color:#75715e">	 * 
+</span><span style="color:#75715e">	 * If any signal sends an error at any point, send that to the subscriber.
+</span><span style="color:#75715e">	 */</span>
+	<span style="color:#75715e">//创建一个新的siganl，也就是最外面的mergeSignal就是这个siganl，mergeSignal调用了subscribeNext后，就会创建一个subscriber，并当作参数触发以下这个block
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> [[RACSignal createSignal:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>RACSubscriber<span style="color:#f92672">&gt;</span> subscriber) {
+		RACStreamBindBlock bindingBlock <span style="color:#f92672">=</span> block();
 
-<pre><code class="language-objective-c">- (RACSignal *)bind:(RACStreamBindBlock (^)(void))block {
-	NSCParameterAssert(block != NULL);
+		NSMutableArray <span style="color:#f92672">*</span>signals <span style="color:#f92672">=</span> [NSMutableArray arrayWithObject:self];
 
-	/*
-	 * -bind: should:
-	 * 
-	 * 1. Subscribe to the original signal of values.
-	 * 2. Any time the original signal sends a value, transform it using the binding block.
-	 * 3. If the binding block returns a signal, subscribe to it, and pass all of its values through to the subscriber as they're received.
-	 * 4. If the binding block asks the bind to terminate, complete the _original_ signal.
-	 * 5. When _all_ signals complete, send completed to the subscriber.
-	 * 
-	 * If any signal sends an error at any point, send that to the subscriber.
-	 */
-	//创建一个新的siganl，也就是最外面的mergeSignal就是这个siganl，mergeSignal调用了subscribeNext后，就会创建一个subscriber，并当作参数触发以下这个block
-	return [[RACSignal createSignal:^(id&lt;RACSubscriber&gt; subscriber) {
-		RACStreamBindBlock bindingBlock = block();
+		RACCompoundDisposable <span style="color:#f92672">*</span>compoundDisposable <span style="color:#f92672">=</span> [RACCompoundDisposable compoundDisposable];
 
-		NSMutableArray *signals = [NSMutableArray arrayWithObject:self];
+    <span style="color:#75715e">//创建completionSignal，处理complete以后的操作
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>completeSignal)(RACSignal <span style="color:#f92672">*</span>, RACDisposable <span style="color:#f92672">*</span>) <span style="color:#f92672">=</span> <span style="color:#f92672">^</span>(RACSignal <span style="color:#f92672">*</span>signal, RACDisposable <span style="color:#f92672">*</span>finishedDisposable) {
+			<span style="color:#66d9ef">BOOL</span> removeDisposable <span style="color:#f92672">=</span> NO;
 
-		RACCompoundDisposable *compoundDisposable = [RACCompoundDisposable compoundDisposable];
-
-    //创建completionSignal，处理complete以后的操作
-		void (^completeSignal)(RACSignal *, RACDisposable *) = ^(RACSignal *signal, RACDisposable *finishedDisposable) {
-			BOOL removeDisposable = NO;
-
-			@synchronized (signals) {
+			<span style="color:#66d9ef">@synchronized</span> (signals) {
 				[signals removeObject:signal];
 
-				if (signals.count == 0) {
+				<span style="color:#66d9ef">if</span> (signals.count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
 					[subscriber sendCompleted];
 					[compoundDisposable dispose];
-				} else {
-					removeDisposable = YES;
+				} <span style="color:#66d9ef">else</span> {
+					removeDisposable <span style="color:#f92672">=</span> YES;
 				}
 			}
 
-			if (removeDisposable) [compoundDisposable removeDisposable:finishedDisposable];
+			<span style="color:#66d9ef">if</span> (removeDisposable) [compoundDisposable removeDisposable:finishedDisposable];
 		};
     
-    //创建addSignal，
-		void (^addSignal)(RACSignal *) = ^(RACSignal *signal) {
-			@synchronized (signals) {
+    <span style="color:#75715e">//创建addSignal，
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">void</span> (<span style="color:#f92672">^</span>addSignal)(RACSignal <span style="color:#f92672">*</span>) <span style="color:#f92672">=</span> <span style="color:#f92672">^</span>(RACSignal <span style="color:#f92672">*</span>signal) {
+			<span style="color:#66d9ef">@synchronized</span> (signals) {
 				[signals addObject:signal];
 			}
 
-			RACSerialDisposable *selfDisposable = [[RACSerialDisposable alloc] init];
+			RACSerialDisposable <span style="color:#f92672">*</span>selfDisposable <span style="color:#f92672">=</span> [[RACSerialDisposable alloc] init];
 			[compoundDisposable addDisposable:selfDisposable];
-			//在添加的过程中，会调用subscribeNext，这时候就会触发signalA的block。
-			RACDisposable *disposable = [signal subscribeNext:^(id x) {
-        //以下这个subscriber就是mergeSignal的，通过sendNext后，最外面的subscribeNext就会被调用。
-				[subscriber sendNext:x];
-			} error:^(NSError *error) {
+			<span style="color:#75715e">//在添加的过程中，会调用subscribeNext，这时候就会触发signalA的block。
+</span><span style="color:#75715e"></span>			RACDisposable <span style="color:#f92672">*</span>disposable <span style="color:#f92672">=</span> [signal subscribeNext:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+        <span style="color:#75715e">//以下这个subscriber就是mergeSignal的，通过sendNext后，最外面的subscribeNext就会被调用。
+</span><span style="color:#75715e"></span>				[subscriber sendNext:x];
+			} error:<span style="color:#f92672">^</span>(NSError <span style="color:#f92672">*</span>error) {
 				[compoundDisposable dispose];
 				[subscriber sendError:error];
-			} completed:^{
-				@autoreleasepool {
+			} completed:<span style="color:#f92672">^</span>{
+				<span style="color:#66d9ef">@autoreleasepool</span> {
 					completeSignal(signal, selfDisposable);
 				}
 			}];
 
-			selfDisposable.disposable = disposable;
+			selfDisposable.disposable <span style="color:#f92672">=</span> disposable;
 		};
 
-		@autoreleasepool {
-			RACSerialDisposable *selfDisposable = [[RACSerialDisposable alloc] init];
+		<span style="color:#66d9ef">@autoreleasepool</span> {
+			RACSerialDisposable <span style="color:#f92672">*</span>selfDisposable <span style="color:#f92672">=</span> [[RACSerialDisposable alloc] init];
 			[compoundDisposable addDisposable:selfDisposable];
 
-      //这里的self是merge的时候创建的signal，调用flatten时，进入到bind，调用subscribeNext把最外面的signalA和signalB取到。这里的x就是signal
-			RACDisposable *bindingDisposable = [self subscribeNext:^(id x) {
-				// Manually check disposal to handle synchronous errors.
-				if (compoundDisposable.disposed) return;
+      <span style="color:#75715e">//这里的self是merge的时候创建的signal，调用flatten时，进入到bind，调用subscribeNext把最外面的signalA和signalB取到。这里的x就是signal
+</span><span style="color:#75715e"></span>			RACDisposable <span style="color:#f92672">*</span>bindingDisposable <span style="color:#f92672">=</span> [self subscribeNext:<span style="color:#f92672">^</span>(<span style="color:#66d9ef">id</span> x) {
+				<span style="color:#75715e">// Manually check disposal to handle synchronous errors.
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> (compoundDisposable.disposed) <span style="color:#66d9ef">return</span>;
 
-        //x也就是signal,会通过block抛到外面，由外面再进行二次处理，但是flatten不做任何做处理，会原封不动返回signal
-				BOOL stop = NO;
-				id signal = bindingBlock(x, &amp;stop);
+        <span style="color:#75715e">//x也就是signal,会通过block抛到外面，由外面再进行二次处理，但是flatten不做任何做处理，会原封不动返回signal
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">BOOL</span> stop <span style="color:#f92672">=</span> NO;
+				<span style="color:#66d9ef">id</span> signal <span style="color:#f92672">=</span> bindingBlock(x, <span style="color:#f92672">&amp;</span>stop);
 
-				@autoreleasepool {
-          //然后会把这个signal添加到数组signals中。
-					if (signal != nil) addSignal(signal);
-					if (signal == nil || stop) {
+				<span style="color:#66d9ef">@autoreleasepool</span> {
+          <span style="color:#75715e">//然后会把这个signal添加到数组signals中。
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> (signal <span style="color:#f92672">!=</span> nil) addSignal(signal);
+					<span style="color:#66d9ef">if</span> (signal <span style="color:#f92672">==</span> nil <span style="color:#f92672">||</span> stop) {
 						[selfDisposable dispose];
 						completeSignal(self, selfDisposable);
 					}
 				}
-			} error:^(NSError *error) {
+			} error:<span style="color:#f92672">^</span>(NSError <span style="color:#f92672">*</span>error) {
 				[compoundDisposable dispose];
 				[subscriber sendError:error];
-			} completed:^{
-				@autoreleasepool {
+			} completed:<span style="color:#f92672">^</span>{
+				<span style="color:#66d9ef">@autoreleasepool</span> {
 					completeSignal(self, selfDisposable);
 				}
 			}];
 
-			selfDisposable.disposable = bindingDisposable;
+			selfDisposable.disposable <span style="color:#f92672">=</span> bindingDisposable;
 		}
 
-		return compoundDisposable;
-	}] setNameWithFormat:@&quot;[%@] -bind:&quot;, self.name];
+		<span style="color:#66d9ef">return</span> compoundDisposable;
+	}] setNameWithFormat:<span style="color:#e6db74">@&#34;[%@] -bind:&#34;</span>, self.name];
 }
-</code></pre>
-
+</code></pre></div>
     </div>
 
     <div class="post-copyright">

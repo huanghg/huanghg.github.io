@@ -54,8 +54,8 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-11-27 18:57:50 \x2b0800 CST",
-    "dateModified" : "2019-11-27 18:57:50 \x2b0800 CST",
+    "datePublished": "2019-11-27 18:57:50 \u002b0800 CST",
+    "dateModified" : "2019-11-27 18:57:50 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/20191127protobuf\/",
     "wordCount" : "274",
     "keywords" : [ "Protobuf", "拾忆"]
@@ -153,105 +153,73 @@
           
           
 
-          
-
-<h2 id="简述">简述</h2>
-
+          <h2 id="简述">简述</h2>
 <p>Protobuf是一种由谷歌开发的，通过proto协议约束的数据格式，详情请见<a href="https://developers.google.com/protocol-buffers">官网</a></p>
-
 <h2 id="协议">协议</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">syntax</span> = <span style="color:#e6db74">&#34;proto3&#34;</span>;
 
-<pre><code class="language-go">syntax = &quot;proto3&quot;;
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">xxxx</span>;
+<span style="color:#a6e22e">option</span> <span style="color:#a6e22e">objc_class_prefix</span> = <span style="color:#e6db74">&#34;xxx&#34;</span>;
 
-package xxxx;
-option objc_class_prefix = &quot;xxx&quot;;
-
-message SearchRequest {
-  string query = 1;
-  int32 page_number = 2;
-  int32 result_per_page = 3;
+<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">SearchRequest</span> {
+  <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">query</span> = <span style="color:#ae81ff">1</span>;
+  <span style="color:#66d9ef">int32</span> <span style="color:#a6e22e">page_number</span> = <span style="color:#ae81ff">2</span>;
+  <span style="color:#66d9ef">int32</span> <span style="color:#a6e22e">result_per_page</span> = <span style="color:#ae81ff">3</span>;
 }
-</code></pre>
-
-<p>上面是一个简易的protobuf协议，其中有两点需要注意⚠️:</p>
-
+</code></pre></div><p>上面是一个简易的protobuf协议，其中有两点需要注意⚠️:</p>
 <ul>
-<li><p>第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”</p></li>
-
-<li><p>如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过<strong>objc_class_prefix</strong>给生成类名带上前缀</p></li>
+<li>
+<p>第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”</p>
+</li>
+<li>
+<p>如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过<strong>objc_class_prefix</strong>给生成类名带上前缀</p>
+</li>
 </ul>
-
 <h2 id="优点">优点</h2>
-
 <ul>
 <li>Protobuf数据格式的数据是以二进制方式传输的，数据量相对XML，JSON等数据格式会小很多倍，所以传输速度也会快很多</li>
 <li>接收到Protobuf数据格式的数据后，需要对其反序列化，生成对应的模型，反序列化的过程效率高于XML数据格式</li>
 </ul>
-
 <h2 id="生成编程语言代码">生成编程语言代码</h2>
-
 <p>Protobuf支持生成多种编程语言代码，前提是装了protobuf的编译器</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">For C++, the compiler generates a .h and .cc file from each .proto, with a class <span style="color:#66d9ef">for</span> each message type described in your file.
 
-<pre><code class="language-shell">For C++, the compiler generates a .h and .cc file from each .proto, with a class for each message type described in your file.
+For Java, the compiler generates a .java file with a class <span style="color:#66d9ef">for</span> each message type, as well as a special Builderclasses <span style="color:#66d9ef">for</span> creating message class instances.
 
-For Java, the compiler generates a .java file with a class for each message type, as well as a special Builderclasses for creating message class instances.
+Python is a little different – the Python compiler generates a module with a static descriptor of each message type in your .proto, which is <span style="color:#66d9ef">then</span> used with a metaclass to create the necessary Python data access class at runtime.
 
-Python is a little different – the Python compiler generates a module with a static descriptor of each message type in your .proto, which is then used with a metaclass to create the necessary Python data access class at runtime.
-
-For Go, the compiler generates a .pb.go file with a type for each message type in your file.
+For Go, the compiler generates a .pb.go file with a type <span style="color:#66d9ef">for</span> each message type in your file.
 
 For Ruby, the compiler generates a .rb file with a Ruby module containing your message types.
 
-For Objective-C, the compiler generates a pbobjc.h and pbobjc.m file from each .proto, with a class for each message type described in your file.
+For Objective-C, the compiler generates a pbobjc.h and pbobjc.m file from each .proto, with a class <span style="color:#66d9ef">for</span> each message type described in your file.
 
-For C#, the compiler generates a .cs file from each .proto, with a class for each message type described in your file.
+For C#, the compiler generates a .cs file from each .proto, with a class <span style="color:#66d9ef">for</span> each message type described in your file.
 
-For Dart, the compiler generates a .pb.dart file with a class for each message type in your file.
-</code></pre>
-
-<p>iOS开发中，通过以下命令，生成Objective-C的类（.h &amp; .m）</p>
-
-<pre><code class="language-shell">protoc --proto_path=. --objc_out=. xxx.proto
-</code></pre>
-
-<p>执行完该命令就可以生成对应Objective-C的类，然后拖到我们的工程，即可使用</p>
-
+For Dart, the compiler generates a .pb.dart file with a class <span style="color:#66d9ef">for</span> each message type in your file.
+</code></pre></div><p>iOS开发中，通过以下命令，生成Objective-C的类（.h &amp; .m）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">protoc --proto_path<span style="color:#f92672">=</span>. --objc_out<span style="color:#f92672">=</span>. xxx.proto
+</code></pre></div><p>执行完该命令就可以生成对应Objective-C的类，然后拖到我们的工程，即可使用</p>
 <h2 id="charles抓包">Charles抓包</h2>
-
 <p>但是在日常开发中，免不了要跟后台联调，如果是HTTP/HTTPS的协议接口，通常都是通过Charles抓包定位问题</p>
-
 <p>如果不做任何处理，会发现Charles无法解析，因为Charles不知道pb定义的格式，此时需要把描述文件添加到Charles</p>
-
 <h3 id="生成描述文件">生成描述文件</h3>
-
 <p>通过以下命令，生成对应的描述文件xxx.desc</p>
-
-<pre><code class="language-shell">protoc -oxxx.desc xxx.proto
-</code></pre>
-
-<p>其中 <strong>-o</strong> 后面紧接着输出文件xxx.desc，中间没有空格</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">protoc -oxxx.desc xxx.proto
+</code></pre></div><p>其中 <strong>-o</strong> 后面紧接着输出文件xxx.desc，中间没有空格</p>
 <h3 id="添加描述文件">添加描述文件</h3>
-
 <p>在Charles面板，我们右键对应的接口，然后选择 <strong>Viewer Mappings&hellip;</strong>,</p>
-
 <p>首先选择Request type &amp; Response type 为 Protocol Buffers</p>
-
 <p>然后点击<strong>Open Descriptor Registry</strong>,把上一步生成的xxx.desc添加进来，如下图</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="../20191127/2.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
-
+<p><img src="../20191127/2.png" alt=""></p>
 <p>Request &amp; Response都配置完以后，效果如下图</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="../20191127/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
-
+<p><img src="../20191127/1.png" alt=""></p>
 <ul>
 <li>Request type: Protocol Buffers</li>
 <li>Message type:package+对应的request对象</li>
 <li>Response type: Protocol Buffers</li>
 <li>Message type:package+对应的response对象</li>
 </ul>
-
 <p>截止，就完成了Charles抓包解析Protobuf数据格式了</p>
 
     </div>

@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "浅谈HTTP，HTTPS",
     "headline" : "浅谈HTTP，HTTPS",
-    "description" : "Let\x27s talk about HTTP \x26 HTTPS",
+    "description" : "Let\u0027s talk about HTTP \u0026 HTTPS",
     "inLanguage" : "zh-cn",
     "author" : "拾忆",
     "creator" : "拾忆",
@@ -54,10 +54,10 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-11-06 17:59:05 \x2b0800 CST",
-    "dateModified" : "2019-11-06 17:59:05 \x2b0800 CST",
+    "datePublished": "2019-11-06 17:59:05 \u002b0800 CST",
+    "dateModified" : "2019-11-06 17:59:05 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/briefhttps\/",
-    "wordCount" : "128",
+    "wordCount" : "63",
     "keywords" : [ "HTTP","HTTPS","SSL\/TSL", "拾忆"]
 }
 </script>
@@ -132,7 +132,7 @@
                         <a href="http://huanghg.github.io/categories/%E8%97%8F%E7%BB%8F%E9%98%81/"> 藏经阁 </a>
                         
                 </span>
-                <span class="post-word-count">, 128 words</span>
+                <span class="post-word-count">, 63 words</span>
         </div>
     </header>
     <div class="post-content">
@@ -154,32 +154,19 @@
           
           
 
-          
-
-<p><center>来自网络</center></p>
-
-<h2 id="概述">概述</h2>
-
+          <!-- raw HTML omitted -->
 <p>HTTP，HTTPS是既陌生，又熟悉的两个协议</p>
-
 <p>熟悉，是因为我们不管畅游互联网，还是开发过程中，都会接触到的</p>
-
 <p>陌生，是因为我们很多都只是知道可以通过HTTP，HTTPS访问网站，请求后台接口。但是对底层原理并不是很熟悉（当然可能只是我不熟悉哈）</p>
-
 <p>他们的本质是定义了一个客户端和服务器之间数据传输的一个协议</p>
-
 <p>想必很多童鞋都或多或少都了解过，这篇文章的初衷</p>
-
 <ul>
 <li>一是在让自己再重新梳理，加深印象</li>
 <li>二是想抛砖引玉，如有不正确的地方，也欢迎大家及时指正</li>
 </ul>
-
 <h2 id="http">HTTP</h2>
-
 <p>在探讨HTTP之前，我们先看看一个生活场景&ndash;写信</p>
-
-<pre><code class="language-shell">小明和小红异地恋，相距甚远，只能通过写信的方式，互诉相思之情
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">小明和小红异地恋，相距甚远，只能通过写信的方式，互诉相思之情
 
 想必大家都写过信（这里貌似暴露了年龄），写信的时候我们会有个信封，由信封包着书信
 
@@ -194,75 +181,52 @@
 在某一天看了小明对小红的情书以后，脑海突然闪过了一个邪恶的念头，小黄决定篡改小明书信内容
 
 在信中说了小红的坏话，导致小红和小明关系紧张
-</code></pre>
-
-<p>通过上述列子，我们可以把发送HTTP请求类比成送信。其中邮编好比服务器ip，可以快速定位目标大致地址，寄信人的地址好比API路径，收信人的姓名好比具体的服务接口，收信人信息好比客户端信息</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
-
-<p><center><code>报文</code>来自网络</center>
-在HTTP时代，数据都是明文传输的。当然明文传输就会有以上的几大风险：</p>
-
+</code></pre></div><p>通过上述列子，我们可以把发送HTTP请求类比成送信。其中邮编好比服务器ip，可以快速定位目标大致地址，寄信人的地址好比API路径，收信人的姓名好比具体的服务接口，收信人信息好比客户端信息</p>
+<p><img src="https://huanghg.github.io/posts/briefhttps/1.png" alt=""></p>
+<!-- raw HTML omitted -->
 <ul>
 <li><strong>窃听风险</strong>（小黄可以看到小明小红的书信内容）</li>
 <li><strong>篡改风险</strong>（小黄可以修改小明小红的书信内容）</li>
 <li><strong>冒充风险</strong>（小黄冒充小明辱骂小红）</li>
 </ul>
-
 <p>为了解决以上三种风险，HTTPS应运而生。
 那什么是HTTPS呢？下面就让我们聊聊HTTPS</p>
-
 <h2 id="https">HTTPS</h2>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/2.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
-
-<p><center>来自网络</center>
-&gt; HTTPS(全称：Hyper Text Transfer Protocol over Secure Socket Layer)，是以安全为目标的HTTP通道，简单讲是HTTP的安全版</p>
-
+<p><img src="https://huanghg.github.io/posts/briefhttps/2.png" alt=""></p>
+<!-- raw HTML omitted -->
 <p>这个锁就是<strong>SSL/TSL协议</strong>，那<strong>SSL/TSL协议</strong>又是怎么解决<strong>窃听风险</strong>，<strong>篡改风险</strong>，<strong>冒充风险</strong>的呢。</p>
-
 <p>下面我们还是以写信为例</p>
-
 <h3 id="解决窃听风险">解决窃听风险</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">小明为了缓解他俩的关系，千里迢迢飞过去找小红，然后当面跟小红解释清楚
 
-<pre><code class="language-shell">小明为了缓解他俩的关系，千里迢迢飞过去找小红，然后当面跟小红解释清楚
+并且跟小红商量好一个<span style="color:#e6db74">&#34;规则&#34;</span>，小明以这个<span style="color:#e6db74">&#34;规则&#34;</span>把书信内容打乱或者混淆
 
-并且跟小红商量好一个&quot;规则&quot;，小明以这个&quot;规则&quot;把书信内容打乱或者混淆
-
-小红用这个&quot;规则&quot;恢复书信内容。
-</code></pre>
-
-<p>这个“规则”就是我们平时所说的<strong>密钥</strong></p>
-
+小红用这个<span style="color:#e6db74">&#34;规则&#34;</span>恢复书信内容。
+</code></pre></div><p>这个“规则”就是我们平时所说的<strong>密钥</strong></p>
 <blockquote>
 <p>这个行为就是<strong>对称加密</strong>，<strong>对称加密</strong>可以解决<strong>窃听风险</strong></p>
 </blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">通过对称加密，他们又过了一段甜蜜光阴，但好景又不长
 
-<pre><code class="language-shell">通过对称加密，他们又过了一段甜蜜光阴，但好景又不长
-
-小黄去小明家里，无意中发现了&quot;规则&quot;，于是乎小黄用规则让书信内容一览无遗
+小黄去小明家里，无意中发现了<span style="color:#e6db74">&#34;规则&#34;</span>，于是乎小黄用规则让书信内容一览无遗
 
 然后篡改了书信内容，用同样的规则打乱或混淆。他们俩关系再陷入紧张
 
-小明不得已又飞过去跟小红澄清&quot;规则&quot;可能已经泄漏了,&quot;固定的对称密钥&quot;终究不安全
+小明不得已又飞过去跟小红澄清<span style="color:#e6db74">&#34;规则&#34;</span>可能已经泄漏了,<span style="color:#e6db74">&#34;固定的对称密钥&#34;</span>终究不安全
 
 于是乎他又想到另外一个好方法
 
-小明就打电话给小红跟她说，以后每次写信之前，小明都会打电话给小红并告诉小红一个&quot;随机数&quot;,
+小明就打电话给小红跟她说，以后每次写信之前，小明都会打电话给小红并告诉小红一个<span style="color:#e6db74">&#34;随机数&#34;</span>,
 
-然后由小红再告诉小明她的一个&quot;随机数&quot;，最终的&quot;规则&quot;由这两个&quot;随机数&quot;生成。
+然后由小红再告诉小明她的一个<span style="color:#e6db74">&#34;随机数&#34;</span>，最终的<span style="color:#e6db74">&#34;规则&#34;</span>由这两个<span style="color:#e6db74">&#34;随机数&#34;</span>生成。
 
-此次的书信内容就由这个&quot;密钥&quot;加密与解密。这样&quot;密钥&quot;每次都是最新的
+此次的书信内容就由这个<span style="color:#e6db74">&#34;密钥&#34;</span>加密与解密。这样<span style="color:#e6db74">&#34;密钥&#34;</span>每次都是最新的
 
-</code></pre>
-
-<blockquote>
+</code></pre></div><blockquote>
 <p>此举称为<strong>协商密钥</strong>，密钥并不是一成不变的，也不会写死在某个地方，而是每次通信前协商好的</p>
 </blockquote>
-
 <h3 id="解决冒充风险">解决冒充风险</h3>
-
-<pre><code class="language-shell">小黄根据之前的规则，无法复用书信内容，索性就伪造了一份
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">小黄根据之前的规则，无法复用书信内容，索性就伪造了一份
 
 在信中说明了临时更改了规则，尽量消除小红的疑惑，小红慢慢信以为真
 
@@ -270,16 +234,12 @@
 
 于是小明怒飞过去，看了伪造的书信，看到潦草的字迹，又想到另外一个方法
 
-小明和小红互相收下了对方的&quot;字迹&quot;，下次收到书信时就跟字迹对比，这样就知道是不是对方
-</code></pre>
-
-<blockquote>
+小明和小红互相收下了对方的<span style="color:#e6db74">&#34;字迹&#34;</span>，下次收到书信时就跟字迹对比，这样就知道是不是对方
+</code></pre></div><blockquote>
 <p>此举称为交换凭证，可以解决<strong>冒充风险</strong></p>
 </blockquote>
-
 <h3 id="解决篡改风险">解决篡改风险</h3>
-
-<pre><code class="language-shell">小黄在跟小明的交谈中，无意中得知了他们以字迹辨别真伪，这下让他慌了
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">小黄在跟小明的交谈中，无意中得知了他们以字迹辨别真伪，这下让他慌了
 
 为了抱得美人归，立志练好书法，默认小明字迹。慢慢的小黄的字迹越来越像，真伪难分
 
@@ -293,62 +253,30 @@
 
 自此小明和小红有情人终成眷属，过上幸福美满生活
 
-</code></pre>
-
-<blockquote>
+</code></pre></div><blockquote>
 <p>此举称为身份验证，可以解决<strong>篡改风险</strong></p>
 </blockquote>
-
-<h2 id="ssl-tsl">SSL/TSL</h2>
-
+<h2 id="ssltsl">SSL/TSL</h2>
 <p>以上描述的几个手段大部分就是SSL/TSL协议要做的事。</p>
-
 <p>下面就让我们来看看SSL/TSL是怎么做到安全的。</p>
-
 <p>首先SSL/TSL是建立在TCP的基础上的，继TCP三次握手成功之后，再次进行握手，从而验证双方的合法性，有效性。握手过程如下：</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/3.jpg" alt="SSL/TSL" class="lazyload"><figcaption class="image-caption">SSL/TSL</figcaption></figure></p>
-
-<p><center><code>SSL/TSL握手过程</code>来自网络</center>
-- <strong>Step1:</strong> SSL握手总是由Client发起的，Client首先会发送<code>Client  Hello</code>的包，这个包里面包含Client一个随机生成数<code>Random1</code>，Client端的SSL/TSL Version，以及Client端<strong>所支持的加密套件列表</strong>等信息。</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/4.jpg" alt="Client Hello" class="lazyload"><figcaption class="image-caption">Client Hello</figcaption></figure></p>
-
-<p><center><code>Client Hello</code>来自网络</center>
-Server收到以后，也会生成一个随机数<code>Random2</code>，并将服务端的SSL/TSL version，以及Server端<strong>选择的加密套件</strong>，合并成<code>Server Hello</code>的包发至Client端。</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/5.jpg" alt="Server Hello" class="lazyload"><figcaption class="image-caption">Server Hello</figcaption></figure></p>
-
-<p><center><code>Server Hello</code>来自网络</center>
-与此同时，会把Server端的<strong>证书</strong>下发,此举为了身份验证，Server可以决定要不要校验Client的证书</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/6.jpg" alt="Certificate" class="lazyload"><figcaption class="image-caption">Certificate</figcaption></figure></p>
-
-<p><center><code>Certificate</code>来自网络</center>
-最后Server端会发送<code>Server Hello Done</code>的包，表示Server端的第一次握手结束</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/7.jpg" alt="Server Hello Done" class="lazyload"><figcaption class="image-caption">Server Hello Done</figcaption></figure></p>
-
-<p><center><code>Server Hello Done</code>来自网络</center>
-- <strong>Step2:</strong> Client端收到<code>Server Hello</code>以及Server<strong>证书</strong>以后，会先从CA机构验证该证书的合法性，验证通过以后取出证书中的公钥，再生成一个随机数<code>Random3</code>,用证书中的公钥加密<code>Random3</code>生成<code>PreMaster Key</code>,然后发送至Server，此举称之为<code>Client Key Exchange</code>，Server收到<code>PreMaster Key</code>以后用对应私钥解密，拿到<code>Random3</code>。自此，Client和Server同时都拥有<code>Random1</code>,<code>Random2</code>,<code>Random3</code>这三个<strong>加密因子</strong>,然后用前面协商的加密套件加密，最终生成<strong>对称密钥</strong></p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/8.jpg" alt="Client Key Exchange" class="lazyload"><figcaption class="image-caption">Client Key Exchange</figcaption></figure></p>
-
-<p><center><code>Client Key Exchange</code>来自网络</center>
-生成密钥之后，Client会发送<code>Change Cipher Spec</code>包，告诉Server，Client已经生成<strong>对称密钥</strong>，后续会用这个<strong>对称密钥</strong>加密，相对于Server也会发送<code>Change Cipher Spec</code>包告知Client</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/9.jpg" alt="Change Cipher Spec(Client)" class="lazyload"><figcaption class="image-caption">Change Cipher Spec(Client)</figcaption></figure></p>
-
-<p><center><code>Change Cipher Spec(Client)</code> 来自网络</center>
-- <strong>Step3:</strong> 自此协商密钥已经完成，最终会互发Finish包，<code>Encrypted Handshake Message</code>, 标志着握手结束，认证成功。</p>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/briefhttps/10.jpg" alt="Encrypted Handshake Message" class="lazyload"><figcaption class="image-caption">Encrypted Handshake Message</figcaption></figure></p>
-
-<p><center><code>Encrypted Handshake Message</code>来自网络</center>
-以上就是SSL/TSL的握手过程，主要的目的是为了协商密钥，增强了通信的安全性。</p>
-
+<p><img src="https://huanghg.github.io/posts/briefhttps/3.jpg" alt="SSL/TSL"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/4.jpg" alt="Client Hello"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/5.jpg" alt="Server Hello"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/6.jpg" alt="Certificate"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/7.jpg" alt="Server Hello Done"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/8.jpg" alt="Client Key Exchange"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/9.jpg" alt="Change Cipher Spec(Client)"></p>
+<!-- raw HTML omitted -->
+<p><img src="https://huanghg.github.io/posts/briefhttps/10.jpg" alt="Encrypted Handshake Message"></p>
+<!-- raw HTML omitted -->
 <p>难道这样子就坚不可摧，可以高枕无忧了吗？正所谓道高一尺，魔高一丈，世上没有戳不破的盾，我们所做的这么多，都只是提高安全系数，加大破解难度而已。</p>
-
 <blockquote>
 <p>灵魂拷问：那HTTPS有哪些缺点，以及要怎么改善呢？</p>
 </blockquote>

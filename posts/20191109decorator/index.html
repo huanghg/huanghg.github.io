@@ -54,8 +54,8 @@
     "accountablePerson" : "拾忆",
     "copyrightHolder" : "拾忆",
     "copyrightYear" : "2019",
-    "datePublished": "2019-11-09 11:11:59 \x2b0800 CST",
-    "dateModified" : "2019-11-09 11:11:59 \x2b0800 CST",
+    "datePublished": "2019-11-09 11:11:59 \u002b0800 CST",
+    "dateModified" : "2019-11-09 11:11:59 \u002b0800 CST",
     "url" : "http:\/\/huanghg.github.io\/posts\/20191109decorator\/",
     "wordCount" : "89",
     "keywords" : [ "设计模式", "拾忆"]
@@ -153,102 +153,72 @@
           
           
 
-          
-
-<h2 id="理解">理解</h2>
-
-<p>​           何谓装饰模式，以下是百度百科的定义</p>
-
+          <h2 id="理解">理解</h2>
+<p>​			何谓装饰模式，以下是百度百科的定义</p>
 <blockquote>
 <p>装饰模式指的是在不必改变原类文件和使用继承的情况下，动态地扩展一个对象的功能。它是通过创建一个包装对象，也就是装饰来包裹真实的对象。</p>
 </blockquote>
-
 <p>大家在不改变原类的前提下，又想扩展功能，或者说只有小差异化的时候，首先想到的应该就是面向对象三大范式之一——继承</p>
-
-<p>继承最大的好处就是<strong>代码的复用性，子类只需要关注差异性。</strong>如同拼爹年代，别人还在争起跑线的时候，殊不知你已经在终点了</p>
-
-<p>继承最大的缺点就是<strong>父类和子类耦合太严重了。</strong>如同父子关系般血脉相连，父类的修改会严重影响到子类</p>
-
+<p>继承最大的好处就是**代码的复用性，子类只需要关注差异性。**如同拼爹年代，别人还在争起跑线的时候，殊不知你已经在终点了</p>
+<p>继承最大的缺点就是**父类和子类耦合太严重了。**如同父子关系般血脉相连，父类的修改会严重影响到子类</p>
 <p>而装饰模式就取继承之精华，去其之糟粕。通过包装的手段，对原本对象的功能扩展</p>
-
 <h2 id="uml">UML</h2>
-
-<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://huanghg.github.io/posts/20191109/1.png" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
-
+<p><img src="https://huanghg.github.io/posts/20191109/1.png" alt=""></p>
 <p>这是从网上拷贝的UML图，是装饰模式最基本的雏形</p>
-
 <h2 id="objective-c-实现">Objective-C 实现</h2>
-
 <p>网上大部分都是Java的实现，下面以Objective-C具体实现装饰模式</p>
-
-<h3 id="首先有个协议shape-里面定义了一个协议方法draw">首先有个协议Shape，里面定义了一个协议方法draw</h3>
-
-<pre><code class="language-objective-c">@protocol Shape &lt;NSObject&gt;
+<h3 id="首先有个协议shape里面定义了一个协议方法draw">首先有个协议Shape，里面定义了一个协议方法draw</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@protocol</span> <span style="color:#a6e22e">Shape</span> <span style="color:#f92672">&lt;</span>NSObject<span style="color:#f92672">&gt;</span>
   
-- (void)draw;
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">void</span>)draw;
 
-@end
-</code></pre>
-
-<h3 id="创建实现了shape协议的类circle">创建实现了Shape协议的类Circle</h3>
-
-<pre><code class="language-objective-c">@interface Circle : NSObject &lt;Shape&gt;
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><h3 id="创建实现了shape协议的类circle">创建实现了Shape协议的类Circle</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@interface</span> <span style="color:#a6e22e">Circle</span> : <span style="color:#a6e22e">NSObject</span> <span style="color:#f92672">&lt;</span>Shape<span style="color:#f92672">&gt;</span>
   
-@end
+<span style="color:#66d9ef">@end</span>
   
 
-@implementation Circle
+<span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">Circle</span>
   
-- (void)draw {
-    NSLog(@&quot;draw circle&quot;);
+- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">draw</span> {
+    NSLog(<span style="color:#e6db74">@&#34;draw circle&#34;</span>);
 }
 
-@end
-</code></pre>
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><h3 id="在不改变原类circle的前提下对其扩展功能此时需要一个包装类shapedecoratorshapedecorator实现了shapedecoratorinterface协议而shapedecoratorinterface是实现shape协议所以shapedecorator也是具有draw的接口">在不改变原类Circle的前提下，对其扩展功能，此时需要一个包装类ShapeDecorator，ShapeDecorator实现了ShapeDecoratorInterface协议，而ShapeDecoratorInterface是实现Shape协议，所以ShapeDecorator也是具有draw的接口</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@protocol</span> <span style="color:#a6e22e">ShapeDecoratorInterface</span> <span style="color:#f92672">&lt;</span>Shape<span style="color:#f92672">&gt;</span>
 
-<h3 id="在不改变原类circle的前提下-对其扩展功能-此时需要一个包装类shapedecorator-shapedecorator实现了shapedecoratorinterface协议-而shapedecoratorinterface是实现shape协议-所以shapedecorator也是具有draw的接口">在不改变原类Circle的前提下，对其扩展功能，此时需要一个包装类ShapeDecorator，ShapeDecorator实现了ShapeDecoratorInterface协议，而ShapeDecoratorInterface是实现Shape协议，所以ShapeDecorator也是具有draw的接口</h3>
+<span style="color:#f92672">-</span> (<span style="color:#66d9ef">instancetype</span>)initWithShape:(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>Shape<span style="color:#f92672">&gt;</span>)shape;
 
-<pre><code class="language-objective-c">@protocol ShapeDecoratorInterface &lt;Shape&gt;
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><h3 id="最终只需要在shapedecorator的draw接口扩展功能即可">最终只需要在ShapeDecorator的draw接口扩展功能即可。</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-objective-c" data-lang="objective-c"><span style="color:#66d9ef">@interface</span> <span style="color:#a6e22e">ShapeDecorator</span> : <span style="color:#a6e22e">NSObject</span> <span style="color:#f92672">&lt;</span>ShapeDecoratorInterface<span style="color:#f92672">&gt;</span>
 
-- (instancetype)initWithShape:(id&lt;Shape&gt;)shape;
+<span style="color:#66d9ef">@property</span> (<span style="color:#66d9ef">nonatomic</span>, <span style="color:#66d9ef">strong</span>) <span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>Shape<span style="color:#f92672">&gt;</span> shape;
 
-@end
-</code></pre>
+<span style="color:#66d9ef">@end</span>
 
-<h3 id="最终只需要在shapedecorator的draw接口扩展功能即可">最终只需要在ShapeDecorator的draw接口扩展功能即可。</h3>
+<span style="color:#66d9ef">@implementation</span> <span style="color:#a6e22e">ShapeDecorator</span>
 
-<pre><code class="language-objective-c">@interface ShapeDecorator : NSObject &lt;ShapeDecoratorInterface&gt;
-
-@property (nonatomic, strong) id&lt;Shape&gt; shape;
-
-@end
-
-@implementation ShapeDecorator
-
-- (instancetype)initWithShape:(id&lt;Shape&gt;)shape {
-    self = [super init];
-    if (self) {
-        self.shape = shape;
+- (<span style="color:#66d9ef">instancetype</span>)<span style="color:#a6e22e">initWithShape:</span>(<span style="color:#66d9ef">id</span><span style="color:#f92672">&lt;</span>Shape<span style="color:#f92672">&gt;</span>)shape {
+    self <span style="color:#f92672">=</span> [super init];
+    <span style="color:#66d9ef">if</span> (self) {
+        self.shape <span style="color:#f92672">=</span> shape;
     }
-    return self;
+    <span style="color:#66d9ef">return</span> self;
 }
 
-- (void)draw {
+- (<span style="color:#66d9ef">void</span>)<span style="color:#a6e22e">draw</span> {
     [self.shape draw];
-    NSLog(@&quot;do another thing&quot;);
+    NSLog(<span style="color:#e6db74">@&#34;do another thing&#34;</span>);
 }
 
-@end
-</code></pre>
-
-<p>截止就是最简单的装饰模式demo</p>
-
+<span style="color:#66d9ef">@end</span>
+</code></pre></div><p>截止就是最简单的装饰模式demo</p>
 <h2 id="场景">场景</h2>
-
 <p>没有最好的设计模式，只有适合的设计模式。在不同的场景，运用不同的设计模式。</p>
-
 <p>那装饰模式适用场景是什么呢？装饰模式好比人穿衣，不同的衣服穿在同一个人身上，气质就不一样了。</p>
-
 <p>而在项目中，想要对一个类进行扩展，又不能对原类修改的时候，此时可以优先考虑装饰模式。</p>
 
     </div>

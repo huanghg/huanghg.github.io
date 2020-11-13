@@ -17,15 +17,15 @@
       <pubDate>Sat, 09 Nov 2019 11:11:59 +0800</pubDate>
       
       <guid>http://huanghg.github.io/posts/20191109decorator/</guid>
-      <description>理解 ​ 何谓装饰模式，以下是百度百科的定义
+      <description>理解 ​	何谓装饰模式，以下是百度百科的定义
  装饰模式指的是在不必改变原类文件和使用继承的情况下，动态地扩展一个对象的功能。它是通过创建一个包装对象，也就是装饰来包裹真实的对象。
  大家在不改变原类的前提下，又想扩展功能，或者说只有小差异化的时候，首先想到的应该就是面向对象三大范式之一——继承
-继承最大的好处就是代码的复用性，子类只需要关注差异性。如同拼爹年代，别人还在争起跑线的时候，殊不知你已经在终点了
-继承最大的缺点就是父类和子类耦合太严重了。如同父子关系般血脉相连，父类的修改会严重影响到子类
+继承最大的好处就是**代码的复用性，子类只需要关注差异性。**如同拼爹年代，别人还在争起跑线的时候，殊不知你已经在终点了
+继承最大的缺点就是**父类和子类耦合太严重了。**如同父子关系般血脉相连，父类的修改会严重影响到子类
 而装饰模式就取继承之精华，去其之糟粕。通过包装的手段，对原本对象的功能扩展
 UML 这是从网上拷贝的UML图，是装饰模式最基本的雏形
 Objective-C 实现 网上大部分都是Java的实现，下面以Objective-C具体实现装饰模式
-首先有个协议Shape，里面定义了一个协议方法draw @protocol Shape &amp;lt;NSObject&amp;gt; - (void)draw; @end  创建实现了Shape协议的类Circle @interface Circle : NSObject &amp;lt;Shape&amp;gt; @end @implementation Circle - (void)draw { NSLog(@&amp;quot;draw circle&amp;quot;); } @end  在不改变原类Circle的前提下，对其扩展功能，此时需要一个包装类ShapeDecorator，ShapeDecorator实现了ShapeDecoratorInterface协议，而ShapeDecoratorInterface是实现Shape协议，所以ShapeDecorator也是具有draw的接口 @protocol ShapeDecoratorInterface &amp;lt;Shape&amp;gt; - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape; @end  最终只需要在ShapeDecorator的draw接口扩展功能即可。 @interface ShapeDecorator : NSObject &amp;lt;ShapeDecoratorInterface&amp;gt; @property (nonatomic, strong) id&amp;lt;Shape&amp;gt; shape; @end @implementation ShapeDecorator - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape { self = [super init]; if (self) { self.</description>
+首先有个协议Shape，里面定义了一个协议方法draw @protocol Shape &amp;lt;NSObject&amp;gt; - (void)draw; @end 创建实现了Shape协议的类Circle @interface Circle : NSObject &amp;lt;Shape&amp;gt; @end @implementation Circle - (void)draw { NSLog(@&amp;#34;draw circle&amp;#34;); } @end 在不改变原类Circle的前提下，对其扩展功能，此时需要一个包装类ShapeDecorator，ShapeDecorator实现了ShapeDecoratorInterface协议，而ShapeDecoratorInterface是实现Shape协议，所以ShapeDecorator也是具有draw的接口 @protocol ShapeDecoratorInterface &amp;lt;Shape&amp;gt; - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape; @end 最终只需要在ShapeDecorator的draw接口扩展功能即可。 @interface ShapeDecorator : NSObject &amp;lt;ShapeDecoratorInterface&amp;gt; @property (nonatomic, strong) id&amp;lt;Shape&amp;gt; shape; @end @implementation ShapeDecorator - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape { self = [super init]; if (self) { self.shape = shape; } return self; } - (void)draw { [self.</description>
     </item>
     
   </channel>

@@ -18,9 +18,9 @@
       
       <guid>http://huanghg.github.io/posts/20191127protobuf/</guid>
       <description>简述 Protobuf是一种由谷歌开发的，通过proto协议约束的数据格式，详情请见官网
-协议 syntax = &amp;quot;proto3&amp;quot;; package xxxx; option objc_class_prefix = &amp;quot;xxx&amp;quot;; message SearchRequest { string query = 1; int32 page_number = 2; int32 result_per_page = 3; }  上面是一个简易的protobuf协议，其中有两点需要注意⚠️:
- 第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”
- 如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过objc_class_prefix给生成类名带上前缀
+协议 syntax = &amp;#34;proto3&amp;#34;; package xxxx; option objc_class_prefix = &amp;#34;xxx&amp;#34;; message SearchRequest { string query = 1; int32 page_number = 2; int32 result_per_page = 3; } 上面是一个简易的protobuf协议，其中有两点需要注意⚠️:
+  第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”
+  如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过objc_class_prefix给生成类名带上前缀
   优点  Protobuf数据格式的数据是以二进制方式传输的，数据量相对XML，JSON等数据格式会小很多倍，所以传输速度也会快很多 接收到Protobuf数据格式的数据后，需要对其反序列化，生成对应的模型，反序列化的过程效率高于XML数据格式  生成编程语言代码 Protobuf支持生成多种编程语言代码，前提是装了protobuf的编译器
 For C++, the compiler generates a .h and .cc file from each .proto, with a class for each message type described in your file. For Java, the compiler generates a .</description>
     </item>

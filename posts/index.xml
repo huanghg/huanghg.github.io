@@ -6,10 +6,55 @@
     <description>Recent content in Posts on 拾忆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 03 Mar 2020 11:59:58 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2020 15:24:34 +0800</lastBuildDate>
     
 	<atom:link href="http://huanghg.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>复盘</title>
+      <link>http://huanghg.github.io/posts/20201019review/</link>
+      <pubDate>Mon, 19 Oct 2020 15:24:34 +0800</pubDate>
+      
+      <guid>http://huanghg.github.io/posts/20201019review/</guid>
+      <description>复盘 Why   明·王阳明《与薛尚谦书》：“经一蹶者长一智，今日之失，未必不为后日之得。”
+ 这就是我们说的“吃一堑长一智”，但、吃了一堑就自然而然地长一智吗？显然不是的。
+如古文所言，今日之失，未必不为后日之得。而不是今日之失，必为后日之得。
+相信大家都有犯重复的错误，在同一个地方摔倒的经历。
+那要怎么样才能做到吃一堑长一智呢？
+答案，就是复盘。
+What   曾子曰：“吾日三省吾身，为人谋而不忠乎？与朋友交而不信乎？传而不习乎？”
+ 何谓复盘？
+复盘，是一种围棋术语，也称 “复局”。
+是棋手在下完棋以后，重新审视这盘棋，重新分析棋势，以追求最佳的下法。
+复盘，是一种方法论。
+是对过去发生的事情进行梳理，剖析，从而找到失败的原因，找到成功的规律。
+复盘，是一种成长。
+是把过去种种经验，转变成自身的能力的手段。
+When  那我们什么时候要复盘呢？
+情况 复盘给人的第一印象是对失败做总结，但其实不然，无论是成功，失败，我们都可以复盘。
+对成功复盘，多侧重分析客观因素，可以提高成功的可复制性。
+对失败复盘，多侧重分析主观因素，可以防止重蹈覆辙，重复犯错。
+时机 复盘的时机也很重要，总结如下：
+  小事，需及时复盘，防止事情结束后遗忘。
+  大事，需阶段性复盘，事情周期长，变动概率高，要对目标或策略及时调整。
+  事后，需全面复盘，全面总结经验教训和规律。
+  How  那我们要怎么做复盘呢？一般用GRAI复盘法来做复盘，GRAI复盘法有4个步骤，即Goal（回顾目标）、Result（评估结果）、Analysis（分析原因）、Insight（归类总结），被称为“GRAI复盘法”
+回顾目标 清晰的目标是复盘的基础。
+回想一下做这件事的初衷，以及预期想要得到什么样的结果。
+另外可以从参与这件事的人员逐一分析。
+评估结果 结合目标与实际完成情况，评估一下结果与目标的差异。
+尽量可以做到量化，例如打个分数。
+分析原因 只有找到原因，才能在失败收获经验。
+那要怎么分析原因呢？大致可分为以下两种：
+有过程的：可以梳理一下整个过程。在梳理过程的时候，一般可以看出问题。
+无过程的：可以通过五问法，追根溯源，找到真正的问题所在。
+ 问题1:机器为什么停了? 回答:因为超过了负荷，保险丝断了。
+问题2:为什么机器会超过负荷? 回答:因为轴承的润滑不够。
+问题3:为什么轴承的润滑会不够? 回答:因为润滑泵吸不上油。
+问题4:为什么润滑泵吸不上油? 回答:因为它的轮轴耗损了。
+问题5:为什么轮轴会耗损? 回答:因为没有安装过滤器，混进了杂质。</description>
+    </item>
     
     <item>
       <title>移动开发概述</title>
@@ -27,7 +72,7 @@
       
       <guid>http://huanghg.github.io/posts/20191230reactivecocoa2/</guid>
       <description>看merge之前，我们先看一下flatten
-flatten //以下是merge另外的一种实现 - (void)flattenDemo { RACSubject *letters = [RACSubject subject]; RACSubject *numbers = [RACSubject subject]; //创建信号数组，当flattened信号subscribeNext的时候，会在其内部触发signalOfSignals的subscribeNext //当[subscriber sendNext:letters];时，会把letters这个signal传递到里面去，会添加到flattened的一个数组中，并建立letters的subscribeNext RACSignal *signalOfSignals = [RACSignal createSignal:^ RACDisposable * (id&amp;lt;RACSubscriber&amp;gt; subscriber) { [subscriber sendNext:letters]; [subscriber sendNext:numbers]; [subscriber sendCompleted]; return nil; }]; //flatten主要是打平，降维 //flatten的时候，创建了一个新的signal，在新的signal里面监听了信号数组，即 /*[RACSignal createSignal:^ RACDisposable * (id&amp;lt;RACSubscriber&amp;gt; subscriber) { [signalOfSignals subscribeNext:^(id x) { addSignal(signal); }]; }]; addSignal() { [letters subscribeNext:^(NSString *x) { [subscriber sendNext:x]; }]; } */ RACSignal *flattened = [signalOfSignals flatten]; // Outputs: A 1 B C 2 [flattened subscribeNext:^(NSString *x) { NSLog(@&amp;quot;%@&amp;quot;, x); }]; //letters信号sendNext就会触发底层的subscribeNext //而底层中subscribeNext就会调用flattened的subscriber //最终就会触发[flattened subscribeNext:^(id x) {}]; [letters sendNext:@&amp;quot;A&amp;quot;]; [numbers sendNext:@&amp;quot;1&amp;quot;]; [letters sendNext:@&amp;quot;B&amp;quot;]; [letters sendNext:@&amp;quot;C&amp;quot;]; [numbers sendNext:@&amp;quot;2&amp;quot;]; }  merge - (void)mergeDemo { RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&amp;lt;RACSubscriber&amp;gt; subscriber) { [subscriber sendNext:@&amp;quot;signalA&amp;quot;]; return nil; }]; RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id&amp;lt;RACSubscriber&amp;gt; subscriber) { [subscriber sendNext:@&amp;quot;signalB&amp;quot;]; return nil; }]; //signalA merge signalB 产生一个新的信号mergeSignal RACSignal *mergeSignal = [signalA merge:signalB]; //新的信号mergeSignal通过subscribeNext创建监听者。 [mergeSignal subscribeNext:^(id x) { NSLog(@&amp;quot;%@&amp;quot;, x); } error:^(NSError *error) { NSLog(@&amp;quot;%@&amp;quot;, error.</description>
+flatten //以下是merge另外的一种实现 - (void)flattenDemo { RACSubject *letters = [RACSubject subject]; RACSubject *numbers = [RACSubject subject]; //创建信号数组，当flattened信号subscribeNext的时候，会在其内部触发signalOfSignals的subscribeNext  //当[subscriber sendNext:letters];时，会把letters这个signal传递到里面去，会添加到flattened的一个数组中，并建立letters的subscribeNext  RACSignal *signalOfSignals = [RACSignal createSignal:^ RACDisposable * (id&amp;lt;RACSubscriber&amp;gt; subscriber) { [subscriber sendNext:letters]; [subscriber sendNext:numbers]; [subscriber sendCompleted]; return nil; }]; //flatten主要是打平，降维  //flatten的时候，创建了一个新的signal，在新的signal里面监听了信号数组，即  /*[RACSignal createSignal:^ RACDisposable * (id&amp;lt;RACSubscriber&amp;gt; subscriber) { [signalOfSignals subscribeNext:^(id x) { addSignal(signal); }]; }]; addSignal() { [letters subscribeNext:^(NSString *x) { [subscriber sendNext:x]; }]; } */ RACSignal *flattened = [signalOfSignals flatten]; // Outputs: A 1 B C 2  [flattened subscribeNext:^(NSString *x) { NSLog(@&amp;#34;%@&amp;#34;, x); }]; //letters信号sendNext就会触发底层的subscribeNext  //而底层中subscribeNext就会调用flattened的subscriber  //最终就会触发[flattened subscribeNext:^(id x) {}];  [letters sendNext:@&amp;#34;A&amp;#34;]; [numbers sendNext:@&amp;#34;1&amp;#34;]; [letters sendNext:@&amp;#34;B&amp;#34;]; [letters sendNext:@&amp;#34;C&amp;#34;]; [numbers sendNext:@&amp;#34;2&amp;#34;]; } merge - (void)mergeDemo { RACSignal *signalA = [RACSignal createSignal:^RACDisposable *(id&amp;lt;RACSubscriber&amp;gt; subscriber) { [subscriber sendNext:@&amp;#34;signalA&amp;#34;]; return nil; }]; RACSignal *signalB = [RACSignal createSignal:^RACDisposable *(id&amp;lt;RACSubscriber&amp;gt; subscriber) { [subscriber sendNext:@&amp;#34;signalB&amp;#34;]; return nil; }]; //signalA merge signalB 产生一个新的信号mergeSignal  RACSignal *mergeSignal = [signalA merge:signalB]; //新的信号mergeSignal通过subscribeNext创建监听者。  [mergeSignal subscribeNext:^(id x) { NSLog(@&amp;#34;%@&amp;#34;, x); } error:^(NSError *error) { NSLog(@&amp;#34;%@&amp;#34;, error.</description>
     </item>
     
     <item>
@@ -37,7 +82,7 @@ flatten //以下是merge另外的一种实现 - (void)flattenDemo { RACSubject *
       
       <guid>http://huanghg.github.io/posts/20191230reactivecocoa1/</guid>
       <description>RACStream 在ReactiveCocoa世界里面，万物皆为Stream，RACSignal和RACSequence都继承于RACStream，声明了一些抽象方法由子类去实现。
-@implementation RACStream ... #pragma mark Abstract methods + (instancetype)empty { return nil; } - (instancetype)bind:(RACStreamBindBlock (^)(void))block { return nil; } + (instancetype)return:(id)value { return nil; } - (instancetype)concat:(RACStream *)stream { return nil; } - (instancetype)zipWith:(RACStream *)stream { return nil; } ... @end  也提供很多底层的操作方法。下面列举了一些常用的方法，更多方法请见RACStream.m，后续会有专题讲解部分的方法，别看这么多方法，其实只要掌握里面的原理，会发现有很多相似的地方。所谓万变不离其宗，就是这个理。
+@implementation RACStream ... #pragma mark Abstract methods  + (instancetype)empty { return nil; } - (instancetype)bind:(RACStreamBindBlock (^)(void))block { return nil; } + (instancetype)return:(id)value { return nil; } - (instancetype)concat:(RACStream *)stream { return nil; } - (instancetype)zipWith:(RACStream *)stream { return nil; } ... @end 也提供很多底层的操作方法。下面列举了一些常用的方法，更多方法请见RACStream.m，后续会有专题讲解部分的方法，别看这么多方法，其实只要掌握里面的原理，会发现有很多相似的地方。所谓万变不离其宗，就是这个理。
 @implementation RACStream (Operations) ... - (instancetype)flattenMap:(RACStream * (^)(id value))block { Class class = self.class; return [[self bind:^{ return ^(id value, BOOL *stop) { id stream = block(value) ?</description>
     </item>
     
@@ -47,17 +92,17 @@ flatten //以下是merge另外的一种实现 - (void)flattenDemo { RACSubject *
       <pubDate>Mon, 30 Dec 2019 17:38:37 +0800</pubDate>
       
       <guid>http://huanghg.github.io/posts/20191230oop/</guid>
-      <description>简介 ​ 相传盘古开天辟地，举手顶天，双脚踏地，撑开混沌天地。最后体力不支，身躯化为山脉，血液演变成河流。混沌世界由此开启。在现实世界里，万物皆对象，万物拥有属性，可执行动作
-​ 二十世纪末，二十一世纪初，出现了一种新物种——程序猿，一种特殊的物种，通过0和1构建了一个虚拟的世界。将世间万物抽象成各种各样的对象，对象包含属性和方法
-​ 单一文化会让人类发展历程停滞不前。人类历史齿轮之所以可以快速往前行驶，靠的是文化间相互碰撞。中国古代有百家争鸣，外国有文艺复兴
-​ 程序世界亦然。面向对象（OOP）有三个特性，继承，封装，多态。这三大特性稳稳地支撑面向对象，让面向对象一度成为程序猿编程首选范式。所谓路遥知马力，用久了，面向对象的诟病也相继出现了
+      <description>简介 ​	相传盘古开天辟地，举手顶天，双脚踏地，撑开混沌天地。最后体力不支，身躯化为山脉，血液演变成河流。混沌世界由此开启。在现实世界里，万物皆对象，万物拥有属性，可执行动作
+​	二十世纪末，二十一世纪初，出现了一种新物种——程序猿，一种特殊的物种，通过0和1构建了一个虚拟的世界。将世间万物抽象成各种各样的对象，对象包含属性和方法
+​	单一文化会让人类发展历程停滞不前。人类历史齿轮之所以可以快速往前行驶，靠的是文化间相互碰撞。中国古代有百家争鸣，外国有文艺复兴
+​	程序世界亦然。面向对象（OOP）有三个特性，继承，封装，多态。这三大特性稳稳地支撑面向对象，让面向对象一度成为程序猿编程首选范式。所谓路遥知马力，用久了，面向对象的诟病也相继出现了
 继承 继承，定义子类继承于父类，共性放在父类，子类负责差异化。这带来了一定的便利，可以起到很好的复用效果，相同的代码只需要在父类写一份，所有的子类可以添加新的方法，也可以重写父类的方法，以达到子类间相不影响
-风险：但是父类和子类的相互影响是也是bug潜伏的有利条件
+**风险：**但是父类和子类的相互影响是也是bug潜伏的有利条件
 解决方案：减少继承的层级，通过组合来代替继承
 封装 封装，无论是通过声明属性方法的作用域，还是通过头文件的方式屏蔽内部实现。其实都是利用了封装的特性，把外在不关心的，不想让外部修改的，封装在类的内部，只对外部暴露部分属性，以及部分接口供配置或者修改。符合设计模式里面的最少知道原则
-风险：但是对外暴露属性，无疑是增大了属性的作用域，也就是可以修改的地方多了，就不纯粹了，因为属性被修改导致的bug的风险就高了
+**风险：**但是对外暴露属性，无疑是增大了属性的作用域，也就是可以修改的地方多了，就不纯粹了，因为属性被修改导致的bug的风险就高了
 解决方案：尽量少对外暴露属性，可以通过方法的方式供外部配置或者修改属性
-风险：另外对外暴露方法，如果不是值传递，而是指针传递。外部也持有这个对象指针，也就是外部也可以修改这个对象
+**风险：**另外对外暴露方法，如果不是值传递，而是指针传递。外部也持有这个对象指针，也就是外部也可以修改这个对象
 解决方案：是方法内部对对象指针进行深拷贝
 多态 多态不是面向对象的独有特性。多态可以分为编译时多态和运行时多态。编译时多态大多体现在接口上的多态，比如同样是构造方法，但是可以通过不一样的参数列表，来达到实例化不同对象的效果。运行时多态建立在继承特性上，对外接口接收的是父类，同一个方法，当传进去的具体实体类不一样，会产生不一样的结果，而这个具体实体类，需要在运行时才知道是什么类型
 面向对象中，很多问题终究在于属性的作用域太广，作用域广，被修改的地方就广，bug很多时候就这么出现了
@@ -82,12 +127,12 @@ flatten //以下是merge另外的一种实现 - (void)flattenDemo { RACSubject *
 外部在消失弹窗的时候，调用该类的API将该弹窗从这个数组中移除
 最后从队列中取出下一次弹窗进行展示
 以上方式有几个弊端
- 接入方式过于复杂
- 使用者需要关心的太多了，如果哪个童鞋在消失自己的弹窗的时候，忘记了从队列中移除，并且没有从队列中取出下一个弹窗进行展示，那队列中的其他弹窗都将永不见天日
+  接入方式过于复杂
+  使用者需要关心的太多了，如果哪个童鞋在消失自己的弹窗的时候，忘记了从队列中移除，并且没有从队列中取出下一个弹窗进行展示，那队列中的其他弹窗都将永不见天日
   原理 为了解决以上问题，该项目运用了几个Objective-C底层的原理，下面将一一剖析
 为了不让使用者在消失自己的弹窗后，需要手动从队列中移除，并且唤醒下一个弹窗
 最开始我想到的是定时任务，但是后面觉得定时任务不是很优雅，后面选择了监听Runloop运行状态变化
-Runloop - (instancetype)init { self = [super init]; if (self) { //创建一个以和屏幕刷新率相同的频率的定时器 _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(wakeup)]; [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes]; dispatch_async(dispatch_get_main_queue(), ^{ //添加Runloop监听者 [self addRunloopObserver]; }); } return self; } - (void)addRunloopObserver { //获取当前runloop CFRunLoopRef runloop = CFRunLoopGetCurrent(); //创建context CFRunLoopObserverContext context = {0, (__bridge void *)self, &amp;amp;CFRetain, &amp;amp;CFRelease, NULL}; //创建runloop监听者 static CFRunLoopObserverRef defaultModeObserver; /*其中runloop的状态有如下几种，这里监听的是kCFRunLoopBeforeWaiting kCFRunLoopEntry = (1UL &amp;lt;&amp;lt; 0), kCFRunLoopBeforeTimers = (1UL &amp;lt;&amp;lt; 1), kCFRunLoopBeforeSources = (1UL &amp;lt;&amp;lt; 2), kCFRunLoopBeforeWaiting = (1UL &amp;lt;&amp;lt; 5), kCFRunLoopAfterWaiting = (1UL &amp;lt;&amp;lt; 6), kCFRunLoopExit = (1UL &amp;lt;&amp;lt; 7), kCFRunLoopAllActivities = 0x0FFFFFFFU */ defaultModeObserver = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeWaiting, YES, 0, &amp;amp;callback, &amp;amp;context); //为当前runloop添加runloop监听者 CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes); CFRelease(defaultModeObserver); } void callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) { //Runloop 回调，在这里面可以管理Popup队列 }  截止，就完成了利用Runloop取代定时任务，对Popup队列进行定时管理</description>
+Runloop - (instancetype)init { self = [super init]; if (self) { //创建一个以和屏幕刷新率相同的频率的定时器  _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(wakeup)]; [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes]; dispatch_async(dispatch_get_main_queue(), ^{ //添加Runloop监听者  [self addRunloopObserver]; }); } return self; } - (void)addRunloopObserver { //获取当前runloop  CFRunLoopRef runloop = CFRunLoopGetCurrent(); //创建context  CFRunLoopObserverContext context = {0, (__bridge void *)self, &amp;amp;CFRetain, &amp;amp;CFRelease, NULL}; //创建runloop监听者  static CFRunLoopObserverRef defaultModeObserver; /*其中runloop的状态有如下几种，这里监听的是kCFRunLoopBeforeWaiting kCFRunLoopEntry = (1UL &amp;lt;&amp;lt; 0), kCFRunLoopBeforeTimers = (1UL &amp;lt;&amp;lt; 1), kCFRunLoopBeforeSources = (1UL &amp;lt;&amp;lt; 2), kCFRunLoopBeforeWaiting = (1UL &amp;lt;&amp;lt; 5), kCFRunLoopAfterWaiting = (1UL &amp;lt;&amp;lt; 6), kCFRunLoopExit = (1UL &amp;lt;&amp;lt; 7), kCFRunLoopAllActivities = 0x0FFFFFFFU */ defaultModeObserver = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeWaiting, YES, 0, &amp;amp;callback, &amp;amp;context); //为当前runloop添加runloop监听者  CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes); CFRelease(defaultModeObserver); } void callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) { //Runloop 回调，在这里面可以管理Popup队列 } 截止，就完成了利用Runloop取代定时任务，对Popup队列进行定时管理</description>
     </item>
     
     <item>
@@ -97,9 +142,9 @@ Runloop - (instancetype)init { self = [super init]; if (self) { //创建一个�
       
       <guid>http://huanghg.github.io/posts/20191127protobuf/</guid>
       <description>简述 Protobuf是一种由谷歌开发的，通过proto协议约束的数据格式，详情请见官网
-协议 syntax = &amp;quot;proto3&amp;quot;; package xxxx; option objc_class_prefix = &amp;quot;xxx&amp;quot;; message SearchRequest { string query = 1; int32 page_number = 2; int32 result_per_page = 3; }  上面是一个简易的protobuf协议，其中有两点需要注意⚠️:
- 第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”
- 如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过objc_class_prefix给生成类名带上前缀
+协议 syntax = &amp;#34;proto3&amp;#34;; package xxxx; option objc_class_prefix = &amp;#34;xxx&amp;#34;; message SearchRequest { string query = 1; int32 page_number = 2; int32 result_per_page = 3; } 上面是一个简易的protobuf协议，其中有两点需要注意⚠️:
+  第一行一定是显示的声明proto对应的版本，如果没有显示声明，默认是“proto2”
+  如果项目中，有多个pb协议，那么这些pb协议之间可能会有相同的定义，比如错误信息等。java等通过packge声明包名区分，但是package对Objective-C不生效，此时需要通过objc_class_prefix给生成类名带上前缀
   优点  Protobuf数据格式的数据是以二进制方式传输的，数据量相对XML，JSON等数据格式会小很多倍，所以传输速度也会快很多 接收到Protobuf数据格式的数据后，需要对其反序列化，生成对应的模型，反序列化的过程效率高于XML数据格式  生成编程语言代码 Protobuf支持生成多种编程语言代码，前提是装了protobuf的编译器
 For C++, the compiler generates a .h and .cc file from each .proto, with a class for each message type described in your file. For Java, the compiler generates a .</description>
     </item>
@@ -124,14 +169,13 @@ For C++, the compiler generates a .h and .cc file from each .proto, with a class
 之前没有很明确的团队发展规划与方向，但是通过Winter的分享，团队的发展建设其实是有必经之路的
 初期：支撑快速迭代的节奏，高效高质量完成大量需求 虽然短短一句话，但是却涵盖了很多学问
 万丈高楼平地起，首先需要一个很扎实的根基，其次组件化，模块化以致起到最大的复用
- 搭建基础服务设施平台  文档平台 CMS CI持续化构建等  脚本，工具  CodeSnippet Xcode extension  辅助系统
- 埋点 日志系统 JSBridge 调试面板  封装基础库
- 网络库：失败重试，请求复用 数据存储：规范存储  UI组件化（UI库等）
- 业务模块
- 底层库：管理导航堆栈 模块与模块间的消息通信 路由    服务端，客户端，前端因特性的差异，所以要解决的问题也是不一样的
- 服务端：解决大量用户访问带来的复杂性，考验服务端的分发，抗压能力 客户端：解决软件需求规模带来的复杂性，考验组件化，模块化，隔离耦合 前端：解决大量页面需求带来的重复劳动，考验模块化，运营配置   中期：追求性能上的提升 这对技术有更高层次的要求，可能要涉及到其他端的专业知识（服务端，客户端，前端）
-了解了各端的特性，才能知道各端如何运作，之间如何衔接，以及问题的最大的瓶颈在哪里等等
- 性能监控</description>
+  搭建基础服务设施平台
+ 文档平台 CMS CI持续化构建等    脚本，工具
+ CodeSnippet Xcode extension    辅助系统
+ 埋点 日志系统 JSBridge 调试面板    封装基础库
+ 网络库：失败重试，请求复用 数据存储：规范存储    UI组件化（UI库等）
+  业务模块
+ 底层库：管理导航堆栈 模块与模块间的消息通信 路由     服务端，客户端，前端因特性的差异，所以要解决的问题也是不一样的</description>
     </item>
     
     <item>
@@ -140,15 +184,15 @@ For C++, the compiler generates a .h and .cc file from each .proto, with a class
       <pubDate>Sat, 09 Nov 2019 11:11:59 +0800</pubDate>
       
       <guid>http://huanghg.github.io/posts/20191109decorator/</guid>
-      <description>理解 ​ 何谓装饰模式，以下是百度百科的定义
+      <description>理解 ​	何谓装饰模式，以下是百度百科的定义
  装饰模式指的是在不必改变原类文件和使用继承的情况下，动态地扩展一个对象的功能。它是通过创建一个包装对象，也就是装饰来包裹真实的对象。
  大家在不改变原类的前提下，又想扩展功能，或者说只有小差异化的时候，首先想到的应该就是面向对象三大范式之一——继承
-继承最大的好处就是代码的复用性，子类只需要关注差异性。如同拼爹年代，别人还在争起跑线的时候，殊不知你已经在终点了
-继承最大的缺点就是父类和子类耦合太严重了。如同父子关系般血脉相连，父类的修改会严重影响到子类
+继承最大的好处就是**代码的复用性，子类只需要关注差异性。**如同拼爹年代，别人还在争起跑线的时候，殊不知你已经在终点了
+继承最大的缺点就是**父类和子类耦合太严重了。**如同父子关系般血脉相连，父类的修改会严重影响到子类
 而装饰模式就取继承之精华，去其之糟粕。通过包装的手段，对原本对象的功能扩展
 UML 这是从网上拷贝的UML图，是装饰模式最基本的雏形
 Objective-C 实现 网上大部分都是Java的实现，下面以Objective-C具体实现装饰模式
-首先有个协议Shape，里面定义了一个协议方法draw @protocol Shape &amp;lt;NSObject&amp;gt; - (void)draw; @end  创建实现了Shape协议的类Circle @interface Circle : NSObject &amp;lt;Shape&amp;gt; @end @implementation Circle - (void)draw { NSLog(@&amp;quot;draw circle&amp;quot;); } @end  在不改变原类Circle的前提下，对其扩展功能，此时需要一个包装类ShapeDecorator，ShapeDecorator实现了ShapeDecoratorInterface协议，而ShapeDecoratorInterface是实现Shape协议，所以ShapeDecorator也是具有draw的接口 @protocol ShapeDecoratorInterface &amp;lt;Shape&amp;gt; - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape; @end  最终只需要在ShapeDecorator的draw接口扩展功能即可。 @interface ShapeDecorator : NSObject &amp;lt;ShapeDecoratorInterface&amp;gt; @property (nonatomic, strong) id&amp;lt;Shape&amp;gt; shape; @end @implementation ShapeDecorator - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape { self = [super init]; if (self) { self.</description>
+首先有个协议Shape，里面定义了一个协议方法draw @protocol Shape &amp;lt;NSObject&amp;gt; - (void)draw; @end 创建实现了Shape协议的类Circle @interface Circle : NSObject &amp;lt;Shape&amp;gt; @end @implementation Circle - (void)draw { NSLog(@&amp;#34;draw circle&amp;#34;); } @end 在不改变原类Circle的前提下，对其扩展功能，此时需要一个包装类ShapeDecorator，ShapeDecorator实现了ShapeDecoratorInterface协议，而ShapeDecoratorInterface是实现Shape协议，所以ShapeDecorator也是具有draw的接口 @protocol ShapeDecoratorInterface &amp;lt;Shape&amp;gt; - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape; @end 最终只需要在ShapeDecorator的draw接口扩展功能即可。 @interface ShapeDecorator : NSObject &amp;lt;ShapeDecoratorInterface&amp;gt; @property (nonatomic, strong) id&amp;lt;Shape&amp;gt; shape; @end @implementation ShapeDecorator - (instancetype)initWithShape:(id&amp;lt;Shape&amp;gt;)shape { self = [super init]; if (self) { self.shape = shape; } return self; } - (void)draw { [self.</description>
     </item>
     
     <item>
@@ -178,7 +222,7 @@ Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。让我最
 前面的信息都挺顺利的，哒哒哒敲完了，点击Create GitHub App的时候，提示途中标红的Webhook URL，这就一脸懵逼了。然后网上各种搜，最后发现创建应该是Github OAuth Application。如下图：
 其中Client ID和Client Secret后续会用到。
 添加gitalk.html模板 从网上拷贝了一份见下方, 注意这份模板是有问题的！！！本身添加评论功能是很简单的，但是这份代码增加集成了难度，下文会详细讲解。
-{{ if .Site.Params.enableGitalk }} &amp;lt;div id=&amp;quot;gitalk-container/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/div&amp;gt; &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.css/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt; &amp;lt;script src=&amp;quot;https://unpkg.com/gitalk/dist/gitalk.min.js/&amp;quot; style=&amp;quot;border:0&amp;quot; &amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; const gitalk = new Gitalk({ clientID: &#39;{{ .Site.Params.Gitalk.clientID }}&#39;, clientSecret: &#39;{{ .Site.Params.Gitalk.clientSecret }}&#39;, repo: &#39;{{ .Site.Params.Gitalk.repo }}&#39;, owner: &#39;{{ .Site.Params.Gitalk.owner }}&#39;, admin: [&#39;{{ .</description>
+{{ if .Site.Params.enableGitalk }} &amp;lt;div id=&amp;#34;gitalk-container/&amp;#34; style=&amp;#34;border:0&amp;#34; &amp;gt;&amp;lt;/div&amp;gt; &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;https://unpkg.com/gitalk/dist/gitalk.css/&amp;#34; style=&amp;#34;border:0&amp;#34; &amp;gt; &amp;lt;script src=&amp;#34;https://unpkg.com/gitalk/dist/gitalk.min.js/&amp;#34; style=&amp;#34;border:0&amp;#34; &amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; const gitalk = new Gitalk({ clientID: &amp;#39;{{ .Site.Params.Gitalk.clientID }}&amp;#39;, clientSecret: &amp;#39;{{ .Site.Params.Gitalk.clientSecret }}&amp;#39;, repo: &amp;#39;{{ .Site.Params.Gitalk.repo }}&amp;#39;, owner: &amp;#39;{{ .Site.Params.Gitalk.owner }}&amp;#39;, admin: [&amp;#39;{{ .</description>
     </item>
     
     <item>
@@ -187,23 +231,22 @@ Gitalk 是一个基于 GitHub Issue 和 Preact 开发的评论插件。让我最
       <pubDate>Wed, 06 Nov 2019 17:59:05 +0800</pubDate>
       
       <guid>http://huanghg.github.io/posts/briefhttps/</guid>
-      <description>来自网络
-概述 HTTP，HTTPS是既陌生，又熟悉的两个协议
+      <description>HTTP，HTTPS是既陌生，又熟悉的两个协议
 熟悉，是因为我们不管畅游互联网，还是开发过程中，都会接触到的
 陌生，是因为我们很多都只是知道可以通过HTTP，HTTPS访问网站，请求后台接口。但是对底层原理并不是很熟悉（当然可能只是我不熟悉哈）
 他们的本质是定义了一个客户端和服务器之间数据传输的一个协议
 想必很多童鞋都或多或少都了解过，这篇文章的初衷
  一是在让自己再重新梳理，加深印象 二是想抛砖引玉，如有不正确的地方，也欢迎大家及时指正  HTTP 在探讨HTTP之前，我们先看看一个生活场景&amp;ndash;写信
-小明和小红异地恋，相距甚远，只能通过写信的方式，互诉相思之情 想必大家都写过信（这里貌似暴露了年龄），写信的时候我们会有个信封，由信封包着书信 在信封上，我们会写明寄信人姓名，寄信人的地址，收信人的姓名，收信人的地址，邮编 邮差根据这些信息就可以正确地把信送到收信人手上了 就这样过了许久的浪漫岁月，但好景不长 暗恋小红已久的小黄，知道他们两一直在以书信来往 在某一天看了小明对小红的情书以后，脑海突然闪过了一个邪恶的念头，小黄决定篡改小明书信内容 在信中说了小红的坏话，导致小红和小明关系紧张  通过上述列子，我们可以把发送HTTP请求类比成送信。其中邮编好比服务器ip，可以快速定位目标大致地址，寄信人的地址好比API路径，收信人的姓名好比具体的服务接口，收信人信息好比客户端信息
-报文来自网络 在HTTP时代，数据都是明文传输的。当然明文传输就会有以上的几大风险：
+小明和小红异地恋，相距甚远，只能通过写信的方式，互诉相思之情 想必大家都写过信（这里貌似暴露了年龄），写信的时候我们会有个信封，由信封包着书信 在信封上，我们会写明寄信人姓名，寄信人的地址，收信人的姓名，收信人的地址，邮编 邮差根据这些信息就可以正确地把信送到收信人手上了 就这样过了许久的浪漫岁月，但好景不长 暗恋小红已久的小黄，知道他们两一直在以书信来往 在某一天看了小明对小红的情书以后，脑海突然闪过了一个邪恶的念头，小黄决定篡改小明书信内容 在信中说了小红的坏话，导致小红和小明关系紧张 通过上述列子，我们可以把发送HTTP请求类比成送信。其中邮编好比服务器ip，可以快速定位目标大致地址，寄信人的地址好比API路径，收信人的姓名好比具体的服务接口，收信人信息好比客户端信息
  窃听风险（小黄可以看到小明小红的书信内容） 篡改风险（小黄可以修改小明小红的书信内容） 冒充风险（小黄冒充小明辱骂小红）  为了解决以上三种风险，HTTPS应运而生。 那什么是HTTPS呢？下面就让我们聊聊HTTPS
-HTTPS 来自网络 &amp;gt; HTTPS(全称：Hyper Text Transfer Protocol over Secure Socket Layer)，是以安全为目标的HTTP通道，简单讲是HTTP的安全版
-这个锁就是SSL/TSL协议，那SSL/TSL协议又是怎么解决窃听风险，篡改风险，冒充风险的呢。
+HTTPS 这个锁就是SSL/TSL协议，那SSL/TSL协议又是怎么解决窃听风险，篡改风险，冒充风险的呢。
 下面我们还是以写信为例
-解决窃听风险 小明为了缓解他俩的关系，千里迢迢飞过去找小红，然后当面跟小红解释清楚 并且跟小红商量好一个&amp;quot;规则&amp;quot;，小明以这个&amp;quot;规则&amp;quot;把书信内容打乱或者混淆 小红用这个&amp;quot;规则&amp;quot;恢复书信内容。  这个“规则”就是我们平时所说的密钥
+解决窃听风险 小明为了缓解他俩的关系，千里迢迢飞过去找小红，然后当面跟小红解释清楚 并且跟小红商量好一个&amp;#34;规则&amp;#34;，小明以这个&amp;#34;规则&amp;#34;把书信内容打乱或者混淆 小红用这个&amp;#34;规则&amp;#34;恢复书信内容。 这个“规则”就是我们平时所说的密钥
  这个行为就是对称加密，对称加密可以解决窃听风险
- 通过对称加密，他们又过了一段甜蜜光阴，但好景又不长 小黄去小明家里，无意中发现了&amp;quot;规则&amp;quot;，于是乎小黄用规则让书信内容一览无遗 然后篡改了书信内容，用同样的规则打乱或混淆。他们俩关系再陷入紧张 小明不得已又飞过去跟小红澄清&amp;quot;规则&amp;quot;可能已经泄漏了,&amp;quot;固定的对称密钥&amp;quot;终究不安全 于是乎他又想到另外一个好方法 小明就打电话给小红跟她说，以后每次写信之前，小明都会打电话给小红并告诉小红一个&amp;quot;随机数&amp;quot;, 然后由小红再告诉小明她的一个&amp;quot;随机数&amp;quot;，最终的&amp;quot;规则&amp;quot;由这两个&amp;quot;随机数&amp;quot;生成。 此次的书信内容就由这个&amp;quot;密钥&amp;quot;加密与解密。这样&amp;quot;密钥&amp;quot;每次都是最新的   此举称为协商密钥，密钥并不是一成不变的，也不会写死在某个地方，而是每次通信前协商好的
- 解决冒充风险 小黄根据之前的规则，无法复用书信内容，索性就伪造了一份 在信中说明了临时更改了规则，尽量消除小红的疑惑，小红慢慢信以为真 久而久之，书信内容越来越离谱，关系再次恶化 于是小明怒飞过去，看了伪造的书信，看到潦草的字迹，又想到另外一个方法 小明和小红互相收下了对方的&amp;quot;字迹&amp;quot;，下次收到书信时就跟字迹对比，这样就知道是不是对方   此举称为交换凭证，可以解决冒充风险</description>
+ 通过对称加密，他们又过了一段甜蜜光阴，但好景又不长 小黄去小明家里，无意中发现了&amp;#34;规则&amp;#34;，于是乎小黄用规则让书信内容一览无遗 然后篡改了书信内容，用同样的规则打乱或混淆。他们俩关系再陷入紧张 小明不得已又飞过去跟小红澄清&amp;#34;规则&amp;#34;可能已经泄漏了,&amp;#34;固定的对称密钥&amp;#34;终究不安全 于是乎他又想到另外一个好方法 小明就打电话给小红跟她说，以后每次写信之前，小明都会打电话给小红并告诉小红一个&amp;#34;随机数&amp;#34;, 然后由小红再告诉小明她的一个&amp;#34;随机数&amp;#34;，最终的&amp;#34;规则&amp;#34;由这两个&amp;#34;随机数&amp;#34;生成。 此次的书信内容就由这个&amp;#34;密钥&amp;#34;加密与解密。这样&amp;#34;密钥&amp;#34;每次都是最新的  此举称为协商密钥，密钥并不是一成不变的，也不会写死在某个地方，而是每次通信前协商好的
+ 解决冒充风险 小黄根据之前的规则，无法复用书信内容，索性就伪造了一份 在信中说明了临时更改了规则，尽量消除小红的疑惑，小红慢慢信以为真 久而久之，书信内容越来越离谱，关系再次恶化 于是小明怒飞过去，看了伪造的书信，看到潦草的字迹，又想到另外一个方法 小明和小红互相收下了对方的&amp;#34;字迹&amp;#34;，下次收到书信时就跟字迹对比，这样就知道是不是对方  此举称为交换凭证，可以解决冒充风险
+ 解决篡改风险 小黄在跟小明的交谈中，无意中得知了他们以字迹辨别真伪，这下让他慌了 为了抱得美人归，立志练好书法，默认小明字迹。慢慢的小黄的字迹越来越像，真伪难分 小明得知书信再次被篡改且字迹相仿，于是绞尽脑汁 决定每次写信之前跟小红说，大概有多少字，书信内容大概描述了什么东西 （这里面有点扯蛋，能打电话说清楚，为啥还要写信呢，权当电话费贵，只能长话短说哈） 这样日后收到书信以后，对比字迹，计算字数，梳理整体脉络 自此小明和小红有情人终成眷属，过上幸福美满生活  此举称为身份验证，可以解决篡改风险
+ SSL/TSL 以上描述的几个手段大部分就是SSL/TSL协议要做的事。</description>
     </item>
     
     <item>
@@ -218,7 +261,7 @@ HTTPS 来自网络 &amp;gt; HTTPS(全称：Hyper Text Transfer Protocol over Sec
 下面就介绍一下Hugo &amp;amp; GitHub Pages搭建的过程。
 简介 Hugo  Hugo是由Go语言实现的静态网站生成器。简单、易用、高效、易扩展、快速部署。
  hugo的安装流程请见中文官网 或英文官网，此处就做不详细介绍。这里更多的想要描述一下hugo的用法，及相关文件夹的功能，以及如何配置hugo。
-➜ `GitHub` hugo new site `blogname` //blogname任君喜欢 Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname. Just a few more steps and you&#39;re ready to go: 1. Download a theme into the same-named folder. Choose a theme from https://themes.gohugo.io/ or create your own with the &amp;quot;hugo new theme &amp;lt;THEMENAME&amp;gt;&amp;quot; command.</description>
+➜ `GitHub` hugo new site `blogname` //blogname任君喜欢 Congratulations! Your new Hugo site is created in /Users/haiguanghuang/Documents/Github/blogname. Just a few more steps and you&amp;#39;re ready to go: 1. Download a theme into the same-named folder. Choose a theme from https://themes.gohugo.io/ or create your own with the &amp;#34;hugo new theme &amp;lt;THEMENAME&amp;gt;&amp;#34; command.</description>
     </item>
     
   </channel>
